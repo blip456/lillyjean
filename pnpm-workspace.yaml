@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - lefthook
+  - supabase
+ignoredBuiltDependencies:
+  - "@parcel/watcher"
+  - "@swc/core"
+  - sharp
+  - unrs-resolver

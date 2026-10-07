@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      # Opens/updates a "chore(main): release x.y.z" PR that bumps package.json and
+      # CHANGELOG.md from conventional commits. Merging it tags the release and
+      # publishes a GitHub Release; Vercel then deploys the new version.
+      - uses: googleapis/release-please-action@v4
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json

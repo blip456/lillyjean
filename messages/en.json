@@ -1,0 +1,12 @@
+{
+  "app": {
+    "name": "Lillyjean",
+    "tagline": "Track your reading, build readlists and take on challenges with your bookclub."
+  },
+  "release": {
+    "version": "Version {version}",
+    "whatsNew": "What's new",
+    "noReleases": "No releases yet.",
+    "back": "Back"
+  }
+}

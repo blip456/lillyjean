@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+CHANGELOG.md
+.next
+node_modules
+supabase/.temp
+src/lib/supabase/database.types.ts
+docs/wireframes/index.html
