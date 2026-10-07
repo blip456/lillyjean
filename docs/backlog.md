@@ -19,7 +19,7 @@ We build in small increments. Every increment starts with a wireframe review (se
 - Log in, forgot password (code → new password), "email me a code instead"
 - Onboarding: Library card (username), Currently reading (optional), Reading pledge (optional)
 - `profiles` table + RLS, route protection in the proxy
-- Settings: sign out, sign out everywhere, delete account; About with version + What's new
+- Settings: sign out, delete account; About with version + What's new
 
 ## Sprint 2 — Books & readlists (flows C, D)
 
@@ -34,7 +34,7 @@ We build in small increments. Every increment starts with a wireframe review (se
 
 ## Sprint 4 — Bookclubs (flow F)
 
-- Create club, invite by username or email (invite links), accept/decline
+- Create club, invite by username or email, accept/decline (no invite links in v1)
 - Share challenges and readlists with clubs, member progress, activity feed
 
 ## Sprint 5 — Home & polish (flow B)
@@ -49,3 +49,15 @@ We build in small increments. Every increment starts with a wireframe review (se
 - Dutch translation via Loco
 - Username login (if users ask for it)
 - Passkeys (once Supabase support is stable)
+- Bookclub invite links: expiry, single- or multi-use, invite sent to one email but accepted with another account (PO feedback A2, A12–A14, A-PO6, A-PO7, F4)
+- Club activity on Home (PO feedback B1)
+- ISBN barcode scanning (PO feedback D3, D-PO3)
+- Check new passwords against known breached passwords, Supabase Pro feature (PO feedback A-PO1)
+- Trophy cabinet on the profile with past years' reading pledges (PO feedback A-PO8)
+- Manual ordering of books in a readlist (PO feedback C-PO4)
+- Public profiles and public readlists (PO feedback C-PO1)
+
+## Dropped
+
+- Sign out everywhere (PO feedback G2, G-PO4)
+- Pick-my-next-read card deck (PO feedback I2)
