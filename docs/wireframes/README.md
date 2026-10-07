@@ -160,84 +160,167 @@ Information architecture (same for both alternatives):
 
 ---
 
-## Open questions for the product owner
+## Open questions
 
-### Navigation
+Each section of `index.html` ends with these questions and an answer box. Answers are sent along with the
+screen feedback in the feedback email. **PO** = product owner, **U** = possible end users (readers).
 
-1. Alt 1 (classic tab bar), Alt 2 (bookshelf + Quick log) or the hybrid?
-2. Profile behind the avatar (as drawn) or as its own tab (dropping the center action)?
-3. Which actions belong in the global `+` / Quick log, and in which order?
-4. Do we need a notifications inbox (bell) in v1, or are push/email notifications plus the activity feed enough?
+### N · Navigation
 
-### A · Auth & onboarding
+**For product owners**
 
-1. Password policy: minimum length (12 drawn), and do we check against known breached passwords?
-2. Code validity (10 min drawn), resend cooldown (60 s drawn) and max wrong attempts?
-3. Sign-up with an email that already exists: reveal it ("already registered, log in?") or stay neutral to avoid account discovery?
-4. Username rules: length, allowed characters, case-sensitive, changeable later (and how often)?
-5. Can an unverified account do anything, and how long until unverified sign-ups are cleaned up?
-6. Splash: minimum duration, and show the animation on every cold open or only the first?
-7. Invites: expiry duration (7 days drawn), single-use or multi-use links, and is the inviter notified on decline?
-8. Invite sent to email X but the person signs in with account Y: allow, warn, or block?
-9. Reading pledge: books only, or also pages/minutes? Can it be changed mid-year, and what happens to past years?
+1. `N-PO1` Alt 1 (classic tab bar), Alt 2 (bookshelf spines + Quick log) or a hybrid of both?
+2. `N-PO2` Profile behind the avatar (as drawn) or as its own tab (dropping the center action)?
+3. `N-PO3` Which actions belong in the global + / Quick log menu, and in which order?
+4. `N-PO4` Do we need a notifications inbox (bell) in v1, or are email/push notifications plus the activity feed enough?
+
+**For possible end users**
+
+1. `N-U1` Which navigation style feels more natural to you, and why?
+2. `N-U2` When you open the app, what is the first thing you would want to do?
+3. `N-U3` Which actions would you use so often that they should always be one tap away?
+
+### A · Splash, authentication & onboarding
+
+**For product owners**
+
+1. `A-PO1` Do we check new passwords against known breached passwords (Supabase Pro feature)?
+2. `A-PO2` Code validity (10 min drawn), resend cooldown (60 s drawn) and maximum wrong attempts: OK?
+3. `A-PO3` Sign-up with an email that already exists: say so ("already registered, log in?") or stay neutral to avoid account discovery?
+4. `A-PO4` Username rules: length, allowed characters, can it be changed later (and how often)?
+5. `A-PO5` Splash: show the animation on every cold open or only the first time?
+6. `A-PO6` Invites: how long is an invite link valid (7 days drawn), single-use or reusable, and is the inviter told when someone declines?
+7. `A-PO7` Invite sent to one email address, but the person signs in with another account: allow, warn or block?
+8. `A-PO8` Reading pledge: books only, or also pages/minutes? Can it be changed mid-year, and what happens to past years?
+
+**For possible end users**
+
+1. `A-U1` How would you prefer to sign in: email + password, a code sent to your email, or a Google account?
+2. `A-U2` Would you rather choose your username right away, or only when you need it (for example when joining a bookclub)?
+3. `A-U3` Does a yearly reading goal motivate you, or does it feel like pressure?
+4. `A-U4` Is there anything in the sign-up steps that would make you stop and close the app?
 
 ### B · Home
 
-1. Streak definition: daily or weekly, and what counts (any progress update, a finished book)? Or replace it with another stat?
-2. Do we track page/percent progress at all in v1, or only the three statuses?
-3. Section order on Home; should users be able to hide or reorder sections?
-4. Which club activity events show on Home vs only inside the club?
+**For product owners**
+
+1. `B-PO1` Streak: daily or weekly, and what counts (any progress update, a finished book)? Or replace it with another stat?
+2. `B-PO2` Do we track page/percentage progress in v1, or only the three statuses (want to read / reading / read)?
+3. `B-PO3` Section order on Home: fixed, or can users hide and reorder sections?
+4. `B-PO4` Which club activity events show on Home, and which only inside the club?
+
+**For possible end users**
+
+1. `B-U1` What do you want to see first when you open the app?
+2. `B-U2` Do you keep track of where you are in a book today (page number, percentage)? How?
+3. `B-U3` Which numbers about your reading would you actually look at?
 
 ### C · Readlists
 
-1. Visibility options: Only me / Shared with clubs / Anyone with the link: is that the right set? Public profiles later?
-2. Readlists shared with a club: view-only or collaborative (members can add books)?
-3. "Recommend to a friend": there is no friends graph yet. Recommend to any username/email, or only to people in shared clubs?
-4. Custom manual ordering in v1, or sort options only? Custom cover upload or auto-mosaic only?
-5. Should the three statuses appear as system lists next to readlists (as drawn in C1) or only in the profile?
-6. Add-to-readlist sheet: save on Done only, or also on dismiss?
+**For product owners**
 
-### D · Books
+1. `C-PO1` Visibility options Only me / Shared with clubs / Anyone with the link: right set? Public profiles later?
+2. `C-PO2` Readlists shared with a club: view-only, or can members add books too?
+3. `C-PO3` "Recommend to a friend" without a friends list: recommend to any username/email, or only to people in shared clubs?
+4. `C-PO4` Manual ordering of books in v1, or sort options only? Custom cover upload, or automatic cover mosaic only?
+5. `C-PO5` Show the three statuses as system lists next to readlists (as drawn in C1), or only on the profile?
 
-1. ~~Primary data source~~ — decided: Open Library primary, Google Books fallback (docs/decisions.md T3). Open: show Google's average rating where available?
-2. Track at "work" level or specific edition (page counts differ per edition)?
-3. Manual book entry when the API has no result: in v1?
-4. ISBN scanning: v1 or later?
-5. Goodreads link: search by ISBN is acceptable (there is no official API)?
-6. Re-reads: can a book be read more than once and count twice towards the pledge?
-7. Personal ratings: do we show our own users' average next to the API rating?
+**For possible end users**
+
+1. `C-U1` What kinds of readlists would you create? Think of two or three you would make in your first week.
+2. `C-U2` Would you share readlists with your bookclub, and should others be able to add books to them?
+3. `C-U3` How do you recommend books to friends today?
+
+### D · Books: search & detail
+
+**For product owners**
+
+1. `D-PO1` Track books at "work" level or per specific edition (page counts differ per edition)?
+2. `D-PO2` Manual book entry when the book database has no result: in v1?
+3. `D-PO3` ISBN barcode scanning: v1 or later?
+4. `D-PO4` Re-reads: can a book be read more than once and count again towards the pledge?
+5. `D-PO5` Show our own members' average rating next to the public rating, and should the public (Google Books) rating be shown at all?
+
+**For possible end users**
+
+1. `D-U1` Where do you look up a book today before deciding to read it?
+2. `D-U2` Would you scan a book's barcode to add it, or rather type the title?
+3. `D-U3` Do you re-read books? Should a re-read count again?
+4. `D-U4` Would you like to give ratings or short reviews that your bookclub can see?
 
 ### E · Challenges
 
-1. Must the book be finished after the challenge start date, or do books already read count?
-2. Can one finished book complete several challenges at the same time?
-3. Own picks: auto-accepted, or approved by the challenge creator? Can others adopt someone's own pick?
-4. Club challenges: are members auto-enrolled or do they join explicitly?
-5. After the end date: can you still complete late? Does "Past" include challenges you joined but did not complete?
-6. Minimum number of candidate books (0 = theme only)?
-7. Can the creator edit dates/candidates after the start? What happens to existing picks?
-8. Who creates Official challenges, and is an admin tool in scope for v1?
-9. Member progress visibility on Official challenges: count only (as drawn) or nothing?
-10. Should the completion celebration be shareable outside the app (image/link)?
+**For product owners**
+
+1. `E-PO1` Must the book be finished after the challenge start date, or do books already read count?
+2. `E-PO2` Can one finished book complete several challenges at the same time?
+3. `E-PO3` Own picks: accepted automatically, or approved by the challenge creator? Can others adopt someone's own pick?
+4. `E-PO4` Club challenges: are members enrolled automatically, or do they join themselves?
+5. `E-PO5` After the end date: can you still complete it late? Does "Past" include challenges you joined but did not complete?
+6. `E-PO6` Minimum number of candidate books (0 = theme only)?
+7. `E-PO7` Can the creator change dates or candidate books after the start? What happens to picks already made?
+8. `E-PO8` Official challenges: is an admin screen in scope for v1, or are they added directly in the database at first?
+9. `E-PO9` Member progress on Official challenges: show a count only (as drawn) or nothing?
+
+**For possible end users**
+
+1. `E-U1` How often would you like a new challenge: monthly, per season, or whenever someone creates one?
+2. `E-U2` Would you rather pick from the suggested books, or choose your own book that fits the theme?
+3. `E-U3` What should happen when you do not finish a challenge before its end date?
+4. `E-U4` Would you want to share a completed challenge outside the app (for example on social media)?
 
 ### F · Bookclubs
 
-1. Flat hierarchy: can every member invite, remove members, edit the club and create challenges? Who can delete the club, and what if the creator leaves?
-2. Maximum club size?
-3. Activity feed: which events, and do we need reactions/comments in v1?
-4. Visibility of a member's private data in a club: do club members see all of my statuses, or only club-related activity?
-5. Reminder emails for unanswered invites? Can a pending email invite be converted when that person signs up with another address?
+**For product owners**
+
+1. `F-PO1` Flat hierarchy: can every member invite and remove members, edit the club and create challenges? Who can delete the club, and what happens when the creator leaves?
+2. `F-PO2` Maximum club size?
+3. `F-PO3` Activity feed: which events, and do we need reactions or comments in v1?
+4. `F-PO4` Do club members see all of a member's reading statuses, or only club-related activity?
+5. `F-PO5` Reminder emails for unanswered invites?
+
+**For possible end users**
+
+1. `F-U1` How many people are in your bookclub(s), and how do you keep in touch today?
+2. `F-U2` Is it OK that everyone in your club can see your reading progress? Is there anything you would want to keep private?
+3. `F-U3` How would you like to hear about club activity: email, phone notification, or only when you open the app?
 
 ### G · Profile, settings & about
 
-1. What can other club members see on my profile (card front only as drawn)?
-2. Changing username and email: allowed, and with which verification?
-3. Delete account: immediate or grace period (e.g. 14 days)? What happens to my picks, activity and shared readlists in clubs (remove or anonymise)?
-4. Sign out everywhere: require a fresh email code or password?
-5. Changelog: hide everything except `feat`/`fix` (current setup)? Show a one-time "What's new" sheet after updates?
-6. Profile photo upload in v1, or initials avatar only?
+**For product owners**
 
-### X · Desktop
+1. `G-PO1` What can other club members see on someone's profile (the card front only, as drawn)?
+2. `G-PO2` Changing username and email: allowed, and with which verification?
+3. `G-PO3` Delete account: immediate or after a grace period (e.g. 14 days)? What happens to picks, activity and shared readlists in clubs (remove or anonymise)?
+4. `G-PO4` "Sign out everywhere": ask for the password or an email code first?
+5. `G-PO5` Changelog: show only new features and fixes (current setup)? Show a one-time "What's new" message after an update?
+6. `G-PO6` Profile photo upload in v1, or initials only?
 
-1. Are the proposed breakpoints OK, and is a tablet layout (collapsed sidebar) needed for v1?
-2. Keyboard shortcuts (e.g. `L` for Quick log, `/` for search): in scope?
+**For possible end users**
+
+1. `G-U1` What would you like other people to see on your profile?
+2. `G-U2` Would you upload a profile photo?
+3. `G-U3` Would you read a "What's new" overview after the app updates?
+
+### I · Other interaction ideas
+
+**For product owners**
+
+1. `I-PO1` Which of these interaction ideas (swipe, long-press, pick-my-next-read deck, spin the wheel) are worth building in v1?
+
+**For possible end users**
+
+1. `I-U1` Would you use swipe and long-press gestures, or do you prefer visible buttons?
+2. `I-U2` Would a "pick my next read" or "spin the wheel" feature help you decide what to read next?
+
+### X · Desktop layout
+
+**For product owners**
+
+1. `X-PO1` Are the proposed screen-size breakpoints OK, and is a tablet layout (collapsed sidebar) needed for v1?
+2. `X-PO2` Keyboard shortcuts (e.g. L for Quick log, / for search): in scope?
+
+**For possible end users**
+
+1. `X-U1` Would you use the app on a phone, a computer, or both?
+2. `X-U2` On a computer, what would you mainly use it for?
