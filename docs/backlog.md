@@ -13,7 +13,7 @@ We build in small, testable increments. The plan below is based on the wireframe
   form for anything else.
 - **One environment:** testers use production (Vercel + one Supabase project). Every change gets a Vercel
   preview link for the Product Owner before it is merged.
-- **Wireframes first:** a screen is built only after its v2 wireframe is approved (Sprint 1).
+- **Wireframes first:** screens are built from the approved v2 wireframes (`docs/wireframes/v2`).
 - **Look and feel:** a clean default theme until the polish sprint; content (library card, covers) carries
   the personality.
 
@@ -26,7 +26,10 @@ We build in small, testable increments. The plan below is based on the wireframe
 - i18n setup (next-intl, `messages/en.json`, Loco-compatible)
 - CI: lint, format, typecheck, test, build, commit/PR-title lint
 
-## Sprint 1 — Wireframes v2 and production setup
+## Sprint 1 — Wireframes v2 and production setup ✅
+
+> Closed on 2026-10-11. Wireframes v2 were approved by the Product Owner without a second review
+> round (decision D7); production is set up, with database deployments via GitHub Actions (T15).
 
 Goal: everyone agrees on what we build, and there is a place to release it.
 
@@ -41,7 +44,7 @@ Goal: everyone agrees on what we build, and there is a place to release it.
     "Stamps" (`G1`)
   - Admin screen (feedback list, official challenges) and in-app feedback form
   - Small "What's new" banner; settings without notifications and without "sign out everywhere"
-- Review round with the Product Owner, Jean and Lilly (same feedback page and email flow as v1)
+- ~~Review round with the Product Owner, Jean and Lilly~~ — skipped (decision D7)
 - Production setup: Supabase project, Vercel project, environment variables, `main` as default branch
   with branch protection, custom SMTP for the auth emails (Supabase's built-in sender is heavily
   rate-limited)
