@@ -271,6 +271,54 @@
     "removed": "Removed from your books",
     "markedRead": "Marked as read",
     "myStatus": "My status",
-    "quickAdd": "+ Want to read"
+    "quickAdd": "+ Want to read",
+    "setStatus": "Set status",
+    "changeStatusOf": "change the status of {title}"
+  },
+  "bookStatus": {
+    "statusLegend": "Status",
+    "readHint": "Asks for the finish date",
+    "progressLabel": "Progress (optional)",
+    "progressHint": "Only if you like to keep track",
+    "progressNotSet": "Not set",
+    "progressValue": "{progress}%",
+    "clearProgress": "Clear",
+    "clearProgressLabel": "Clear progress",
+    "remove": "Remove from my books",
+    "save": "Save",
+    "continue": "Continue",
+    "progressSummary": "Progress (optional): {progress}%",
+    "progressSummaryNotSet": "Progress (optional): not set",
+    "editProgress": "Edit",
+    "editProgressLabel": "Edit progress",
+    "progressSaved": "Progress saved",
+    "markedReadAgain": "Marked as read again",
+    "undone": "Change undone",
+    "swipeActions": "Change the status of {title}",
+    "swipeHint": "Tip: swipe a book to change its status",
+    "dismissHint": "Dismiss tip",
+    "shelf": {
+      "count": "{count, plural, =0 {No books} one {# book} other {# books}}",
+      "title": {
+        "want_to_read": "Want to read",
+        "reading": "Reading",
+        "read": "Read"
+      },
+      "empty": {
+        "want_to_read": {
+          "title": "Nothing on your wish list yet",
+          "text": "Find a book you would like to read and set it to Want to read."
+        },
+        "reading": {
+          "title": "Nothing on your nightstand yet",
+          "text": "Find a book and mark it as Reading."
+        },
+        "read": {
+          "title": "No finished books yet",
+          "text": "When you finish a book, mark it as read and it shows up here."
+        }
+      },
+      "findBook": "Find a book"
+    }
   }
 }
