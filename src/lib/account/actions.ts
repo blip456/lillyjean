@@ -1,6 +1,7 @@
 "use server";
 
 import type { PostgrestError } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -24,11 +25,21 @@ function field(formData: FormData, name: string) {
   return typeof value === "string" ? value : "";
 }
 
+/** Validates the session from the JWT claims (no extra round trip to Supabase Auth). */
 async function requireUser() {
   const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
-  if (!data.user) redirect("/welcome");
-  return { supabase, user: data.user };
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+  if (!claims?.sub) redirect("/welcome");
+  return { supabase, user: { id: claims.sub, email: claims.email } };
+}
+
+/**
+ * Pages stay in the client cache for a short while (staleTimes in next.config.ts);
+ * drop them after a change so no screen shows the old value.
+ */
+function refreshPages() {
+  revalidatePath("/", "layout");
 }
 
 /** Database rule violations raised by the profiles trigger and constraints. */
@@ -56,6 +67,7 @@ export async function saveUsername(
     .eq("id", user.id);
   if (error) return { fieldErrors: { username: usernameErrorKey(error) } };
 
+  refreshPages();
   redirect(
     context === "onboarding"
       ? "/onboarding/pledge"
@@ -91,6 +103,7 @@ export async function savePledge(
     if (error) return { error: "unknown" };
   }
 
+  refreshPages();
   redirect(context === "onboarding" ? "/" : "/settings?changed=pledge");
 }
 
@@ -161,6 +174,7 @@ export async function sendFeedback(
     .insert({ message: message.data, app_version: APP_VERSION });
   if (error) return { error: "unknown" };
 
+  refreshPages();
   redirect("/settings?changed=feedback");
 }
 

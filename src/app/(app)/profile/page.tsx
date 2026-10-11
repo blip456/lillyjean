@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { LibraryCard } from "@/components/library-card";
 import { PageHeader } from "@/components/page-header";
 import { Card } from "@/components/ui/card";
+import { Link } from "@/components/ui/link";
 import { requireOnboardedAccount } from "@/lib/account/guards";
 
 export default async function ProfilePage() {

@@ -1,5 +1,6 @@
-import Link from "next/link";
 import type { ComponentProps } from "react";
+
+import { Link } from "./link";
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 

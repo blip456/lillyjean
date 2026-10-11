@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+
+import { Link } from "@/components/ui/link";
 
 type PageHeaderProps = {
   title: ReactNode;

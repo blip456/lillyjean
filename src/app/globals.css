@@ -58,3 +58,32 @@ body {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
+
+/* Link progress bar (src/components/ui/link-pending-bar.tsx): hidden for fast navigations. */
+.link-pending-bar {
+  animation: link-pending 2s cubic-bezier(0.1, 0.7, 0.3, 1) 150ms both;
+}
+
+@keyframes link-pending {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-pending-bar {
+    animation: link-pending-fade 0s linear 150ms both;
+  }
+
+  @keyframes link-pending-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

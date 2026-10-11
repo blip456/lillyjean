@@ -16,7 +16,24 @@ const eslintConfig = defineConfig([
       ],
       "@typescript-eslint/consistent-type-imports": "error",
       "no-console": ["warn", { allow: ["warn", "error"] }],
+      // Links prefetch the full page and show a progress bar via our wrapper (T17).
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "next/link",
+              importNames: ["default"],
+              message: "Use { Link } from @/components/ui/link (T17).",
+            },
+          ],
+        },
+      ],
     },
+  },
+  {
+    files: ["src/components/ui/link.tsx"],
+    rules: { "no-restricted-imports": "off" },
   },
   {
     // Standalone Node scripts (report to the console).

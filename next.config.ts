@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
     // What's coming reads the sprint plan at runtime.
     "/whats-coming": ["./docs/backlog.md"],
   },
+  experimental: {
+    // Visited and prefetched pages stay in the client cache for 30 s, so links
+    // (src/components/ui/link.tsx prefetches them) open without waiting for the server.
+    // Account actions call revalidatePath() after a change, which clears this cache (T17).
+    staleTimes: { dynamic: 30, static: 30 },
+  },
   turbopack: {
     rules: {
       "*.css": {
