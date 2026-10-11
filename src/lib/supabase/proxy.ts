@@ -6,14 +6,12 @@ import { getSupabaseEnv, hasSupabaseEnv } from "./env";
 /**
  * Refreshes the Supabase auth session on every request and keeps the auth
  * cookies in sync between the browser and Server Components.
- *
- * Route protection (redirecting signed-out users to the welcome screen) is
- * added together with the auth screens.
+ * Returns the response to continue with and the signed-in user id (if any).
  */
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
-  if (!hasSupabaseEnv()) return response;
+  if (!hasSupabaseEnv()) return { response, userId: null };
 
   const { url, publishableKey } = getSupabaseEnv();
   const supabase = createServerClient(url, publishableKey, {
@@ -35,7 +33,8 @@ export async function updateSession(request: NextRequest) {
 
   // Do not run code between createServerClient and getClaims():
   // getClaims() validates the JWT and triggers the token refresh.
-  await supabase.auth.getClaims();
+  const { data } = await supabase.auth.getClaims();
+  const userId = typeof data?.claims?.sub === "string" ? data.claims.sub : null;
 
-  return response;
+  return { response, userId };
 }

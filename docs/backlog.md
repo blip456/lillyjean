@@ -52,6 +52,10 @@ Goal: everyone agrees on what we build, and there is a place to release it.
 
 ## Sprint 2 — Accounts (internal release, Product Owner tests)
 
+> Built on branch `sprint2` (2026-10-11): database migration with 25 database tests, all screens below,
+> and an end-to-end browser test of every flow against a local Supabase. Waiting for the Product Owner's
+> test on production. Onboarding has two steps for now; "Currently reading" joins in Sprint 3.
+
 Goal: you can create an account, get your library card and send feedback.
 
 - Splash (animation on the very first open only) → session check → Welcome or Home

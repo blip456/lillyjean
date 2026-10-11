@@ -4,6 +4,8 @@ pre-commit:
   jobs:
     - name: eslint
       glob: "*.{js,mjs,cjs,ts,tsx}"
+      exclude:
+        - "src/lib/supabase/database.types.ts"
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
     - name: prettier

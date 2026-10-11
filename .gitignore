@@ -46,3 +46,6 @@ yarn-error.log*
 supabase/.temp
 supabase/.branches
 next-env.d.ts
+
+# e2e screenshots
+e2e/screenshots/

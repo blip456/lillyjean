@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <body
+    style="
+      margin: 0;
+      padding: 24px;
+      background: #fbf9f4;
+      font-family: -apple-system, &quot;Segoe UI&quot;, sans-serif;
+      color: #1f1d1a;
+    "
+  >
+    <div
+      style="
+        max-width: 480px;
+        margin: 0 auto;
+        background: #ffffff;
+        border: 1px solid #e3ded3;
+        border-radius: 16px;
+        padding: 28px;
+      "
+    >
+      <p
+        style="
+          margin: 0 0 4px;
+          font-family: Georgia, serif;
+          font-size: 18px;
+          font-weight: bold;
+        "
+      >
+        Lillyjean
+      </p>
+      <h1
+        style="margin: 16px 0 8px; font-family: Georgia, serif; font-size: 24px"
+      >
+        Confirm your new email
+      </h1>
+      <p style="margin: 0 0 20px; line-height: 1.5">
+        Enter this code in Lillyjean to start using this address for your
+        account.
+      </p>
+      <p
+        style="
+          margin: 0 0 20px;
+          font-family: ui-monospace, Menlo, monospace;
+          font-size: 34px;
+          font-weight: bold;
+          letter-spacing: 8px;
+        "
+      >
+        {{ .Token }}
+      </p>
+      <p style="margin: 0; color: #6b665d; font-size: 14px; line-height: 1.5">
+        The code is valid for 15 minutes. Didn't ask for this? You can ignore
+        this email; nothing changes.
+      </p>
+    </div>
+  </body>
+</html>

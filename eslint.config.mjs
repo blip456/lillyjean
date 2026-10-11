@@ -18,6 +18,14 @@ const eslintConfig = defineConfig([
       "no-console": ["warn", { allow: ["warn", "error"] }],
     },
   },
+  {
+    // Standalone Node scripts (CommonJS, report to the console).
+    files: ["e2e/**/*.cjs"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "no-console": "off",
+    },
+  },
   globalIgnores([
     ".next/**",
     "out/**",
