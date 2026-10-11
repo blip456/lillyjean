@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/blip456/lillyjean/compare/v0.2.1...v0.2.2) (2026-10-11)
+
+
+### Bug Fixes
+
+* **ui:** add a What's coming page to settings ([#11](https://github.com/blip456/lillyjean/issues/11)) ([a24abcf](https://github.com/blip456/lillyjean/commit/a24abcf8da3d29255b135ad5c53307d77bab14d5))
+
 ## [0.2.1](https://github.com/blip456/lillyjean/compare/v0.2.0...v0.2.1) (2026-10-11)
 
 

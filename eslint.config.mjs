@@ -36,8 +36,8 @@ const eslintConfig = defineConfig([
     rules: { "no-restricted-imports": "off" },
   },
   {
-    // Standalone Node scripts (CommonJS, report to the console).
-    files: ["e2e/**/*.cjs"],
+    // Standalone Node scripts (report to the console).
+    files: ["e2e/**/*.cjs", "scripts/**/*.mjs", ".claude/hooks/**/*.mjs"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
       "no-console": "off",

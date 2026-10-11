@@ -23,6 +23,12 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
     token stored as a repository secret, then remove the bypass.
   - In practice GitHub asks for approval before CI runs on a release PR: open the PR and click
     **Approve and run** (or "Approve workflows to run"), wait for green, then merge.
+- [ ] **Enforce branch names:** Settings → Rules → Rulesets → New ruleset → **Import a ruleset** →
+      `.github/rulesets/conventional-branches.json`. GitHub then refuses to create a branch that does not
+      start with `feature/`, `feat/`, `bugfix/`, `fix/`, `hotfix/`, `release/` or `chore/` (decision D9).
+      `main` and release-please's branch are excluded. Nobody can bypass it. Existing branches are not
+      affected. In the `Protect main` ruleset, add the `Branch name` status check (the JSON file already
+      has it for future imports).
 - [ ] Merge the open work from `claude/elegant-hawking-25bf1r` into `main` via a pull request.
 
 ## 2. Supabase project

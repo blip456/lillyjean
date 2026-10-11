@@ -1,0 +1,27 @@
+{
+  "name": "Conventional branch names",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "include": ["~ALL"],
+      "exclude": [
+        "refs/heads/main",
+        "refs/heads/feature/**/*",
+        "refs/heads/feat/**/*",
+        "refs/heads/bugfix/**/*",
+        "refs/heads/fix/**/*",
+        "refs/heads/hotfix/**/*",
+        "refs/heads/release/**/*",
+        "refs/heads/chore/**/*",
+        "refs/heads/release-please--*"
+      ]
+    }
+  },
+  "bypass_actors": [],
+  "rules": [
+    {
+      "type": "creation"
+    }
+  ]
+}
