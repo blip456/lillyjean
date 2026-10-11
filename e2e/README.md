@@ -21,3 +21,18 @@ Options (environment variables): `BASE_URL`, `SHOTS` (screenshot folder, default
 
 The run takes about two minutes: Supabase sends at most one email per address per minute, so the
 password reset waits for that.
+
+## Shared helpers and book data (Sprint 3)
+
+`helpers.cjs` creates a ready-to-use account (confirmed, username set, optional pledge) through the local
+Auth admin API, logs in through the app, and reports PASS/FAIL lines:
+
+```js
+const { createReader, logIn, reporter, visible } = require("./helpers.cjs");
+const reader = await createReader("shelf", { pledge: 12 });
+await logIn(page, reader);
+```
+
+Book checks need offline book data, because the checks must not depend on Open Library or Google Books:
+add `BOOKS_API=fixtures` to `.env.local` before `pnpm build && pnpm start`. The books are listed in
+`src/lib/books/providers/fixtures.ts` (for example, searching "austen" finds three books).
