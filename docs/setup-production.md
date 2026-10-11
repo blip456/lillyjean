@@ -12,13 +12,15 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
       changelog line.
 - [ ] **Allow release-please to open release PRs:** Settings → Actions → General → Workflow permissions →
       "Read and write permissions" and tick "Allow GitHub Actions to create and approve pull requests".
-- [ ] **Protect `main`:** Settings → Rules → Rulesets → New branch ruleset for `main`:
-  - require a pull request before merging;
+- [ ] **Protect `main`:** Settings → Rules → Rulesets → New ruleset → **Import a ruleset** →
+      `.github/rulesets/protect-main.json`. It sets up:
+  - require a pull request before merging (squash only, no approvals needed for a solo developer);
   - require status checks: `Lint, typecheck, test, build` and `Conventional commits`;
-  - block force pushes.
-  - Note: release PRs opened by release-please use GitHub's built-in token, and GitHub does not start CI
-    for those. Either add yourself as a bypass actor for the ruleset (simplest), or let **(dev)** switch
-    release-please to a fine-grained personal access token stored as a repository secret.
+  - block force pushes and deleting `main`;
+  - repository admins (you) may bypass the rules **when merging a pull request**, never for direct pushes.
+    Needed because release PRs opened by release-please use GitHub's built-in token, and GitHub does not
+    start CI for those. Alternative: let **(dev)** switch release-please to a fine-grained personal access
+    token stored as a repository secret, then remove the bypass.
 - [ ] Merge the open work from `claude/elegant-hawking-25bf1r` into `main` via a pull request.
 
 ## 2. Supabase project
