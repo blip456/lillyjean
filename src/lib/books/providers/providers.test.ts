@@ -91,7 +91,7 @@ describe("Open Library", () => {
         authors: ["Jane Austen"],
         description: null,
         coverUrl: "https://covers.openlibrary.org/b/id/14348537-M.jpg",
-        isbn: "9780141439518",
+        isbn: null,
         publishedYear: 1813,
         googleRating: null,
         googleRatingsCount: null,
@@ -176,6 +176,28 @@ describe("searchExternalBooks", () => {
       .mockResolvedValueOnce(jsonResponse(googleResponse));
     vi.stubGlobal("fetch", fetch);
     expect(await searchExternalBooks("pride", "all")).toHaveLength(1);
+  });
+
+  it("retries Open Library once after a network error", async () => {
+    const fetch = vi
+      .fn()
+      .mockRejectedValueOnce(new TypeError("connection reset"))
+      .mockResolvedValueOnce(jsonResponse(openLibraryResponse));
+    vi.stubGlobal("fetch", fetch);
+    const books = await searchExternalBooks("pride", "all");
+    expect(books.map((b) => b.source)).toEqual(["openlibrary"]);
+    expect(String(fetch.mock.calls[1][0])).toContain("openlibrary.org");
+  });
+
+  it("keeps the ISBN only when the search was an ISBN", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => jsonResponse(openLibraryResponse)),
+    );
+    expect((await searchExternalBooks("pride", "all"))[0].isbn).toBeNull();
+    expect(
+      (await searchExternalBooks("978-0-14-143951-8", "all"))[0].isbn,
+    ).toBe("9780141439518");
   });
 
   it("sends the Google API key when configured", async () => {
