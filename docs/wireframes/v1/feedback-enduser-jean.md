@@ -4,7 +4,7 @@
 | -------------- | ------------------------------------------------------------- |
 | **Role**       | End user (reader, member of two bookclubs)                    |
 | **Reviewer**   | Jean                                                          |
-| **Wireframes** | v1 (`docs/wireframes/index.html`)                             |
+| **Wireframes** | v1 (`docs/wireframes/v1/index.html`)                          |
 | **Received**   | 2026-10-09, via the feedback email from the wireframes page   |
 | **Status**     | Recorded. To be consolidated with the Product Owner feedback. |
 

@@ -2,7 +2,7 @@
 
 Open `index.html` in any browser. It is a single self-contained file (no network needed).
 
-Version 2 is updated after the first review round (Product Owner, Jean, Lilly; see `../feedback-*.md`). It follows the decisions in [`docs/decisions.md`](../../decisions.md) (P7–P34, A1–A11, D1–D6) and the sprint plan in [`docs/backlog.md`](../../backlog.md).
+Version 2 is updated after the first review round (Product Owner, Jean, Lilly; see `../v1/feedback-*.md`). It follows the decisions in [`docs/decisions.md`](../../decisions.md) (P7–P34, A1–A11, D1–D6) and the sprint plan in [`docs/backlog.md`](../../backlog.md).
 
 - Every screen has a stable **ID**, a **sprint tag** (`S2`…`S9`) and, where relevant, a **"Changed in v2"** or **"New in v2"** badge with the decision ID.
 - Dashed sprint tags inside a screen mark parts that arrive in a later sprint (for example the readlists row on Home, S4).
