@@ -8,8 +8,10 @@ import { getSupabaseEnv } from "./env";
 
 /** Supabase client for Server Components, Server Actions and Route Handlers. */
 export async function createClient() {
-  const { url, publishableKey } = getSupabaseEnv();
+  // Read the request first: it marks the page as dynamic, so the build never tries to
+  // prerender a signed-in page (and never needs the Supabase env to do so).
   const cookieStore = await cookies();
+  const { url, publishableKey } = getSupabaseEnv();
 
   return createServerClient<Database>(url, publishableKey, {
     cookies: {
