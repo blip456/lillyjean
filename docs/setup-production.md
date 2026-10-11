@@ -51,8 +51,11 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
 
 ## 3. Vercel project
 
-- [ ] Import the GitHub repository at [vercel.com](https://vercel.com); framework preset Next.js;
-      production branch `main`.
+- [ ] Import the GitHub repository at [vercel.com](https://vercel.com) **once**, as a project named
+      `lillyjean`; framework preset Next.js; production branch `main`. Every Vercel project linked to the
+      repo builds every push and posts its own deployment status on pull requests, so a second import
+      (Vercel then names it e.g. `lillyjean-xxxx`) means duplicate builds; delete it under that project's
+      Settings → General → Delete Project.
 - [ ] Environment variables (Settings → Environment Variables), for Production and Preview:
   - `NEXT_PUBLIC_SUPABASE_URL` = project URL from step 2
   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` = publishable key from step 2

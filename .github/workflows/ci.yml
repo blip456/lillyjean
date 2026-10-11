@@ -2,6 +2,8 @@ name: CI
 
 on:
   pull_request:
+    # "edited" re-checks the PR title after it is renamed (it becomes the squash commit).
+    types: [opened, synchronize, reopened, edited]
   push:
     branches: [main]
 
