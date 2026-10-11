@@ -4,6 +4,7 @@
 
 - Read `docs/decisions.md` before changing architecture; add a new entry when a decision changes.
 - Feature screens are built only after their wireframe in `docs/wireframes` is approved.
+- UI work follows `DESIGN.md` (read it first); colours only via design tokens, never raw hex values.
 - Commits follow Conventional Commits with the scopes in `commitlint.config.mjs` (see CONTRIBUTING.md).
 - All UI copy goes through next-intl (`messages/en.json`). Inputs have visible labels; never put example
   values in placeholders.

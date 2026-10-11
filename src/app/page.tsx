@@ -8,8 +8,8 @@ export default function Home() {
 
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-4 p-8 text-center">
-      <h1 className="text-3xl font-semibold">{t("name")}</h1>
-      <p className="max-w-md opacity-80">{t("tagline")}</p>
+      <h1 className="text-title">{t("name")}</h1>
+      <p className="max-w-md text-muted-foreground">{t("tagline")}</p>
       <VersionBadge />
     </main>
   );

@@ -1,0 +1,456 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Lillyjean primitives: the raw palette. Components never use these directly; semantic tokens in light.tokens.json and dark.tokens.json alias them. `hex` is the value you edit; `pnpm tokens:build` rewrites `components` from it.",
+  "color": {
+    "$type": "color",
+    "white": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "hex": "#ffffff"
+      }
+    },
+    "black": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0],
+        "hex": "#000000"
+      }
+    },
+    "transparent": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0],
+        "alpha": 0,
+        "hex": "#000000"
+      },
+      "$description": "Fully transparent; the fade-out stop of gradients."
+    },
+    "teal": {
+      "100": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.8314, 0.9373, 0.9294],
+          "hex": "#d4efed"
+        }
+      },
+      "200": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.6588, 0.8627, 0.851],
+          "hex": "#a8dcd9"
+        }
+      },
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.5608, 0.8275, 0.8118],
+          "hex": "#8fd3cf"
+        }
+      },
+      "400": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.4353, 0.8157, 0.7961],
+          "hex": "#6fd0cb"
+        },
+        "$description": "Teal text and links on dark backgrounds."
+      },
+      "500": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.3608, 0.7412, 0.7255],
+          "hex": "#5cbdb9"
+        },
+        "$description": "Blue Greeny, the user palette accent. Fill only: white text on it is 2.2:1."
+      },
+      "600": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.1843, 0.5608, 0.5451],
+          "hex": "#2f8f8b"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.098, 0.4392, 0.4235],
+          "hex": "#19706c"
+        },
+        "$description": "Teal text and links on light backgrounds (5.5:1 on the page background)."
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.0784, 0.3608, 0.349],
+          "hex": "#145c59"
+        }
+      },
+      "900": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.0431, 0.2078, 0.2],
+          "hex": "#0b3533"
+        },
+        "$description": "Ink on teal fills (6.0:1 on teal 500)."
+      },
+      "950": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.0157, 0.1255, 0.1216],
+          "hex": "#04201f"
+        },
+        "$description": "Ink on teal fills in dark mode."
+      },
+      "$description": "Blue Greeny ramp. 500 is the brand accent fill; 700 is the AA-safe text/link teal; 900 is the ink that sits on teal fills."
+    },
+    "mint": {
+      "50": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9647, 0.9843, 0.9804],
+          "hex": "#f6fbfa"
+        }
+      },
+      "100": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9216, 0.9647, 0.9608],
+          "hex": "#ebf6f5"
+        },
+        "$description": "Teeny Greeny, from the user palette."
+      },
+      "200": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.8627, 0.9373, 0.9294],
+          "hex": "#dcefed"
+        }
+      },
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.749, 0.902, 0.8902],
+          "hex": "#bfe6e3"
+        }
+      },
+      "$description": "Teeny Greeny ramp: quiet surfaces and the cool end of the page gradient."
+    },
+    "pink": {
+      "50": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9922, 0.9529, 0.9608],
+          "hex": "#fdf3f5"
+        }
+      },
+      "100": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9843, 0.8902, 0.9098],
+          "hex": "#fbe3e8"
+        },
+        "$description": "Pinky, from the user palette."
+      },
+      "200": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9725, 0.7961, 0.8353],
+          "hex": "#f8cbd5"
+        }
+      },
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9569, 0.7137, 0.7686],
+          "hex": "#f4b6c4"
+        },
+        "$description": "Pink highlight on dark backgrounds."
+      },
+      "400": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9412, 0.6078, 0.6902],
+          "hex": "#f09bb0"
+        }
+      },
+      "$description": "Pinky ramp: washes, highlights and the warm end of the page gradient."
+    },
+    "rose": {
+      "600": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.7059, 0.251, 0.3686],
+          "hex": "#b4405e"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.549, 0.1843, 0.2824],
+          "hex": "#8c2f48"
+        },
+        "$description": "Rose text on Pinky (6.6:1)."
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.4196, 0.1333, 0.2118],
+          "hex": "#6b2236"
+        }
+      },
+      "900": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.2902, 0.0784, 0.1412],
+          "hex": "#4a1424"
+        }
+      },
+      "950": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.1647, 0.0902, 0.1176],
+          "hex": "#2a171e"
+        },
+        "$description": "Pink glow in the dark page gradient."
+      },
+      "$description": "Rose ramp: text and icons that sit on pink (Read status, challenge indicator)."
+    },
+    "neutral": {
+      "0": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 1, 1],
+          "hex": "#ffffff"
+        }
+      },
+      "50": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9529, 0.9725, 0.9686],
+          "hex": "#f3f8f7"
+        },
+        "$description": "Grouped background."
+      },
+      "100": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.902, 0.9294, 0.9255],
+          "hex": "#e6edec"
+        }
+      },
+      "200": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.8275, 0.8549, 0.851],
+          "hex": "#d3dad9"
+        }
+      },
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.6627, 0.7098, 0.702],
+          "hex": "#a9b5b3"
+        }
+      },
+      "500": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.4902, 0.5373, 0.5294],
+          "hex": "#7d8987"
+        }
+      },
+      "600": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.3373, 0.3804, 0.3725],
+          "hex": "#56615f"
+        },
+        "$description": "Secondary label."
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.2118, 0.2588, 0.2471],
+          "hex": "#36423f"
+        }
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.1059, 0.1529, 0.149],
+          "hex": "#1b2726"
+        }
+      },
+      "900": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.0471, 0.0902, 0.0863],
+          "hex": "#0c1716"
+        },
+        "$description": "Label (primary text)."
+      },
+      "$description": "Teal-tinted neutrals from iOS Glass (light mode)."
+    },
+    "charcoal": {
+      "100": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9569, 0.9569, 0.9608],
+          "hex": "#f4f4f5"
+        },
+        "$description": "Text on charcoal."
+      },
+      "200": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.8431, 0.851, 0.8588],
+          "hex": "#d7d9db"
+        }
+      },
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.6078, 0.6314, 0.6549],
+          "hex": "#9ba1a7"
+        },
+        "$description": "Secondary text on charcoal."
+      },
+      "400": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.4196, 0.4431, 0.4667],
+          "hex": "#6b7177"
+        }
+      },
+      "500": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.3333, 0.3569, 0.3804],
+          "hex": "#555b61"
+        }
+      },
+      "600": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.2471, 0.2667, 0.2824],
+          "hex": "#3f4448"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.2039, 0.2196, 0.2353],
+          "hex": "#34383c"
+        }
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.1569, 0.1686, 0.1804],
+          "hex": "#282b2e"
+        },
+        "$description": "Raised surface."
+      },
+      "850": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.1137, 0.1216, 0.1294],
+          "hex": "#1d1f21"
+        },
+        "$description": "Surface (cards, sheets)."
+      },
+      "900": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.0706, 0.0745, 0.0784],
+          "hex": "#121314"
+        },
+        "$description": "Background."
+      },
+      "950": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.0392, 0.0431, 0.0471],
+          "hex": "#0a0b0c"
+        },
+        "$description": "Tab bar."
+      },
+      "$description": "Charcoal neutrals from Media dark (dark mode)."
+    },
+    "red": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.5412, 0.4784],
+          "hex": "#ff8a7a"
+        },
+        "$description": "Destructive on dark backgrounds."
+      },
+      "600": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.7529, 0.2235, 0.1686],
+          "hex": "#c0392b"
+        },
+        "$description": "Destructive on light backgrounds (5.4:1 on white)."
+      },
+      "950": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.1647, 0.0392, 0.0235],
+          "hex": "#2a0a06"
+        },
+        "$description": "Ink on the dark-mode destructive fill."
+      },
+      "$description": "Destructive actions and errors."
+    },
+    "amber": {
+      "400": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.7686, 0.3412],
+          "hex": "#ffc457"
+        }
+      },
+      "500": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.9608, 0.651, 0.1373],
+          "hex": "#f5a623"
+        }
+      },
+      "$description": "Star ratings."
+    },
+    "butter": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.949, 0.8039, 0.5216],
+          "hex": "#f2cd85"
+        }
+      },
+      "$description": "Avatar and chart accent."
+    },
+    "sky": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.6588, 0.8314, 0.9333],
+          "hex": "#a8d4ee"
+        }
+      },
+      "$description": "Avatar and chart accent."
+    },
+    "leaf": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.749, 0.8784, 0.651],
+          "hex": "#bfe0a6"
+        }
+      },
+      "$description": "Avatar and chart accent."
+    }
+  }
+}

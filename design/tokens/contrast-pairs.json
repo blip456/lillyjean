@@ -1,0 +1,93 @@
+{
+  "$description": "Text/background pairs that must meet WCAG 2.2 AA in every theme: 4.5 for text, 3 for large text (24 px, or 19 px bold) and UI boundaries/icons. Checked by scripts/tokens/tokens.test.ts and reported by pnpm tokens:build. Translucent backgrounds are composited over `over` (default: background). Add a pair whenever you add a foreground token.",
+  "pairs": [
+    { "fg": "foreground", "bg": "background", "min": 4.5 },
+    {
+      "fg": "foreground",
+      "bg": "gradient-from",
+      "min": 4.5,
+      "note": "text on the warm end of the page gradient"
+    },
+    {
+      "fg": "foreground",
+      "bg": "gradient-via",
+      "min": 4.5,
+      "note": "text on the teal glow"
+    },
+    {
+      "fg": "foreground",
+      "bg": "gradient-to",
+      "min": 4.5,
+      "note": "text on the cool end of the page gradient"
+    },
+    { "fg": "card-foreground", "bg": "card", "min": 4.5 },
+    { "fg": "popover-foreground", "bg": "popover", "min": 4.5 },
+    { "fg": "primary-foreground", "bg": "primary", "min": 4.5 },
+    { "fg": "secondary-foreground", "bg": "secondary", "min": 4.5 },
+    { "fg": "accent-foreground", "bg": "accent", "min": 4.5 },
+    { "fg": "muted-foreground", "bg": "background", "min": 4.5 },
+    { "fg": "muted-foreground", "bg": "card", "min": 4.5 },
+    { "fg": "muted-foreground", "bg": "muted", "min": 4.5 },
+    { "fg": "muted-foreground", "bg": "secondary", "min": 4.5 },
+    { "fg": "muted-foreground", "bg": "gradient-from", "min": 4.5 },
+    { "fg": "muted-foreground", "bg": "gradient-via", "min": 4.5 },
+    { "fg": "muted-foreground", "bg": "gradient-to", "min": 4.5 },
+    { "fg": "link", "bg": "background", "min": 4.5 },
+    { "fg": "link", "bg": "card", "min": 4.5 },
+    { "fg": "link", "bg": "gradient-from", "min": 4.5 },
+    { "fg": "link", "bg": "gradient-via", "min": 4.5 },
+    { "fg": "link", "bg": "gradient-to", "min": 4.5 },
+    { "fg": "destructive", "bg": "background", "min": 4.5 },
+    { "fg": "destructive", "bg": "card", "min": 4.5 },
+    { "fg": "destructive-foreground", "bg": "destructive", "min": 4.5 },
+    {
+      "fg": "highlight-foreground",
+      "bg": "highlight",
+      "min": 4.5,
+      "over": "card"
+    },
+    {
+      "fg": "status-want-foreground",
+      "bg": "status-want",
+      "min": 4.5,
+      "over": "card"
+    },
+    {
+      "fg": "status-reading-foreground",
+      "bg": "status-reading",
+      "min": 4.5,
+      "over": "card"
+    },
+    {
+      "fg": "status-read-foreground",
+      "bg": "status-read",
+      "min": 4.5,
+      "over": "card"
+    },
+    { "fg": "challenge", "bg": "background", "min": 4.5 },
+    { "fg": "challenge", "bg": "card", "min": 4.5 },
+    { "fg": "challenge-badge-foreground", "bg": "challenge-badge", "min": 4.5 },
+    { "fg": "tab-bar-foreground", "bg": "tab-bar", "min": 4.5 },
+    { "fg": "tab-bar-active", "bg": "tab-bar", "min": 4.5 },
+    { "fg": "plus-key-foreground", "bg": "plus-key", "min": 4.5 },
+    {
+      "fg": "foreground",
+      "bg": "surface-glass",
+      "min": 4.5,
+      "note": "glass over the plain page"
+    },
+    { "fg": "avatar-foreground", "bg": "avatar-1", "min": 4.5 },
+    { "fg": "avatar-foreground", "bg": "avatar-2", "min": 4.5 },
+    { "fg": "avatar-foreground", "bg": "avatar-3", "min": 4.5 },
+    { "fg": "avatar-foreground", "bg": "avatar-4", "min": 4.5 },
+    { "fg": "avatar-foreground", "bg": "avatar-5", "min": 4.5 },
+    { "fg": "sidebar-foreground", "bg": "sidebar", "min": 4.5 },
+    { "fg": "sidebar-primary-foreground", "bg": "sidebar-primary", "min": 4.5 },
+    { "fg": "sidebar-accent-foreground", "bg": "sidebar-accent", "min": 4.5 },
+    { "fg": "ring", "bg": "background", "min": 3, "note": "focus ring" },
+    { "fg": "ring", "bg": "card", "min": 3, "note": "focus ring" },
+    { "fg": "input", "bg": "background", "min": 3, "note": "input boundary" },
+    { "fg": "input", "bg": "card", "min": 3, "note": "input boundary" },
+    { "fg": "progress", "bg": "card", "min": 3, "note": "progress fill" }
+  ]
+}

@@ -1,0 +1,450 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Lillyjean semantic tokens, dark theme ([data-theme=\"dark\"] on <html>; not applied automatically yet). Same names as light.tokens.json.",
+  "color": {
+    "$type": "color",
+    "background": {
+      "$value": "{color.charcoal.900}",
+      "$description": "Page background under the gradient; also the base colour of the gradient and the fade target of cover backdrops."
+    },
+    "foreground": {
+      "$value": "{color.charcoal.100}",
+      "$description": "Default text and icons on the page, cards and sheets."
+    },
+    "card": {
+      "$value": "{color.charcoal.850}",
+      "$description": "Cards, dense-row groups, challenge cards, stat tiles (Media dark \"surface\")."
+    },
+    "card-foreground": {
+      "$value": "{color.charcoal.100}",
+      "$description": "Text on card."
+    },
+    "popover": {
+      "$value": "{color.charcoal.850}",
+      "$description": "Menus, long-press context menus, toasts."
+    },
+    "popover-foreground": {
+      "$value": "{color.charcoal.100}",
+      "$description": "Text on popover."
+    },
+    "primary": {
+      "$value": "{color.teal.500}",
+      "$description": "THE accent. Primary buttons, the + key, active segment, selected status, toggles, focus fills. Change this to change the accent."
+    },
+    "primary-foreground": {
+      "$value": "{color.teal.950}",
+      "$description": "Text and icons on primary fills (deep ink, never white)."
+    },
+    "secondary": {
+      "$value": "{color.charcoal.800}",
+      "$description": "Secondary buttons, filled inputs, chips (Media dark \"raised surface\")."
+    },
+    "secondary-foreground": {
+      "$value": "{color.charcoal.100}",
+      "$description": "Text on secondary."
+    },
+    "muted": {
+      "$value": "{color.charcoal.800}",
+      "$description": "Quiet fills: skeletons, empty states, disabled controls."
+    },
+    "muted-foreground": {
+      "$value": "{color.charcoal.300}",
+      "$description": "Secondary text: subtitles, meta, captions, inactive labels."
+    },
+    "accent": {
+      "$value": "{color.charcoal.800}",
+      "$description": "Hover/pressed background of ghost buttons, menu items and rows (shadcn \"accent\")."
+    },
+    "accent-foreground": {
+      "$value": "{color.charcoal.100}",
+      "$description": "Text on accent."
+    },
+    "destructive": {
+      "$value": "{color.red.300}",
+      "$description": "Destructive actions and error text (delete account, remove from readlist)."
+    },
+    "destructive-foreground": {
+      "$value": "{color.red.950}",
+      "$description": "Text on a destructive fill."
+    },
+    "border": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "alpha": 0.09,
+        "hex": "#ffffff"
+      },
+      "$description": "Hairlines: row separators, card outlines, dividers."
+    },
+    "input": {
+      "$value": "{color.charcoal.400}",
+      "$description": "Boundary of inputs, checkboxes, radios and outlined buttons (3:1 against the page)."
+    },
+    "ring": {
+      "$value": "{color.teal.400}",
+      "$description": "Focus ring (3:1 against the page)."
+    },
+    "chart-1": {
+      "$value": "{color.teal.500}",
+      "$description": "Charts and stats, series 1."
+    },
+    "chart-2": {
+      "$value": "{color.pink.300}",
+      "$description": "Charts and stats, series 2."
+    },
+    "chart-3": {
+      "$value": "{color.butter.300}",
+      "$description": "Charts and stats, series 3."
+    },
+    "chart-4": {
+      "$value": "{color.sky.300}",
+      "$description": "Charts and stats, series 4."
+    },
+    "chart-5": {
+      "$value": "{color.teal.200}",
+      "$description": "Charts and stats, series 5."
+    },
+    "sidebar": {
+      "$value": "{color.charcoal.950}",
+      "$description": "Desktop sidebar (X1) background."
+    },
+    "sidebar-foreground": {
+      "$value": "{color.charcoal.100}",
+      "$description": "Desktop sidebar text."
+    },
+    "sidebar-primary": {
+      "$value": "{color.teal.500}",
+      "$description": "Desktop sidebar active item fill."
+    },
+    "sidebar-primary-foreground": {
+      "$value": "{color.teal.950}",
+      "$description": "Text on the sidebar active item."
+    },
+    "sidebar-accent": {
+      "$value": "{color.charcoal.800}",
+      "$description": "Desktop sidebar hover fill."
+    },
+    "sidebar-accent-foreground": {
+      "$value": "{color.charcoal.100}",
+      "$description": "Text on the sidebar hover fill."
+    },
+    "sidebar-border": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "alpha": 0.09,
+        "hex": "#ffffff"
+      },
+      "$description": "Desktop sidebar dividers."
+    },
+    "sidebar-ring": {
+      "$value": "{color.teal.400}",
+      "$description": "Desktop sidebar focus ring."
+    },
+    "link": {
+      "$value": "{color.teal.400}",
+      "$description": "Inline links and text buttons (\"All\", \"See what's new\", \"Read more\")."
+    },
+    "highlight": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.9569, 0.7137, 0.7686],
+        "alpha": 0.16,
+        "hex": "#f4b6c4"
+      },
+      "$description": "Pink highlight surface: recommendations, \"new\" badges, shared items."
+    },
+    "highlight-foreground": {
+      "$value": "{color.pink.300}",
+      "$description": "Text on highlight."
+    },
+    "surface-glass": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.1137, 0.1216, 0.1294],
+        "alpha": 0.78,
+        "hex": "#1d1f21"
+      },
+      "$description": "Translucent fill of glass surfaces (sheets, sticky top bar). Always with the glass utility (blur)."
+    },
+    "surface-glass-edge": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "alpha": 0.08,
+        "hex": "#ffffff"
+      },
+      "$description": "Light inner edge of glass surfaces."
+    },
+    "scrim": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0],
+        "alpha": 0.6,
+        "hex": "#000000"
+      },
+      "$description": "Dimmed backdrop behind sheets and dialogs."
+    },
+    "gradient-from": {
+      "$value": "{color.rose.950}",
+      "$description": "Warm (pink) stop of the page gradient, top left and bottom right."
+    },
+    "gradient-via": {
+      "$value": "{color.teal.950}",
+      "$description": "Teal glow stop of the page gradient, top right."
+    },
+    "gradient-to": {
+      "$value": "{color.charcoal.850}",
+      "$description": "Cool (mint) stop of the page gradient, bottom left."
+    },
+    "status-want": {
+      "$value": "{color.charcoal.800}",
+      "$description": "Want to read: pill and segment fill."
+    },
+    "status-want-foreground": {
+      "$value": "{color.charcoal.200}",
+      "$description": "Want to read: pill text and icon."
+    },
+    "status-reading": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.3608, 0.7412, 0.7255],
+        "alpha": 0.16,
+        "hex": "#5cbdb9"
+      },
+      "$description": "Reading: pill and segment fill."
+    },
+    "status-reading-foreground": {
+      "$value": "{color.teal.400}",
+      "$description": "Reading: pill text and icon."
+    },
+    "status-read": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.9569, 0.7137, 0.7686],
+        "alpha": 0.16,
+        "hex": "#f4b6c4"
+      },
+      "$description": "Read: pill and segment fill."
+    },
+    "status-read-foreground": {
+      "$value": "{color.pink.300}",
+      "$description": "Read: pill text and icon."
+    },
+    "challenge": {
+      "$value": "{color.pink.300}",
+      "$description": "Challenge indicator (flag icon + \"In challenge\") on search results, Home and book detail."
+    },
+    "challenge-badge": {
+      "$value": "{color.charcoal.950}",
+      "$description": "Round challenge badge on top of a cover."
+    },
+    "challenge-badge-foreground": {
+      "$value": "{color.pink.300}",
+      "$description": "Flag icon inside the challenge badge."
+    },
+    "challenge-personal": {
+      "$value": "{color.teal.500}",
+      "$description": "Type stripe and kicker of personal challenges."
+    },
+    "challenge-shared": {
+      "$value": "{color.pink.300}",
+      "$description": "Type stripe of challenges shared with friends."
+    },
+    "challenge-official": {
+      "$value": "{color.charcoal.400}",
+      "$description": "Type stripe of official challenges."
+    },
+    "tab-bar": {
+      "$value": "{color.charcoal.950}",
+      "$description": "Flat bottom tab bar (N1) background."
+    },
+    "tab-bar-foreground": {
+      "$value": "{color.charcoal.300}",
+      "$description": "Inactive tab icon and label."
+    },
+    "tab-bar-active": {
+      "$value": "{color.teal.400}",
+      "$description": "Active tab icon and label."
+    },
+    "tab-bar-border": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "alpha": 0.06,
+        "hex": "#ffffff"
+      },
+      "$description": "Top hairline of the tab bar."
+    },
+    "plus-key": {
+      "$value": "{color.teal.500}",
+      "$description": "The + key in the middle of the tab bar (N2)."
+    },
+    "plus-key-foreground": {
+      "$value": "{color.teal.950}",
+      "$description": "The + glyph on the + key."
+    },
+    "avatar-ring-from": {
+      "$value": "{color.teal.500}",
+      "$description": "Start of the \"reading now\" ring around a friend avatar."
+    },
+    "avatar-ring-to": {
+      "$value": "{color.pink.300}",
+      "$description": "End of the \"reading now\" ring around a friend avatar."
+    },
+    "avatar-1": {
+      "$value": "{color.teal.500}",
+      "$description": "Initials avatar fill 1 (picked from the user id)."
+    },
+    "avatar-2": {
+      "$value": "{color.pink.400}",
+      "$description": "Initials avatar fill 2."
+    },
+    "avatar-3": {
+      "$value": "{color.butter.300}",
+      "$description": "Initials avatar fill 3."
+    },
+    "avatar-4": {
+      "$value": "{color.sky.300}",
+      "$description": "Initials avatar fill 4."
+    },
+    "avatar-5": {
+      "$value": "{color.leaf.300}",
+      "$description": "Initials avatar fill 5."
+    },
+    "avatar-foreground": {
+      "$value": "{color.teal.900}",
+      "$description": "Initials on every avatar fill."
+    },
+    "progress": {
+      "$value": "{color.teal.500}",
+      "$description": "Progress bar and ring fill (pledge, reading percentage, challenge progress). Always shown with a number."
+    },
+    "progress-track": {
+      "$value": "{color.charcoal.700}",
+      "$description": "Progress bar and ring track."
+    },
+    "rating": {
+      "$value": "{color.amber.400}",
+      "$description": "Filled star of a half-star rating. Always shown with the number."
+    },
+    "rating-empty": {
+      "$value": "{color.charcoal.600}",
+      "$description": "Empty star."
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "cover": {
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "alpha": 0.08,
+            "hex": "#ffffff"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 1,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.9,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 6,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 14,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -6,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Book covers in shelves, rows and fans."
+    },
+    "card": {
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "alpha": 0.06,
+            "hex": "#ffffff"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 1,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Cards that float on the gradient (stat tile, challenge card)."
+    },
+    "sheet": {
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "alpha": 0.08,
+            "hex": "#ffffff"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": -1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Bottom sheets (+ menu, status sheet)."
+    }
+  }
+}

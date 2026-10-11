@@ -1,0 +1,29 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/resolver.json",
+  "name": "Lillyjean",
+  "version": "2025.10",
+  "description": "How the token files combine. Foundation first, then one theme. `pnpm tokens:build` resolves the light and dark contexts and writes src/app/tokens.css.",
+  "sets": {
+    "foundation": {
+      "description": "Palette, type, shape, space, motion and gradients; the same in every theme.",
+      "sources": [
+        { "$ref": "primitives.tokens.json" },
+        { "$ref": "foundation.tokens.json" }
+      ]
+    }
+  },
+  "modifiers": {
+    "theme": {
+      "description": "Colour theme. Light is the designed default (:root); dark is opt-in via data-theme=\"dark\" on <html>.",
+      "contexts": {
+        "light": [{ "$ref": "light.tokens.json" }],
+        "dark": [{ "$ref": "dark.tokens.json" }]
+      },
+      "default": "light"
+    }
+  },
+  "resolutionOrder": [
+    { "$ref": "#/sets/foundation" },
+    { "$ref": "#/modifiers/theme" }
+  ]
+}

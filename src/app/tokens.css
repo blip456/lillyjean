@@ -1,0 +1,431 @@
+/*
+ * Lillyjean design tokens. GENERATED FILE: do not edit by hand.
+ * Source: design/tokens/*.tokens.json (W3C DTCG 2025.10) via design/tokens/lillyjean.resolver.json.
+ * Change a token there, then run `pnpm tokens:build`. See DESIGN.md.
+ */
+
+/* Theme variables: fonts, type ramp, radii, spacing, blur and easing (text-title, rounded-cover, min-h-tap, …).
+   The default Tailwind palette is removed so only the colour tokens below exist as utilities. */
+@theme {
+  --color-*: initial;
+  --font-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --text-wordmark: 1.625rem;
+  --text-wordmark--line-height: 1;
+  --text-wordmark--letter-spacing: -0.05em;
+  --text-wordmark--font-weight: 900;
+  --text-display: 1.875rem;
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 900;
+  --text-title: 1.875rem;
+  --text-title--line-height: 1.0667;
+  --text-title--letter-spacing: -0.035em;
+  --text-title--font-weight: 900;
+  --text-headline: 1.375rem;
+  --text-headline--line-height: 1.1818;
+  --text-headline--letter-spacing: -0.03em;
+  --text-headline--font-weight: 900;
+  --text-section: 1.1875rem;
+  --text-section--line-height: 1.2632;
+  --text-section--letter-spacing: -0.02em;
+  --text-section--font-weight: 800;
+  --text-stat: 3rem;
+  --text-stat--line-height: 1;
+  --text-stat--letter-spacing: -0.05em;
+  --text-stat--font-weight: 900;
+  --text-row-title: 0.9375rem;
+  --text-row-title--line-height: 1.3333;
+  --text-row-title--letter-spacing: -0.005em;
+  --text-row-title--font-weight: 700;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.3333;
+  --text-body--letter-spacing: -0.005em;
+  --text-body--font-weight: 400;
+  --text-subtitle: 0.8125rem;
+  --text-subtitle--line-height: 1.3846;
+  --text-subtitle--letter-spacing: 0;
+  --text-subtitle--font-weight: 400;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.3333;
+  --text-caption--letter-spacing: 0;
+  --text-caption--font-weight: 400;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.2727;
+  --text-label--letter-spacing: 0.12em;
+  --text-label--font-weight: 700;
+  --text-button: 0.9375rem;
+  --text-button--line-height: 1.3333;
+  --text-button--letter-spacing: 0;
+  --text-button--font-weight: 800;
+  --text-tab: 0.625rem;
+  --text-tab--line-height: 1.2;
+  --text-tab--letter-spacing: 0;
+  --text-tab--font-weight: 700;
+  --text-field: 1rem;
+  --text-field--line-height: 1.375;
+  --text-field--letter-spacing: 0;
+  --text-field--font-weight: 400;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-sheet: 16px;
+  --radius-cover: 3px;
+  --spacing-gutter: 16px;
+  --spacing-tap: 44px;
+  --spacing-row: 52px;
+  --spacing-cover-shelf: 112px;
+  --spacing-cover-row: 40px;
+  --spacing-cover-mini: 30px;
+  --blur-glass: 20px;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Light theme: the designed default. */
+:root {
+  color-scheme: light;
+  --radius: 10px; /* radius.lg, the shadcn base radius */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-sheet: 400ms;
+  /* Page background under the gradient; also the base colour of the gradient and the fade target of cover backdrops. */
+  --background: #f3f8f7; /* color.neutral.50 */
+  /* Default text and icons on the page, cards and sheets. */
+  --foreground: #0c1716; /* color.neutral.900 */
+  /* Cards, dense-row groups, challenge cards, stat tiles (Media dark "surface"). */
+  --card: #ffffff; /* color.neutral.0 */
+  /* Text on card. */
+  --card-foreground: #0c1716; /* color.neutral.900 */
+  /* Menus, long-press context menus, toasts. */
+  --popover: #ffffff; /* color.neutral.0 */
+  /* Text on popover. */
+  --popover-foreground: #0c1716; /* color.neutral.900 */
+  /* THE accent. Primary buttons, the + key, active segment, selected status, toggles, focus fills. Change this to change the accent. */
+  --primary: #5cbdb9; /* color.teal.500 */
+  /* Text and icons on primary fills (deep ink, never white). */
+  --primary-foreground: #0b3533; /* color.teal.900 */
+  /* Secondary buttons, filled inputs, chips (Media dark "raised surface"). */
+  --secondary: #dcefed; /* color.mint.200 */
+  /* Text on secondary. */
+  --secondary-foreground: #0b3533; /* color.teal.900 */
+  /* Quiet fills: skeletons, empty states, disabled controls. */
+  --muted: #ebf6f5; /* color.mint.100 */
+  /* Secondary text: subtitles, meta, captions, inactive labels. */
+  --muted-foreground: #56615f; /* color.neutral.600 */
+  /* Hover/pressed background of ghost buttons, menu items and rows (shadcn "accent"). */
+  --accent: #dcefed; /* color.mint.200 */
+  /* Text on accent. */
+  --accent-foreground: #0b3533; /* color.teal.900 */
+  /* Destructive actions and error text (delete account, remove from readlist). */
+  --destructive: #c0392b; /* color.red.600 */
+  /* Text on a destructive fill. */
+  --destructive-foreground: #ffffff; /* color.white */
+  /* Hairlines: row separators, card outlines, dividers. */
+  --border: rgb(20 60 58 / 16%);
+  /* Boundary of inputs, checkboxes, radios and outlined buttons (3:1 against the page). */
+  --input: #7d8987; /* color.neutral.500 */
+  /* Focus ring (3:1 against the page). */
+  --ring: #2f8f8b; /* color.teal.600 */
+  /* Charts and stats, series 1. */
+  --chart-1: #5cbdb9; /* color.teal.500 */
+  /* Charts and stats, series 2. */
+  --chart-2: #f09bb0; /* color.pink.400 */
+  /* Charts and stats, series 3. */
+  --chart-3: #f2cd85; /* color.butter.300 */
+  /* Charts and stats, series 4. */
+  --chart-4: #a8d4ee; /* color.sky.300 */
+  /* Charts and stats, series 5. */
+  --chart-5: #145c59; /* color.teal.800 */
+  /* Desktop sidebar (X1) background. */
+  --sidebar: #ffffff; /* color.neutral.0 */
+  /* Desktop sidebar text. */
+  --sidebar-foreground: #0c1716; /* color.neutral.900 */
+  /* Desktop sidebar active item fill. */
+  --sidebar-primary: #5cbdb9; /* color.teal.500 */
+  /* Text on the sidebar active item. */
+  --sidebar-primary-foreground: #0b3533; /* color.teal.900 */
+  /* Desktop sidebar hover fill. */
+  --sidebar-accent: #dcefed; /* color.mint.200 */
+  /* Text on the sidebar hover fill. */
+  --sidebar-accent-foreground: #0b3533; /* color.teal.900 */
+  /* Desktop sidebar dividers. */
+  --sidebar-border: rgb(20 60 58 / 16%);
+  /* Desktop sidebar focus ring. */
+  --sidebar-ring: #2f8f8b; /* color.teal.600 */
+  /* Inline links and text buttons ("All", "See what's new", "Read more"). */
+  --link: #19706c; /* color.teal.700 */
+  /* Pink highlight surface: recommendations, "new" badges, shared items. */
+  --highlight: #fbe3e8; /* color.pink.100 */
+  /* Text on highlight. */
+  --highlight-foreground: #8c2f48; /* color.rose.700 */
+  /* Translucent fill of glass surfaces (sheets, sticky top bar). Always with the glass utility (blur). */
+  --surface-glass: rgb(253 243 245 / 88%);
+  /* Light inner edge of glass surfaces. */
+  --surface-glass-edge: rgb(255 255 255 / 78%);
+  /* Dimmed backdrop behind sheets and dialogs. */
+  --scrim: rgb(12 23 22 / 40%);
+  /* Warm (pink) stop of the page gradient, top left and bottom right. */
+  --gradient-from: #fbe3e8; /* color.pink.100 */
+  /* Teal glow stop of the page gradient, top right. */
+  --gradient-via: #d4efed; /* color.teal.100 */
+  /* Cool (mint) stop of the page gradient, bottom left. */
+  --gradient-to: #ebf6f5; /* color.mint.100 */
+  /* Want to read: pill and segment fill. */
+  --status-want: #e6edec; /* color.neutral.100 */
+  /* Want to read: pill text and icon. */
+  --status-want-foreground: #36423f; /* color.neutral.700 */
+  /* Reading: pill and segment fill. */
+  --status-reading: #d4efed; /* color.teal.100 */
+  /* Reading: pill text and icon. */
+  --status-reading-foreground: #145c59; /* color.teal.800 */
+  /* Read: pill and segment fill. */
+  --status-read: #fbe3e8; /* color.pink.100 */
+  /* Read: pill text and icon. */
+  --status-read-foreground: #8c2f48; /* color.rose.700 */
+  /* Challenge indicator (flag icon + "In challenge") on search results, Home and book detail. */
+  --challenge: #b4405e; /* color.rose.600 */
+  /* Round challenge badge on top of a cover. */
+  --challenge-badge: #8c2f48; /* color.rose.700 */
+  /* Flag icon inside the challenge badge. */
+  --challenge-badge-foreground: #fdf3f5; /* color.pink.50 */
+  /* Type stripe and kicker of personal challenges. */
+  --challenge-personal: #5cbdb9; /* color.teal.500 */
+  /* Type stripe of challenges shared with friends. */
+  --challenge-shared: #f09bb0; /* color.pink.400 */
+  /* Type stripe of official challenges. */
+  --challenge-official: #145c59; /* color.teal.800 */
+  /* Flat bottom tab bar (N1) background. */
+  --tab-bar: #ffffff; /* color.neutral.0 */
+  /* Inactive tab icon and label. */
+  --tab-bar-foreground: #56615f; /* color.neutral.600 */
+  /* Active tab icon and label. */
+  --tab-bar-active: #19706c; /* color.teal.700 */
+  /* Top hairline of the tab bar. */
+  --tab-bar-border: rgb(20 60 58 / 16%);
+  /* The + key in the middle of the tab bar (N2). */
+  --plus-key: #5cbdb9; /* color.teal.500 */
+  /* The + glyph on the + key. */
+  --plus-key-foreground: #0b3533; /* color.teal.900 */
+  /* Start of the "reading now" ring around a friend avatar. */
+  --avatar-ring-from: #5cbdb9; /* color.teal.500 */
+  /* End of the "reading now" ring around a friend avatar. */
+  --avatar-ring-to: #f09bb0; /* color.pink.400 */
+  /* Initials avatar fill 1 (picked from the user id). */
+  --avatar-1: #5cbdb9; /* color.teal.500 */
+  /* Initials avatar fill 2. */
+  --avatar-2: #f09bb0; /* color.pink.400 */
+  /* Initials avatar fill 3. */
+  --avatar-3: #f2cd85; /* color.butter.300 */
+  /* Initials avatar fill 4. */
+  --avatar-4: #a8d4ee; /* color.sky.300 */
+  /* Initials avatar fill 5. */
+  --avatar-5: #bfe0a6; /* color.leaf.300 */
+  /* Initials on every avatar fill. */
+  --avatar-foreground: #0b3533; /* color.teal.900 */
+  /* Progress bar and ring fill (pledge, reading percentage, challenge progress). Always shown with a number. */
+  --progress: #2f8f8b; /* color.teal.600 */
+  /* Progress bar and ring track. */
+  --progress-track: rgb(15 63 61 / 12%);
+  /* Filled star of a half-star rating. Always shown with the number. */
+  --rating: #f5a623; /* color.amber.500 */
+  /* Empty star. */
+  --rating-empty: #d3dad9; /* color.neutral.200 */
+  --cover-shadow:
+    0 1px 2px 0 rgb(12 23 22 / 18%), 0 6px 14px -6px rgb(12 23 22 / 22%);
+  --card-shadow:
+    0 1px 2px 0 rgb(15 63 61 / 6%), 0 8px 24px -12px rgb(15 63 61 / 12%);
+  --sheet-shadow: 0 -8px 30px -10px rgb(15 63 61 / 18%);
+  --gradient-page:
+    radial-gradient(75% 34% at 4% 2%, #fbe3e8 0%, transparent 70%),
+    radial-gradient(60% 32% at 100% 14%, #d4efed 0%, transparent 70%),
+    radial-gradient(80% 40% at 20% 100%, #ebf6f5 0%, transparent 70%),
+    radial-gradient(60% 30% at 100% 92%, #fbe3e8 0%, transparent 70%), #f3f8f7;
+  --gradient-avatar-ring: conic-gradient(
+    from 0deg,
+    #5cbdb9 0%,
+    #f09bb0 50%,
+    #5cbdb9 100%
+  );
+}
+
+/* Dark theme: opt-in with data-theme="dark" on <html>. Not applied from prefers-color-scheme yet. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #121314; /* color.charcoal.900 */
+  --foreground: #f4f4f5; /* color.charcoal.100 */
+  --card: #1d1f21; /* color.charcoal.850 */
+  --card-foreground: #f4f4f5; /* color.charcoal.100 */
+  --popover: #1d1f21; /* color.charcoal.850 */
+  --popover-foreground: #f4f4f5; /* color.charcoal.100 */
+  --primary: #5cbdb9; /* color.teal.500 */
+  --primary-foreground: #04201f; /* color.teal.950 */
+  --secondary: #282b2e; /* color.charcoal.800 */
+  --secondary-foreground: #f4f4f5; /* color.charcoal.100 */
+  --muted: #282b2e; /* color.charcoal.800 */
+  --muted-foreground: #9ba1a7; /* color.charcoal.300 */
+  --accent: #282b2e; /* color.charcoal.800 */
+  --accent-foreground: #f4f4f5; /* color.charcoal.100 */
+  --destructive: #ff8a7a; /* color.red.300 */
+  --destructive-foreground: #2a0a06; /* color.red.950 */
+  --border: rgb(255 255 255 / 9%);
+  --input: #6b7177; /* color.charcoal.400 */
+  --ring: #6fd0cb; /* color.teal.400 */
+  --chart-1: #5cbdb9; /* color.teal.500 */
+  --chart-2: #f4b6c4; /* color.pink.300 */
+  --chart-3: #f2cd85; /* color.butter.300 */
+  --chart-4: #a8d4ee; /* color.sky.300 */
+  --chart-5: #a8dcd9; /* color.teal.200 */
+  --sidebar: #0a0b0c; /* color.charcoal.950 */
+  --sidebar-foreground: #f4f4f5; /* color.charcoal.100 */
+  --sidebar-primary: #5cbdb9; /* color.teal.500 */
+  --sidebar-primary-foreground: #04201f; /* color.teal.950 */
+  --sidebar-accent: #282b2e; /* color.charcoal.800 */
+  --sidebar-accent-foreground: #f4f4f5; /* color.charcoal.100 */
+  --sidebar-border: rgb(255 255 255 / 9%);
+  --sidebar-ring: #6fd0cb; /* color.teal.400 */
+  --link: #6fd0cb; /* color.teal.400 */
+  --highlight: rgb(244 182 196 / 16%);
+  --highlight-foreground: #f4b6c4; /* color.pink.300 */
+  --surface-glass: rgb(29 31 33 / 78%);
+  --surface-glass-edge: rgb(255 255 255 / 8%);
+  --scrim: rgb(0 0 0 / 60%);
+  --gradient-from: #2a171e; /* color.rose.950 */
+  --gradient-via: #04201f; /* color.teal.950 */
+  --gradient-to: #1d1f21; /* color.charcoal.850 */
+  --status-want: #282b2e; /* color.charcoal.800 */
+  --status-want-foreground: #d7d9db; /* color.charcoal.200 */
+  --status-reading: rgb(92 189 185 / 16%);
+  --status-reading-foreground: #6fd0cb; /* color.teal.400 */
+  --status-read: rgb(244 182 196 / 16%);
+  --status-read-foreground: #f4b6c4; /* color.pink.300 */
+  --challenge: #f4b6c4; /* color.pink.300 */
+  --challenge-badge: #0a0b0c; /* color.charcoal.950 */
+  --challenge-badge-foreground: #f4b6c4; /* color.pink.300 */
+  --challenge-personal: #5cbdb9; /* color.teal.500 */
+  --challenge-shared: #f4b6c4; /* color.pink.300 */
+  --challenge-official: #6b7177; /* color.charcoal.400 */
+  --tab-bar: #0a0b0c; /* color.charcoal.950 */
+  --tab-bar-foreground: #9ba1a7; /* color.charcoal.300 */
+  --tab-bar-active: #6fd0cb; /* color.teal.400 */
+  --tab-bar-border: rgb(255 255 255 / 6%);
+  --plus-key: #5cbdb9; /* color.teal.500 */
+  --plus-key-foreground: #04201f; /* color.teal.950 */
+  --avatar-ring-from: #5cbdb9; /* color.teal.500 */
+  --avatar-ring-to: #f4b6c4; /* color.pink.300 */
+  --avatar-1: #5cbdb9; /* color.teal.500 */
+  --avatar-2: #f09bb0; /* color.pink.400 */
+  --avatar-3: #f2cd85; /* color.butter.300 */
+  --avatar-4: #a8d4ee; /* color.sky.300 */
+  --avatar-5: #bfe0a6; /* color.leaf.300 */
+  --avatar-foreground: #0b3533; /* color.teal.900 */
+  --progress: #5cbdb9; /* color.teal.500 */
+  --progress-track: #34383c; /* color.charcoal.700 */
+  --rating: #ffc457; /* color.amber.400 */
+  --rating-empty: #3f4448; /* color.charcoal.600 */
+  --cover-shadow:
+    0 0 0 1px rgb(255 255 255 / 8%), 0 6px 14px -6px rgb(0 0 0 / 90%);
+  --card-shadow: 0 0 0 1px rgb(255 255 255 / 6%);
+  --sheet-shadow: 0 -1px 0 0 rgb(255 255 255 / 8%);
+  --gradient-page:
+    radial-gradient(75% 34% at 4% 2%, #2a171e 0%, transparent 70%),
+    radial-gradient(60% 32% at 100% 14%, #04201f 0%, transparent 70%),
+    radial-gradient(80% 40% at 20% 100%, #1d1f21 0%, transparent 70%),
+    radial-gradient(60% 30% at 100% 92%, #2a171e 0%, transparent 70%), #121314;
+  --gradient-avatar-ring: conic-gradient(
+    from 0deg,
+    #5cbdb9 0%,
+    #f4b6c4 50%,
+    #5cbdb9 100%
+  );
+}
+
+/* Utilities: bg-primary, text-muted-foreground, border-border, shadow-cover, … (names match shadcn/ui). */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-link: var(--link);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-surface-glass: var(--surface-glass);
+  --color-surface-glass-edge: var(--surface-glass-edge);
+  --color-scrim: var(--scrim);
+  --color-gradient-from: var(--gradient-from);
+  --color-gradient-via: var(--gradient-via);
+  --color-gradient-to: var(--gradient-to);
+  --color-status-want: var(--status-want);
+  --color-status-want-foreground: var(--status-want-foreground);
+  --color-status-reading: var(--status-reading);
+  --color-status-reading-foreground: var(--status-reading-foreground);
+  --color-status-read: var(--status-read);
+  --color-status-read-foreground: var(--status-read-foreground);
+  --color-challenge: var(--challenge);
+  --color-challenge-badge: var(--challenge-badge);
+  --color-challenge-badge-foreground: var(--challenge-badge-foreground);
+  --color-challenge-personal: var(--challenge-personal);
+  --color-challenge-shared: var(--challenge-shared);
+  --color-challenge-official: var(--challenge-official);
+  --color-tab-bar: var(--tab-bar);
+  --color-tab-bar-foreground: var(--tab-bar-foreground);
+  --color-tab-bar-active: var(--tab-bar-active);
+  --color-tab-bar-border: var(--tab-bar-border);
+  --color-plus-key: var(--plus-key);
+  --color-plus-key-foreground: var(--plus-key-foreground);
+  --color-avatar-ring-from: var(--avatar-ring-from);
+  --color-avatar-ring-to: var(--avatar-ring-to);
+  --color-avatar-1: var(--avatar-1);
+  --color-avatar-2: var(--avatar-2);
+  --color-avatar-3: var(--avatar-3);
+  --color-avatar-4: var(--avatar-4);
+  --color-avatar-5: var(--avatar-5);
+  --color-avatar-foreground: var(--avatar-foreground);
+  --color-progress: var(--progress);
+  --color-progress-track: var(--progress-track);
+  --color-rating: var(--rating);
+  --color-rating-empty: var(--rating-empty);
+  --shadow-cover: var(--cover-shadow);
+  --shadow-card: var(--card-shadow);
+  --shadow-sheet: var(--sheet-shadow);
+}
+
+@utility bg-page-gradient {
+  background: var(--gradient-page);
+}
+
+@utility bg-avatar-ring-gradient {
+  background: var(--gradient-avatar-ring);
+}

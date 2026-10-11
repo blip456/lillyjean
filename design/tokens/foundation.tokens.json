@@ -1,0 +1,335 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Lillyjean foundation tokens: type, shape, space, motion and the gradients. These are the same in every theme; gradient colours alias the semantic colours, so they follow the theme.",
+  "font": {
+    "$type": "fontFamily",
+    "sans": {
+      "$value": [
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Roboto",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif",
+        "Apple Color Emoji",
+        "Segoe UI Emoji"
+      ],
+      "$description": "System sans: SF Pro on iPhone and Mac, Segoe UI / Roboto elsewhere. No downloaded fonts."
+    },
+    "mono": {
+      "$value": [
+        "ui-monospace",
+        "SFMono-Regular",
+        "Menlo",
+        "Consolas",
+        "monospace"
+      ],
+      "$description": "Code and tabular debug output only."
+    }
+  },
+  "typography": {
+    "$type": "typography",
+    "$description": "Type ramp from the Media dark design: heavy, tight headings and dense 15 px body. Sizes are converted to rem and letter spacing to em by the generator. Use as Tailwind text-<name> utilities.",
+    "wordmark": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 26, "unit": "px" },
+        "fontWeight": 900,
+        "letterSpacing": { "value": -1.3, "unit": "px" },
+        "lineHeight": 1
+      },
+      "$description": "26/26 black. The lillyjean wordmark on Home and the welcome screen."
+    },
+    "display": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 30, "unit": "px" },
+        "fontWeight": 900,
+        "letterSpacing": { "value": -1.05, "unit": "px" },
+        "lineHeight": 1.1
+      },
+      "$description": "30/33 black. Welcome and onboarding headlines."
+    },
+    "title": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 30, "unit": "px" },
+        "fontWeight": 900,
+        "letterSpacing": { "value": -1.05, "unit": "px" },
+        "lineHeight": 1.0667
+      },
+      "$description": "30/32 black. Screen titles (Readlists, Challenges, Friends), readlist and challenge names."
+    },
+    "headline": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 22, "unit": "px" },
+        "fontWeight": 900,
+        "letterSpacing": { "value": -0.66, "unit": "px" },
+        "lineHeight": 1.1818
+      },
+      "$description": "22/26 black. Sheet titles and the book title on the book detail."
+    },
+    "section": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 19, "unit": "px" },
+        "fontWeight": 800,
+        "letterSpacing": { "value": -0.38, "unit": "px" },
+        "lineHeight": 1.2632
+      },
+      "$description": "19/24 heavy. Section headers above shelves and lists (Currently reading, Ongoing challenges)."
+    },
+    "stat": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 48, "unit": "px" },
+        "fontWeight": 900,
+        "letterSpacing": { "value": -2.4, "unit": "px" },
+        "lineHeight": 1
+      },
+      "$description": "48/48 black. Big numbers: books read this year, challenges completed."
+    },
+    "row-title": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 15, "unit": "px" },
+        "fontWeight": 700,
+        "letterSpacing": { "value": -0.075, "unit": "px" },
+        "lineHeight": 1.3333
+      },
+      "$description": "15/20 bold. Book titles in rows and shelves, person names, card titles."
+    },
+    "body": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 15, "unit": "px" },
+        "fontWeight": 400,
+        "letterSpacing": { "value": -0.075, "unit": "px" },
+        "lineHeight": 1.3333
+      },
+      "$description": "15/20 regular. Default body text (set on <body>)."
+    },
+    "subtitle": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 13, "unit": "px" },
+        "fontWeight": 400,
+        "letterSpacing": { "value": 0, "unit": "px" },
+        "lineHeight": 1.3846
+      },
+      "$description": "13/18 regular. Row subtitles (author), meta lines, helper text."
+    },
+    "caption": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 12, "unit": "px" },
+        "fontWeight": 400,
+        "letterSpacing": { "value": 0, "unit": "px" },
+        "lineHeight": 1.3333
+      },
+      "$description": "12/16 regular. Under-cover captions, progress percentages, fine print."
+    },
+    "label": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 11, "unit": "px" },
+        "fontWeight": 700,
+        "letterSpacing": { "value": 1.32, "unit": "px" },
+        "lineHeight": 1.2727
+      },
+      "$description": "11/14 bold, +0.12em, always with the uppercase utility. Kickers (PERSONAL, 2026 · BOOKS READ), field labels above dense groups."
+    },
+    "button": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 15, "unit": "px" },
+        "fontWeight": 800,
+        "letterSpacing": { "value": 0, "unit": "px" },
+        "lineHeight": 1.3333
+      },
+      "$description": "15/20 heavy. Buttons and segmented controls."
+    },
+    "tab": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 10, "unit": "px" },
+        "fontWeight": 700,
+        "letterSpacing": { "value": 0, "unit": "px" },
+        "lineHeight": 1.2
+      },
+      "$description": "10/12 bold. Tab bar labels."
+    },
+    "field": {
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": { "value": 16, "unit": "px" },
+        "fontWeight": 400,
+        "letterSpacing": { "value": 0, "unit": "px" },
+        "lineHeight": 1.375
+      },
+      "$description": "16/22 regular. Text inside inputs: 16 px or more stops iOS Safari from zooming in on focus."
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "sm": {
+      "$value": { "value": 6, "unit": "px" },
+      "$description": "Small controls, menu icons."
+    },
+    "md": {
+      "$value": { "value": 8, "unit": "px" },
+      "$description": "Cards, inputs, challenge cards, banners (Media dark)."
+    },
+    "lg": {
+      "$value": { "value": 10, "unit": "px" },
+      "$description": "Base radius; also emitted as shadcn's --radius. Stat tile, recommendation card."
+    },
+    "xl": {
+      "$value": { "value": 12, "unit": "px" },
+      "$description": "Library card, the + key."
+    },
+    "2xl": {
+      "$value": { "value": 16, "unit": "px" },
+      "$description": "Large cards."
+    },
+    "sheet": {
+      "$value": { "value": 16, "unit": "px" },
+      "$description": "Top corners of bottom sheets."
+    },
+    "cover": {
+      "$value": { "value": 3, "unit": "px" },
+      "$description": "Book covers: almost square corners, like a real book."
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "gutter": {
+      "$value": { "value": 16, "unit": "px" },
+      "$description": "Horizontal screen padding (px-gutter)."
+    },
+    "tap": {
+      "$value": { "value": 44, "unit": "px" },
+      "$description": "Minimum tap target (min-h-tap, min-w-tap): Apple HIG 44 pt, WCAG 2.5.5."
+    },
+    "row": {
+      "$value": { "value": 52, "unit": "px" },
+      "$description": "Minimum height of a dense list row."
+    },
+    "cover-shelf": {
+      "$value": { "value": 112, "unit": "px" },
+      "$description": "Cover width in horizontal shelves."
+    },
+    "cover-row": {
+      "$value": { "value": 40, "unit": "px" },
+      "$description": "Cover width in dense rows."
+    },
+    "cover-mini": {
+      "$value": { "value": 30, "unit": "px" },
+      "$description": "Cover width next to a friend (the book they are reading)."
+    }
+  },
+  "blur": {
+    "$type": "dimension",
+    "glass": {
+      "$value": { "value": 20, "unit": "px" },
+      "$description": "Backdrop blur of glass surfaces (sheets, sticky top bar). Never on list items."
+    }
+  },
+  "duration": {
+    "$type": "duration",
+    "fast": {
+      "$value": { "value": 150, "unit": "ms" },
+      "$description": "Pressed states, colour changes."
+    },
+    "base": {
+      "$value": { "value": 250, "unit": "ms" },
+      "$description": "Small moves: segment, toggles, swipe actions."
+    },
+    "sheet": {
+      "$value": { "value": 400, "unit": "ms" },
+      "$description": "Bottom sheets and screen transitions."
+    }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "standard": { "$value": [0.2, 0, 0, 1], "$description": "Default easing." },
+    "sheet": {
+      "$value": [0.32, 0.72, 0, 1],
+      "$description": "iOS-like sheet easing (Base UI Drawer demos)."
+    }
+  },
+  "gradient": {
+    "$type": "gradient",
+    "page": {
+      "$description": "Page background: soft pink and mint washes with a teal glow, over the background colour (from iOS Glass). Applied to <body> by globals.css.",
+      "$extensions": {
+        "org.lillyjean.css": { "layers": true, "base": "{color.background}" }
+      },
+      "top-left": {
+        "$value": [
+          { "color": "{color.gradient-from}", "position": 0 },
+          { "color": "{color.transparent}", "position": 0.7 }
+        ],
+        "$extensions": {
+          "org.lillyjean.css": {
+            "function": "radial-gradient",
+            "geometry": "75% 34% at 4% 2%"
+          }
+        }
+      },
+      "top-right": {
+        "$value": [
+          { "color": "{color.gradient-via}", "position": 0 },
+          { "color": "{color.transparent}", "position": 0.7 }
+        ],
+        "$extensions": {
+          "org.lillyjean.css": {
+            "function": "radial-gradient",
+            "geometry": "60% 32% at 100% 14%"
+          }
+        }
+      },
+      "bottom-left": {
+        "$value": [
+          { "color": "{color.gradient-to}", "position": 0 },
+          { "color": "{color.transparent}", "position": 0.7 }
+        ],
+        "$extensions": {
+          "org.lillyjean.css": {
+            "function": "radial-gradient",
+            "geometry": "80% 40% at 20% 100%"
+          }
+        }
+      },
+      "bottom-right": {
+        "$value": [
+          { "color": "{color.gradient-from}", "position": 0 },
+          { "color": "{color.transparent}", "position": 0.7 }
+        ],
+        "$extensions": {
+          "org.lillyjean.css": {
+            "function": "radial-gradient",
+            "geometry": "60% 30% at 100% 92%"
+          }
+        }
+      }
+    },
+    "avatar-ring": {
+      "$value": [
+        { "color": "{color.avatar-ring-from}", "position": 0 },
+        { "color": "{color.avatar-ring-to}", "position": 0.5 },
+        { "color": "{color.avatar-ring-from}", "position": 1 }
+      ],
+      "$description": "The ring around a friend who is reading right now.",
+      "$extensions": {
+        "org.lillyjean.css": {
+          "function": "conic-gradient",
+          "geometry": "from 0deg"
+        }
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ export function VersionBadge() {
   return (
     <Link
       href="/changelog"
-      className="text-sm underline-offset-4 opacity-70 hover:underline"
+      className="inline-flex min-h-tap items-center text-subtitle text-link underline-offset-4 hover:underline"
     >
       {t("version", { version: APP_VERSION })} · {t("whatsNew")}
     </Link>
