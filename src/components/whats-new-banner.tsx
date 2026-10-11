@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
+import { Link } from "@/components/ui/link";
 import { APP_VERSION } from "@/lib/release/version";
 
 const STORAGE_KEY = "lillyjean:last-seen-version";

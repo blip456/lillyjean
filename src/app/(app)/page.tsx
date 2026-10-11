@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { Avatar } from "@/components/avatar";
 import { Card } from "@/components/ui/card";
+import { Link } from "@/components/ui/link";
 import { WhatsNewBanner } from "@/components/whats-new-banner";
 import { requireOnboardedAccount } from "@/lib/account/guards";
 

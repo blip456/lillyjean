@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { PasswordField } from "@/components/password-field";
 import { SubmitButton } from "@/components/submit-button";
 import { Field, Input } from "@/components/ui/field";
 import { FormMessage } from "@/components/ui/form-message";
+import { Link } from "@/components/ui/link";
 import { useErrorMessage } from "@/components/use-error-message";
 import { useFormAction } from "@/components/use-form-action";
 import { signUp } from "@/lib/auth/actions";

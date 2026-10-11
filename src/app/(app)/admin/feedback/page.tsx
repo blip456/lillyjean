@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { getFormatter, getTranslations } from "next-intl/server";
 
 import { PageHeader } from "@/components/page-header";
 import { Card } from "@/components/ui/card";
+import { Link } from "@/components/ui/link";
 import { requireAdmin } from "@/lib/account/guards";
 import { createClient } from "@/lib/supabase/server";
 

@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { PageHeader } from "@/components/page-header";
+import { Link } from "@/components/ui/link";
 import { requireAdmin } from "@/lib/account/guards";
 import { createClient } from "@/lib/supabase/server";
 

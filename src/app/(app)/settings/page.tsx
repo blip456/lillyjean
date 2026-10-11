@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { PageHeader } from "@/components/page-header";
 import { FormMessage } from "@/components/ui/form-message";
+import { Link } from "@/components/ui/link";
 import { requireOnboardedAccount } from "@/lib/account/guards";
 import { signOut } from "@/lib/auth/actions";
 import { APP_VERSION } from "@/lib/release/version";
