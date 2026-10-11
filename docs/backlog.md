@@ -45,6 +45,7 @@ Goal: everyone agrees on what we build, and there is a place to release it.
 - Production setup: Supabase project, Vercel project, environment variables, `main` as default branch
   with branch protection, custom SMTP for the auth emails (Supabase's built-in sender is heavily
   rate-limited)
+  — checklist in [`setup-production.md`](setup-production.md)
 
 ## Sprint 2 — Accounts (internal release, Product Owner tests)
 
