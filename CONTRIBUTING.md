@@ -44,6 +44,17 @@ On every push to `main`, release-please keeps a release PR up to date. Merging t
 `package.json`, updates `CHANGELOG.md`, tags `vX.Y.Z` and publishes a GitHub Release. The app shows
 the version and the changelog at `/changelog`.
 
+Version numbers follow the sprints (decision D8):
+
+- Sprint N ships as **v0.N.0**. Merge the release PR once, at the end of the sprint, so each sprint gives
+  exactly one minor release.
+- Hotfixes between sprints are patch releases (v0.N.1, v0.N.2, …). Give their PR a `fix:` title: before
+  1.0, release-please turns `feat:` into a minor bump, which would take the next sprint's number.
+- Sprint headings in `docs/backlog.md` carry their version (`## Sprint 3 — Track your books · v0.3.0`).
+  The app's **What's coming** page (`/whats-coming`) is generated from the open sprints in that file, so
+  keep the headings in this format.
+- CI on a release PR only starts after **Approve and run** on the PR.
+
 ## UI copy and translations
 
 - Never hard-code user-facing text: add it to `messages/en.json` and use `useTranslations` /
