@@ -50,15 +50,27 @@ Goal: everyone agrees on what we build, and there is a place to release it.
   rate-limited)
   — checklist in [`setup-production.md`](setup-production.md)
 
-## Sprint 2 — Accounts (internal release, Product Owner tests)
+## Sprint 2 — Accounts (internal release, Product Owner tests) ✅
 
-> Built on branch `sprint2` (2026-10-11): database migration with 25 database tests, all screens below,
-> and an end-to-end browser test of every flow against a local Supabase. Waiting for the Product Owner's
-> test on production. Onboarding has two steps for now; "Currently reading" joins in Sprint 3.
+> Closed on 2026-10-11. Released as **v0.2.0** (accounts, onboarding, settings, feedback) and **v0.2.1**
+> (release PR titles, clean What's new list). Tested by the Product Owner on production: account created,
+> admin role set, daily account clean-up job visible in Supabase. Verified before release with 25 database
+> tests, unit tests and an end-to-end browser check of every flow (`e2e/accounts.cjs`).
+>
+> Changes against the plan:
+>
+> - The first-open splash **animation** moved to Sprint 9 (polish), as in wireframe A1; Sprint 2 ships a
+>   plain, fast start.
+> - Onboarding has two steps (library card, pledge); "Currently reading" joins in Sprint 3.
+> - The 6-digit code is one field with autofill instead of six boxes (decision A13).
+>
+> Learned along the way: release PRs need a valid commit scope (fixed in v0.2.1) and their CI only runs
+> after a manual "Approve and run" (see Later); the free Supabase plan needs custom SMTP before the email
+> templates can be edited.
 
 Goal: you can create an account, get your library card and send feedback.
 
-- Splash (animation on the very first open only) → session check → Welcome or Home
+- Plain, fast start → session check → Welcome or Home (first-open animation moved to Sprint 9)
 - Sign up (email + password), confirm with 6-digit code, resend with cooldown; neutral message for
   existing emails
 - Log in, forgot password (code → new password), "email me a code instead"
@@ -145,7 +157,7 @@ Goal: reading together without bookclubs.
 Goal: make it feel like Lillyjean.
 
 - Visual design: colours, typography, the "book nerdy" library card; applied across all screens
-- First-open splash animation as an "unboxing" moment
+- First-open splash animation as an "unboxing" moment (moved from Sprint 2)
 - Accessibility pass (WCAG 2.2 AA), performance and offline shell for the PWA
 - Fixes from tester feedback
 
@@ -176,6 +188,9 @@ Platform
 - Username login (if users ask for it)
 - Passkeys (once Supabase support is stable)
 - Check new passwords against known breached passwords (Supabase Pro feature)
+- Run CI on release PRs automatically: give release-please a fine-grained access token, so release PRs no
+  longer need a manual "Approve and run"
+- Run the end-to-end checks (`e2e/`) in CI against a local Supabase
 
 ## Dropped
 

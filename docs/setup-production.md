@@ -21,6 +21,8 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
     Needed because release PRs opened by release-please use GitHub's built-in token, and GitHub does not
     start CI for those. Alternative: let **(dev)** switch release-please to a fine-grained personal access
     token stored as a repository secret, then remove the bypass.
+  - In practice GitHub asks for approval before CI runs on a release PR: open the PR and click
+    **Approve and run** (or "Approve workflows to run"), wait for green, then merge.
 - [ ] Merge the open work from `claude/elegant-hawking-25bf1r` into `main` via a pull request.
 
 ## 2. Supabase project
