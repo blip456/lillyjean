@@ -44,7 +44,18 @@
     "currentPassword": "Your current password is not right.",
     "sessionExpired": "Your session expired. Please log in again.",
     "sameEmail": "This is already your email address.",
-    "samePassword": "Choose a different password than your current one."
+    "samePassword": "Choose a different password than your current one.",
+    "searchTooLong": "Use at most 200 characters.",
+    "searchUnavailable": "Book search is not available right now. Try again in a minute, or add the book yourself.",
+    "progressInvalid": "Choose a percentage from 0 to 100.",
+    "finishedOnInvalid": "Enter a valid date.",
+    "finishedOnFuture": "The finish date cannot be in the future.",
+    "titleRequired": "Enter the title.",
+    "titleTooLong": "Use at most 300 characters.",
+    "authorRequired": "Enter the author.",
+    "authorTooLong": "Use at most 200 characters.",
+    "isbnInvalid": "This is not a valid ISBN. Check the 10 or 13 digits, or leave it empty.",
+    "descriptionTooLong": "Use at most 2000 characters."
   },
   "welcome": {
     "title": "Track what you read. Share it with friends.",
@@ -238,5 +249,28 @@
     "next": "Next",
     "version": "v{version}",
     "empty": "Everything we planned is released. New plans follow soon."
+  },
+  "books": {
+    "status": {
+      "want_to_read": "Want to read",
+      "reading": "Reading",
+      "read": "Read"
+    },
+    "noStatus": "Not on your shelf",
+    "progress": "{progress}%",
+    "byAuthors": "by {authors}",
+    "unknownAuthor": "Unknown author",
+    "coverAlt": "Cover of {title}",
+    "markAsRead": "Mark as read",
+    "finishedOn": "Finished on",
+    "finishedOnHint": "Today, unless you change it",
+    "reReadNote": "You read this book before. It counts again towards your pledge.",
+    "close": "Close",
+    "undo": "Undo",
+    "movedTo": "Moved to {status}",
+    "removed": "Removed from your books",
+    "markedRead": "Marked as read",
+    "myStatus": "My status",
+    "quickAdd": "+ Want to read"
   }
 }
