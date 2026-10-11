@@ -44,6 +44,17 @@ describe("parseChangelog", () => {
     });
   });
 
+  it("strips the PR and commit links that release-please adds", () => {
+    const [release] = parseChangelog(
+      "## [0.2.0](https://example.test/compare/v0.1.0...v0.2.0) (2026-10-11)\n\n### Features\n\n" +
+        "* **auth:** accounts, onboarding, settings and feedback ([#5](https://example.test/issues/5)) " +
+        "([c06ecfb](https://example.test/commit/c06ecfb3b6d18a91b5e852d223b2ea20eaf2bf98))\n",
+    );
+    expect(release.sections[0].items).toEqual([
+      { scope: "auth", text: "accounts, onboarding, settings and feedback" },
+    ]);
+  });
+
   it("returns an empty list when there are no releases", () => {
     expect(parseChangelog("# Changelog\n")).toEqual([]);
   });
