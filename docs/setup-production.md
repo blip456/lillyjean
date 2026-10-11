@@ -36,9 +36,7 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
   - email OTP length **6**, OTP expiry **900 s** (10–15 minutes).
 - [ ] **URL configuration:** Authentication → URL Configuration → Site URL = the production URL from
       Vercel (step 3); add the Vercel preview URL pattern to the redirect URLs.
-- [ ] **Email templates:** Authentication → Emails → Templates. "Confirm signup", "Magic link" and "Reset
-      password" must contain the 6-digit code `{{ .Token }}` (the app works with codes, not links;
-      decision A3). **(dev)** provides the template text in Sprint 2.
+- [ ] **Email templates and auth settings for accounts:** see step 5 (Sprint 2).
 - [ ] **Custom SMTP** (decision T13): Authentication → Emails → SMTP Settings. The built-in sender only
       allows a handful of emails per hour, which breaks sign-up codes during testing. Options:
   - a transactional email service with your **own domain** (e.g. Resend, Postmark): best delivery, needs
@@ -108,7 +106,42 @@ Good to know:
 - When the access token expires, the workflow fails at "Link the production project"; generate a new
   token and update the secret.
 
-## 5. Testers
+## 5. Accounts in production (Sprint 2)
+
+Do these before you test Sprint 2 on production; the app only works with **codes**, never email links
+(decision A3).
+
+1. **Auth settings:** Authentication → Sign In / Providers → Email:
+   - **Confirm email:** on;
+   - **Secure email change:** **off**, so only the new address confirms an email change (decision A8);
+   - **Secure password change:** on;
+   - **Minimum password length:** 12;
+   - **Email OTP length:** 6; **Email OTP expiration:** 900 seconds (the app says "valid for 15 minutes").
+2. **Email templates:** Authentication → Emails → Templates. For each template below, set the subject and
+   replace the message body with the full contents of the file from the repository (they contain the
+   code `{{ .Token }}` and no link):
+
+   | Template             | Subject                                       | File                                   |
+   | -------------------- | --------------------------------------------- | -------------------------------------- |
+   | Confirm signup       | `Your Lillyjean code: confirm your email`     | `supabase/templates/confirmation.html` |
+   | Magic link           | `Your Lillyjean login code`                   | `supabase/templates/magic_link.html`   |
+   | Reset password       | `Your Lillyjean code: reset your password`    | `supabase/templates/recovery.html`     |
+   | Change email address | `Your Lillyjean code: confirm your new email` | `supabase/templates/email_change.html` |
+
+3. **Custom SMTP** (see step 2): needed now. Without it, sign-up codes stop after a few emails per hour.
+4. **Make yourself admin** after creating your own account in the app (Supabase → SQL Editor):
+
+   ```sql
+   update public.profiles set role = 'admin' where username = 'your-username';
+   ```
+
+   Settings then shows an **Admin** section with the feedback list.
+
+5. **Daily clean-up:** the migration schedules a daily job (`purge-deleted-accounts`, via `pg_cron`)
+   that removes accounts 14 days after deletion. Check it under Integrations → Cron after the first
+   database deploy.
+
+## 6. Testers
 
 - [ ] Share the production URL with Jean and Lilly after Sprint 3 (decision D2).
 - [ ] Ask them to "Add to Home Screen" so the app behaves like an installed app.
