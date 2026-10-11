@@ -10,8 +10,9 @@ const RELEASE_HEADING =
   /^##\s+\[?(\d+\.\d+\.\d+[^\]\s]*)\]?(?:\([^)]*\))?\s*(?:\((\d{4}-\d{2}-\d{2})\))?/;
 const SECTION_HEADING = /^###\s+(.+)$/;
 const ITEM = /^[*-]\s+(?:\*\*([^*]+):\*\*\s+)?(.+)$/;
-// release-please appends the commit link and issue refs, e.g. " ([abc1234](https://...)), closes [#12](...)".
-const TRAILING_REFS = /\s+\(\[[0-9a-f]{7,40}\]\(.*$/;
+// release-please appends PR and commit links, e.g. " ([#5](https://...)) ([abc1234](https://...))",
+// sometimes followed by ", closes [#12](...)".
+const TRAILING_REFS = /\s+\(\[(?:#\d+|[0-9a-f]{7,40})\]\(.*$/;
 
 /** Parses a release-please / conventional-changelog CHANGELOG.md into structured releases. */
 export function parseChangelog(markdown: string): ChangelogRelease[] {
