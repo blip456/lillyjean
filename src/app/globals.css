@@ -1,24 +1,60 @@
 @import "tailwindcss";
 
+/* Clean default theme (decision D5); the visual identity comes in the polish sprint. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbf9f4;
+  --foreground: #1f1d1a;
+  --surface: #ffffff;
+  --muted: #6b665d;
+  --border: #e3ded3;
+  --primary: #1f1d1a;
+  --primary-foreground: #fbf9f4;
+  --accent: #b23a34;
+  --danger: #a3261f;
+  --success: #2f6b3a;
+  --focus: #2f5aa8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #151412;
+    --foreground: #eeeae2;
+    --surface: #1e1c19;
+    --muted: #a39d92;
+    --border: #36322c;
+    --primary: #eeeae2;
+    --primary-foreground: #151412;
+    --accent: #e07b72;
+    --danger: #f08a80;
+    --success: #7fc28a;
+    --focus: #8fb3f5;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-focus: var(--focus);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }

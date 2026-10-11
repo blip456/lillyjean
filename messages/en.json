@@ -1,7 +1,229 @@
 {
   "app": {
     "name": "Lillyjean",
-    "tagline": "Track your reading, build readlists and take on challenges with your bookclub. TEST"
+    "tagline": "Track what you read. Share it with friends."
+  },
+  "common": {
+    "back": "Back",
+    "continue": "Continue",
+    "save": "Save",
+    "cancel": "Cancel",
+    "show": "Show",
+    "hide": "Hide",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "loading": "Loading…",
+    "googleLater": "Continue with Google · coming later",
+    "or": "or",
+    "stepOf": "{step} of {total}",
+    "available": "Available",
+    "taken": "Taken",
+    "checking": "Checking…",
+    "memberSince": "Member since {date}",
+    "libraryCard": "Library card",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "errors": {
+    "unknown": "Something went wrong. Please try again.",
+    "emailInvalid": "Enter a valid email address.",
+    "passwordTooShort": "Use at least 12 characters.",
+    "passwordTooLong": "Use at most 72 characters.",
+    "passwordWeak": "This password is too easy to guess. Try a few words together.",
+    "codeInvalid": "Enter the 6-digit code from the email.",
+    "codeWrong": "This code is not right or has expired. Check the email or ask for a new code.",
+    "credentials": "Email or password is not right.",
+    "rateLimited": "Too many attempts. Wait a minute and try again.",
+    "usernameFormat": "Use 3–20 characters: lowercase letters, digits, dot and underscore.",
+    "usernameTaken": "This username is already taken.",
+    "usernameReserved": "This username is not available.",
+    "usernameCooldown": "You can change your username once every 30 days.",
+    "pledgeInvalid": "Choose a number from 1 to 999.",
+    "feedbackEmpty": "Write a few words first.",
+    "feedbackTooLong": "Keep it under 5000 characters.",
+    "currentPassword": "Your current password is not right.",
+    "sessionExpired": "Your session expired. Please log in again.",
+    "sameEmail": "This is already your email address.",
+    "samePassword": "Choose a different password than your current one."
+  },
+  "welcome": {
+    "title": "Track what you read. Share it with friends.",
+    "createAccount": "Create account",
+    "logIn": "Log in",
+    "deleted": "Your account is closed. It will be removed for good in 14 days."
+  },
+  "signup": {
+    "title": "Create your account",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 12 characters. Several words together are easy to remember.",
+    "terms": "By creating an account you agree to the Terms and Privacy Policy.",
+    "submit": "Create account",
+    "haveAccount": "Already have an account?",
+    "logIn": "Log in"
+  },
+  "verify": {
+    "titleSignup": "Check your mailbox",
+    "titleLogin": "Check your mailbox",
+    "titleRecovery": "Enter the code",
+    "titleEmailChange": "Confirm your new email",
+    "sentTo": "If this address can be used, we sent a 6-digit code to {email}.",
+    "sentToEmailChange": "We sent a 6-digit code to {email}.",
+    "editEmail": "Edit email",
+    "code": "6-digit code",
+    "codeHint": "The code is valid for 15 minutes.",
+    "submit": "Verify",
+    "submitRecovery": "Continue",
+    "resend": "Resend code",
+    "resendIn": "Resend code in {seconds} s",
+    "resent": "We sent a new code.",
+    "missingEmail": "Start again to get a code."
+  },
+  "login": {
+    "title": "Log in",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Forgot password?",
+    "submit": "Log in",
+    "emailCode": "Email me a code instead",
+    "newHere": "New here?",
+    "createAccount": "Create account"
+  },
+  "codeLogin": {
+    "title": "Log in with a code",
+    "intro": "We will email you a 6-digit code.",
+    "email": "Email",
+    "submit": "Send code"
+  },
+  "forgot": {
+    "title": "Reset your password",
+    "intro": "We will email you a 6-digit code.",
+    "email": "Email",
+    "submit": "Send code"
+  },
+  "resetPassword": {
+    "title": "Choose a new password",
+    "password": "New password",
+    "passwordHint": "At least 12 characters",
+    "submit": "Save and log in"
+  },
+  "onboarding": {
+    "libraryCard": {
+      "title": "Get your library card",
+      "intro": "Pick a username. Friends find you with it.",
+      "username": "Username",
+      "usernameHint": "3–20 characters: lowercase letters, digits, dot and underscore"
+    },
+    "pledge": {
+      "title": "Your reading pledge",
+      "intro": "How many books do you want to read this year?",
+      "goal": "Books this year",
+      "decrease": "One book less",
+      "increase": "One book more",
+      "changeLater": "You can change this any time in Settings.",
+      "noGoal": "No goal, just reading",
+      "noGoalHint": "Home shows the books you read, without a target.",
+      "finish": "Finish"
+    }
+  },
+  "home": {
+    "greeting": "Welcome {username}",
+    "thisYear": "This year",
+    "booksRead": "{count} of {goal} books read this year",
+    "booksReadNoGoal": "{count} books read this year",
+    "pledgeLink": "Set a reading pledge",
+    "comingNext": "Book tracking arrives in the next release: search books, mark them as reading or read, and see them here.",
+    "openProfile": "Open your profile"
+  },
+  "profile": {
+    "title": "Profile",
+    "booksRead": "{count, plural, one {# book read} other {# books read}}",
+    "challenges": "{count, plural, one {# challenge} other {# challenges}}",
+    "pledgeThisYear": "Pledge this year",
+    "pledgeProgress": "{count} / {goal}",
+    "noPledge": "No goal, just reading",
+    "openSettings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "reading": "Reading",
+    "pledge": "Yearly pledge",
+    "pledgeValue": "{goal} books",
+    "noPledge": "No goal",
+    "help": "Help",
+    "sendFeedback": "Send feedback",
+    "about": "About",
+    "version": "Version",
+    "whatsNew": "What's new",
+    "admin": "Admin",
+    "signOut": "Sign out",
+    "deleteAccount": "Delete account",
+    "emailChanged": "Your email address is changed.",
+    "passwordChanged": "Your password is changed.",
+    "usernameChanged": "Your username is changed.",
+    "pledgeSaved": "Your pledge is saved.",
+    "feedbackSent": "Thanks! We read every message."
+  },
+  "changeUsername": {
+    "title": "Change username",
+    "current": "Current username",
+    "new": "New username",
+    "rule": "You can change your username once every 30 days.",
+    "nextChange": "You can change it again on {date}."
+  },
+  "changeEmail": {
+    "title": "Change email",
+    "current": "Current email",
+    "new": "New email",
+    "intro": "We send a 6-digit code to the new address to confirm it.",
+    "submit": "Send code"
+  },
+  "changePassword": {
+    "title": "Change password",
+    "current": "Current password",
+    "new": "New password",
+    "newHint": "At least 12 characters"
+  },
+  "changePledge": {
+    "title": "Yearly pledge",
+    "intro": "How many books do you want to read in {year}?"
+  },
+  "feedback": {
+    "title": "Send feedback",
+    "intro": "Tell us what works, what doesn't, or what you miss.",
+    "message": "Your feedback",
+    "messageHint": "We also save the app version and your username with it.",
+    "submit": "Send"
+  },
+  "deleteAccount": {
+    "title": "Delete account",
+    "question": "Delete your account?",
+    "explanation": "Your account is closed right away. After 14 days your personal data is removed for good.",
+    "password": "Password",
+    "passwordHint": "To confirm it is you",
+    "submit": "Delete my account",
+    "keep": "Keep my account"
+  },
+  "admin": {
+    "title": "Admin",
+    "intro": "Only visible to the admin role.",
+    "feedback": "Feedback",
+    "feedbackCount": "{count, plural, one {# message} other {# messages}}",
+    "sort": "Sort",
+    "newest": "Newest first",
+    "oldest": "Oldest first",
+    "empty": "No feedback yet.",
+    "deletedUser": "Deleted account",
+    "noUsername": "No username yet"
+  },
+  "whatsNewBanner": {
+    "text": "Lillyjean was updated –",
+    "link": "see what's new",
+    "dismiss": "Dismiss"
   },
   "release": {
     "version": "Version {version}",
