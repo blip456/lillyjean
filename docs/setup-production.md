@@ -117,7 +117,11 @@ Do these before you test Sprint 2 on production; the app only works with **codes
    - **Secure password change:** on;
    - **Minimum password length:** 12;
    - **Email OTP length:** 6; **Email OTP expiration:** 900 seconds (the app says "valid for 15 minutes").
-2. **Email templates:** Authentication → Emails → Templates. For each template below, set the subject and
+2. **Custom SMTP first** (see step 2 above): needed now. Without it, Supabase's built-in sender stops
+   after a few emails per hour, and on the free plan new projects that use the built-in sender cannot
+   edit the email templates at all (reported since June 2026). With your own SMTP the templates are
+   editable on the free plan too.
+3. **Email templates** (after SMTP): Authentication → Emails → Templates. For each template below, set the subject and
    replace the message body with the full contents of the file from the repository (they contain the
    code `{{ .Token }}` and no link):
 
@@ -128,7 +132,6 @@ Do these before you test Sprint 2 on production; the app only works with **codes
    | Reset password       | `Your Lillyjean code: reset your password`    | `supabase/templates/recovery.html`     |
    | Change email address | `Your Lillyjean code: confirm your new email` | `supabase/templates/email_change.html` |
 
-3. **Custom SMTP** (see step 2): needed now. Without it, sign-up codes stop after a few emails per hour.
 4. **Make yourself admin** after creating your own account in the app (Supabase → SQL Editor):
 
    ```sql
