@@ -23,7 +23,27 @@ export type Database = {
           }
         },"public": {
           Tables: {
-            "feedback": {
+            "books": {
+                  Row: {
+                    "authors": (string)[],"cover_url": string | null,"created_at": string,"created_by": string | null,"description": string | null,"details_checked": boolean,"google_rating": number | null,"google_ratings_count": number | null,"id": string,"isbn": string | null,"published_year": number | null,"source": Database["public"]['Enums']["book_source"],"source_id": string | null,"title": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "authors"?: (string)[],"cover_url"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"details_checked"?: boolean,"google_rating"?: number | null,"google_ratings_count"?: number | null,"id"?: string,"isbn"?: string | null,"published_year"?: number | null,"source": Database["public"]['Enums']["book_source"],"source_id"?: string | null,"title": string
+                  }
+                  Update: {
+                    "authors"?: (string)[],"cover_url"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"details_checked"?: boolean,"google_rating"?: number | null,"google_ratings_count"?: number | null,"id"?: string,"isbn"?: string | null,"published_year"?: number | null,"source"?: Database["public"]['Enums']["book_source"],"source_id"?: string | null,"title"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "books_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"feedback": {
                   Row: {
                     "app_version": string,"created_at": string,"id": number,"message": string,"user_id": string | null
                   }
@@ -77,30 +97,106 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"reads": {
+                  Row: {
+                    "book_id": string,"created_at": string,"finished_on": string,"id": number,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "book_id": string,"created_at"?: string,"finished_on"?: string,"id"?: never,"user_id"?: string
+                  }
+                  Update: {
+                    "book_id"?: string,"created_at"?: string,"finished_on"?: string,"id"?: never,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "reads_book_id_fkey"
+      columns: ["book_id"]
+isOneToOne: false
+      referencedRelation: "books"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "reads_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"user_books": {
+                  Row: {
+                    "book_id": string,"created_at": string,"progress": number | null,"status": Database["public"]['Enums']["book_status"],"status_changed_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "book_id": string,"created_at"?: string,"progress"?: number | null,"status": Database["public"]['Enums']["book_status"],"status_changed_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "book_id"?: string,"created_at"?: string,"progress"?: number | null,"status"?: Database["public"]['Enums']["book_status"],"status_changed_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "user_books_book_id_fkey"
+      columns: ["book_id"]
+isOneToOne: false
+      referencedRelation: "books"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "user_books_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 }
           }
           Views: {
             [_ in never]: never
           }
           Functions: {
-            "is_admin":
+            "add_manual_book":
+{ Args: { "p_authors": (string)[],"p_description"?: string,"p_isbn"?: string,"p_status": Database["public"]['Enums']["book_status"],"p_title": string }; Returns: string
+                           },
+"is_admin":
 { Args: Record<PropertyKey, never>; Returns: boolean
                            },
 "is_reserved_username":
 { Args: { "name": string }; Returns: boolean
                            },
+"mark_book_read":
+{ Args: { "p_book_id": string,"p_finished_on"?: string }; Returns: number
+                           },
 "purge_deleted_accounts":
 { Args: Record<PropertyKey, never>; Returns: number
                            },
+"remove_my_book":
+{ Args: { "p_book_id": string }; Returns: Json
+                           },
 "request_account_deletion":
 { Args: Record<PropertyKey, never>; Returns: undefined
+                           },
+"restore_my_book":
+{ Args: { "p_book_id": string,"p_snapshot": Json }; Returns: undefined
+                           },
+"save_external_book":
+{ Args: { "p_authors"?: (string)[],"p_cover_url"?: string,"p_description"?: string,"p_details_checked"?: boolean,"p_google_rating"?: number,"p_google_ratings_count"?: number,"p_isbn"?: string,"p_published_year"?: number,"p_source": Database["public"]['Enums']["book_source"],"p_source_id": string,"p_title": string }; Returns: string
+                           },
+"save_external_books":
+{ Args: { "p_books": Json }; Returns: (string)[]
+                           },
+"set_book_status":
+{ Args: { "p_book_id": string,"p_progress"?: number,"p_status": Database["public"]['Enums']["book_status"] }; Returns: undefined
+                           },
+"undo_mark_book_read":
+{ Args: { "p_previous_progress"?: number,"p_previous_status"?: Database["public"]['Enums']["book_status"],"p_read_id": number }; Returns: undefined
                            },
 "username_available":
 { Args: { "name": string }; Returns: boolean
                            }
           }
           Enums: {
-            "app_role": "user"|"admin"
+            "app_role": "user"|"admin","book_source": "openlibrary"|"google"|"manual","book_status": "want_to_read"|"reading"|"read"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -220,7 +316,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "app_role": ["user", "admin"]
+            "app_role": ["user", "admin"],"book_source": ["openlibrary", "google", "manual"],"book_status": ["want_to_read", "reading", "read"]
           }
         }
 } as const
