@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/blip456/lillyjean/compare/v0.2.0...v0.2.1) (2026-10-11)
+
+
+### Bug Fixes
+
+* **release:** release pr titles and changelog links ([#7](https://github.com/blip456/lillyjean/issues/7)) ([00b8525](https://github.com/blip456/lillyjean/commit/00b8525045ef35f7820325693f7ed4971aabc461))
+
 ## [0.2.0](https://github.com/blip456/lillyjean/compare/v0.1.0...v0.2.0) (2026-10-11)
 
 
