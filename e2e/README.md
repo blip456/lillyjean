@@ -36,3 +36,13 @@ await logIn(page, reader);
 Book checks need offline book data, because the checks must not depend on Open Library or Google Books:
 add `BOOKS_API=fixtures` to `.env.local` before `pnpm build && pnpm start`. The books are listed in
 `src/lib/books/providers/fixtures.ts` (for example, searching "austen" finds three books).
+
+## Book search, book page and manual entry (Sprint 3)
+
+`books-search.cjs` searches "austen" (live results, filters, refresh, quick add), opens a book (rating,
+Goodreads link, status, mark as read with a past date, re-read, remove + Undo), adds a book manually
+(required fields first), checks unknown book ids (404) and the search without JavaScript.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/books-search.cjs
+```
