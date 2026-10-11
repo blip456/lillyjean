@@ -47,7 +47,7 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
     address** without a domain (e.g. Brevo): quicker,
     but emails are more likely to land in spam.
     Check the provider's current free-tier limits before choosing.
-- [ ] **(dev)** Link the repo to the project (`supabase link`) and apply migrations from Sprint 2 onwards.
+- [ ] Database changes are applied by GitHub Actions; see step 4.
 
 ## 3. Vercel project
 
@@ -60,7 +60,52 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
 - [ ] Optional: a custom domain for the app (Settings → Domains). The free Hobby plan is meant for
       non-commercial use; fine for testing.
 
-## 4. Testers
+## 4. Database deployments via GitHub Actions (decision T15)
+
+Database changes (migrations in `supabase/migrations`) are applied to production by the **Database
+deploy** workflow (`.github/workflows/db-deploy.yml`) after they are merged to `main`. Every pull request
+also runs a **Database** check in CI against a temporary local database. The Supabase credentials live
+only in GitHub; they never pass through chat or the development environment.
+
+1. **Create a Supabase access token:** in Supabase, click your avatar → **Account preferences** →
+   **Access Tokens** → **Generate new token**. Name it `github-actions-lillyjean`, set an expiry you
+   are comfortable with (e.g. one year) and copy it. You only see it once.
+2. **Find the project reference:** Project Settings → General → **Project ID** (20 lowercase
+   characters; also the first part of the project URL, `https://<project-id>.supabase.co`).
+3. **Find the database password:** the password you chose when creating the project. If you no longer
+   have it: Project Settings → Database → **Reset database password**. Nothing else uses it yet, so
+   resetting is safe now.
+4. **Create a GitHub environment:** in the repository, Settings → **Environments** → **New environment**
+   → name it exactly `production` → **Configure environment**.
+   - Optional: under **Deployment branches and tags**, choose "Selected branches and tags" and add
+     `main`, so only `main` can use these secrets.
+   - Optional: tick **Required reviewers** and add yourself if you want to approve every database
+     change before it runs (a manual step per release).
+5. **Add three environment secrets** (same page → **Environment secrets** → **Add environment secret**):
+
+   | Name                    | Value                             |
+   | ----------------------- | --------------------------------- |
+   | `SUPABASE_ACCESS_TOKEN` | the access token from step 1      |
+   | `SUPABASE_PROJECT_ID`   | the project reference from step 2 |
+   | `SUPABASE_DB_PASSWORD`  | the database password from step 3 |
+
+6. **Check it works (optional, recommended):** Actions tab → **Database deploy** → **Run workflow** on
+   `main`. With no migrations yet it should link to the project and report that the remote database
+   is up to date. A failure at "Link the production project" means a secret is wrong.
+7. **Require the database check on `main` (optional):** add `Database` to the required status checks of
+   the `Protect main` ruleset (Settings → Rules → Rulesets → Protect main → Require status checks →
+   Add checks). `.github/rulesets/protect-main.json` already includes it for future imports.
+
+Good to know:
+
+- The workflow only runs when a merge to `main` changes files in `supabase/migrations`, or when you start
+  it by hand.
+- Vercel deploys the app at the same time. For a minute the new app can run against the old database,
+  so migrations are written to be backwards compatible (add first, remove later).
+- When the access token expires, the workflow fails at "Link the production project"; generate a new
+  token and update the secret.
+
+## 5. Testers
 
 - [ ] Share the production URL with Jean and Lilly after Sprint 3 (decision D2).
 - [ ] Ask them to "Add to Home Screen" so the app behaves like an installed app.
@@ -69,4 +114,5 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
 
 - `main` is the protected default branch and CI runs on pull requests.
 - Merging to `main` deploys to Vercel production and release-please opens a release PR.
-- A test sign-up on production receives a 6-digit code by email within a minute.
+- A test sign-up on production receives a 6-digit code by email within a minute (from Sprint 2).
+- The **Database deploy** workflow can link to the production project.

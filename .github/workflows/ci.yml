@@ -27,6 +27,43 @@ jobs:
       - run: pnpm test
       - run: pnpm build
 
+  database:
+    name: Database
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Throwaway local Supabase (Docker) with only the services the checks need.
+      - name: Start local Supabase
+        run: pnpm exec supabase start -x realtime,storage-api,imgproxy,mailpit,studio,edge-runtime,logflare,vector,supavisor
+      - name: Apply all migrations from scratch
+        run: pnpm exec supabase db reset
+      - name: Lint the database schema
+        run: pnpm exec supabase db lint --local --fail-on error
+      - name: Run database tests
+        run: |
+          if compgen -G "supabase/tests/*.sql" > /dev/null; then
+            pnpm exec supabase test db
+          else
+            echo "No database tests yet."
+          fi
+      - name: Generated types are up to date
+        run: |
+          pnpm exec supabase gen types typescript --local > /tmp/database.types.ts
+          if compgen -G "supabase/migrations/*.sql" > /dev/null; then
+            diff -u src/lib/supabase/database.types.ts /tmp/database.types.ts || {
+              echo "::error::src/lib/supabase/database.types.ts is out of date. Run 'pnpm db:types' and commit the result."
+              exit 1
+            }
+          else
+            echo "No migrations yet; skipping the types check."
+          fi
+
   commits:
     name: Conventional commits
     if: github.event_name == 'pull_request'

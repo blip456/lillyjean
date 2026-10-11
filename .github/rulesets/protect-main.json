@@ -40,6 +40,10 @@
           {
             "context": "Conventional commits",
             "integration_id": 15368
+          },
+          {
+            "context": "Database",
+            "integration_id": 15368
           }
         ]
       }
