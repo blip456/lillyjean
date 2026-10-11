@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/blip456/lillyjean/compare/v0.2.2...v0.2.3) (2026-10-11)
+
+
+### Performance
+
+* **ui:** open screens instantly when tapping links ([#14](https://github.com/blip456/lillyjean/issues/14)) ([1c38e13](https://github.com/blip456/lillyjean/commit/1c38e130776e84fb5697f7ace12d972d013db331))
+
 ## [0.2.2](https://github.com/blip456/lillyjean/compare/v0.2.1...v0.2.2) (2026-10-11)
 
 
