@@ -36,6 +36,11 @@ The `commit-msg` hook checks this locally; CI checks every commit and the PR tit
 ## Branches and pull requests
 
 - Branch from `main`, open a PR, squash-merge. The PR title becomes the commit on `main`.
+- Branch names follow [Conventional Branch](https://conventionalbranch.org): `<type>/<description>`.
+  Types: `feature/` (or `feat/`), `bugfix/` (or `fix/`), `hotfix/`, `release/`, `chore/`. The
+  description is lower case with hyphens (`feature/add-login-page`, `fix/header-bug`,
+  `release/v1.2.0`). The `pre-push` hook and CI check it; GitHub refuses to create other branches.
+  Rename a branch with `git branch -m <type>/<description>`.
 - Every PR runs lint, format check, typecheck, tests and build.
 
 ## Releases
