@@ -28,8 +28,8 @@ the changelog shown in the app, so write them for a reader of the changelog.
 Breaking change: add `!` after the type (`feat!: …`) or a `BREAKING CHANGE:` footer. Before 1.0 a
 breaking change bumps the minor version.
 
-Allowed scopes: `auth`, `home`, `books`, `readlists`, `challenges`, `clubs`, `profile`, `ui`, `i18n`,
-`db`, `api`, `ci`, `deps`, `release`, `docs`.
+Allowed scopes: `auth`, `home`, `books`, `readlists`, `challenges`, `clubs`, `friends`, `admin`, `feedback`,
+`profile`, `ui`, `i18n`, `db`, `api`, `ci`, `deps`, `release`, `docs`.
 
 The `commit-msg` hook checks this locally; CI checks every commit and the PR title.
 
