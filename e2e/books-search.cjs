@@ -180,12 +180,17 @@ const LONG_DESCRIPTION =
         (await page.getByText("4.3 out of 5 stars").count()) === 1,
     );
     const goodreads = page.getByRole("link", { name: /View on Goodreads/ });
+    // By ISBN when the book has one, otherwise a search for title + author (P5).
+    const goodreadsHref = await goodreads.getAttribute("href");
     check(
       "View on Goodreads opens Goodreads in a new tab",
-      (await goodreads.getAttribute("href")) ===
-        "https://www.goodreads.com/book/isbn/9780141439518" &&
+      [
+        "https://www.goodreads.com/book/isbn/9780141439518",
+        "https://www.goodreads.com/search?q=Pride+and+Prejudice+Jane+Austen",
+      ].includes(goodreadsHref) &&
         (await goodreads.getAttribute("target")) === "_blank" &&
         (await goodreads.getAttribute("rel")) === "noopener noreferrer",
+      goodreadsHref,
     );
     check(
       "no overflow menu for a book that is not on the shelf",
