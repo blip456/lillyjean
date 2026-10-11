@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
   // The in-app changelog reads CHANGELOG.md at runtime; ship it with the server bundle.
   outputFileTracingIncludes: {
     "/changelog": ["./CHANGELOG.md"],
+    // What's coming reads the sprint plan at runtime.
+    "/whats-coming": ["./docs/backlog.md"],
   },
   turbopack: {
     rules: {

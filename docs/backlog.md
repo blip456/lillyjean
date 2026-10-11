@@ -8,7 +8,11 @@ We build in small, testable increments. The plan below is based on the wireframe
 
 - **Sprints of one week.** Every sprint delivers one increment of user value and ends with a release
   (version + changelog via release-please).
-- **Testers:** Jean and Lilly, plus the Product Owner. The first tester release is at the end of Sprint 3.
+- **Versions:** sprint N ships as **v0.N.0** (Sprint 3 → v0.3.0, Sprint 4 → v0.4.0, …). Hotfixes between
+  sprints are patch releases (v0.N.1, v0.N.2, …) and use `fix:` pull request titles. To get exactly one
+  minor release per sprint, merge the release PR once at the end of the sprint. Each sprint heading below
+  shows its version; the app's **What's coming** page (Settings → About) is generated from these sections.
+- **Testers:** Jean and Lilly, plus the Product Owner. The first tester release is v0.3.0 (Sprint 3).
 - **Feedback per release:** a short "please try this" checklist for each release, plus the in-app feedback
   form for anything else.
 - **One environment:** testers use production (Vercel + one Supabase project). Every change gets a Vercel
@@ -17,7 +21,7 @@ We build in small, testable increments. The plan below is based on the wireframe
 - **Look and feel:** a clean default theme until the polish sprint; content (library card, covers) carries
   the personality.
 
-## Sprint 0 — Foundation ✅
+## Sprint 0 — Foundation · v0.1.0 ✅
 
 - Next.js 16 + TypeScript + Tailwind scaffold
 - Supabase project config (local), typed client helpers, session-refresh proxy
@@ -26,7 +30,7 @@ We build in small, testable increments. The plan below is based on the wireframe
 - i18n setup (next-intl, `messages/en.json`, Loco-compatible)
 - CI: lint, format, typecheck, test, build, commit/PR-title lint
 
-## Sprint 1 — Wireframes v2 and production setup ✅
+## Sprint 1 — Wireframes v2 and production setup · no release ✅
 
 > Closed on 2026-10-11. Wireframes v2 were approved by the Product Owner without a second review
 > round (decision D7); production is set up, with database deployments via GitHub Actions (T15).
@@ -50,12 +54,13 @@ Goal: everyone agrees on what we build, and there is a place to release it.
   rate-limited)
   — checklist in [`setup-production.md`](setup-production.md)
 
-## Sprint 2 — Accounts (internal release, Product Owner tests) ✅
+## Sprint 2 — Accounts · v0.2.0 ✅
 
 > Closed on 2026-10-11. Released as **v0.2.0** (accounts, onboarding, settings, feedback) and **v0.2.1**
-> (release PR titles, clean What's new list). Tested by the Product Owner on production: account created,
-> admin role set, daily account clean-up job visible in Supabase. Verified before release with 25 database
-> tests, unit tests and an end-to-end browser check of every flow (`e2e/accounts.cjs`).
+> (release PR titles, clean What's new list). Hotfix **v0.2.2** adds the What's coming page (decision D8).
+> Tested by the Product Owner on production: account created, admin role set, daily account clean-up job
+> visible in Supabase. Verified before release with 25 database tests, unit tests and an end-to-end browser
+> check of every flow (`e2e/accounts.cjs`).
 >
 > Changes against the plan:
 >
@@ -82,12 +87,11 @@ Goal: you can create an account, get your library card and send feedback.
 - In-app feedback form; mini admin screen listing feedback, sortable old → new and new → old
 - PWA basics: manifest, icons, installable on the home screen
 
-## Sprint 3 — Track your books (Release 1 to Jean and Lilly)
+## Sprint 3 — Track your books · v0.3.0
 
-Goal: testers sign up and track what they read.
+Goal: the first release for Jean and Lilly: sign up and track what you read.
 
-- Book search (Open Library, Google Books fallback) with `books` cache; manual book entry when nothing
-  is found
+- Book search (Open Library, with Google Books as fallback); add a book by hand when nothing is found
 - Book detail: cover, title, author, description, Google rating where available, "View on Goodreads"
 - Statuses Want to read / Reading / Read; several books can be Reading at once; optional percentage on a
   Reading book
@@ -98,17 +102,17 @@ Goal: testers sign up and track what they read.
 - **+** menu: Add book, Mark as read
 - Test checklist for Jean and Lilly
 
-## Sprint 4 — Readlists (Release 2)
+## Sprint 4 — Readlists · v0.4.0
 
 Goal: collect books in readlists, like playlists.
 
 - Create, rename and delete readlists; add/remove books; a book in many readlists
 - Add-to-readlist sheet (multi-select + "New readlist")
-- Readlists overview with the three statuses as system lists and the filter bar (`C1`)
+- Readlists overview with your three statuses as lists and a filter bar
 - Automatic cover mosaic
 - Home: readlists row; **+** menu: New readlist
 
-## Sprint 5 — Personal challenges (Release 3)
+## Sprint 5 — Personal challenges · v0.5.0
 
 Goal: set yourself reading challenges and complete them.
 
@@ -124,7 +128,7 @@ Goal: set yourself reading challenges and complete them.
 - Home: ongoing challenges section; profile: completed challenges on the library card
 - **+** menu: New challenge
 
-## Sprint 6 — Official challenges and admin (Release 4)
+## Sprint 6 — Official challenges and admin · v0.6.0
 
 Goal: the Product Owner publishes app-wide challenges that everyone can join.
 
@@ -133,7 +137,7 @@ Goal: the Product Owner publishes app-wide challenges that everyone can join.
 - Others' progress on official challenges: count of finishers only
 - Admin screen keeps the feedback list (from Sprint 2)
 
-## Sprint 7 — Friends (Release 5)
+## Sprint 7 — Friends · v0.7.0
 
 Goal: connect with friends and see what they read.
 
@@ -141,7 +145,7 @@ Goal: connect with friends and see what they read.
 - Friends tab: friends list and pending requests
 - Friend profile: everything is visible to friends (library card, statuses, readlists, challenges)
 
-## Sprint 8 — Share and recommend (Release 6)
+## Sprint 8 — Share and recommend · v0.8.0
 
 Goal: reading together without bookclubs.
 
@@ -152,7 +156,7 @@ Goal: reading together without bookclubs.
 - Ratings with half stars; book detail shows the friends' average and the Google rating
 - Deleted accounts: shared contributions stay, shown as "Kicked out of the library"
 
-## Sprint 9 — Polish (Release 7)
+## Sprint 9 — Polish · v0.9.0
 
 Goal: make it feel like Lillyjean.
 

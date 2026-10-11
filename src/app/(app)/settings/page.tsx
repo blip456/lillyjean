@@ -60,6 +60,7 @@ export default async function SettingsPage({
           <span className="font-mono text-sm text-muted">v{APP_VERSION}</span>
         </div>
         <Row href="/changelog" label={t("whatsNew")} />
+        <Row href="/whats-coming" label={t("whatsComing")} />
       </Section>
 
       {profile.role === "admin" && (

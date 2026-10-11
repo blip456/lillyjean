@@ -166,7 +166,8 @@
     "passwordChanged": "Your password is changed.",
     "usernameChanged": "Your username is changed.",
     "pledgeSaved": "Your pledge is saved.",
-    "feedbackSent": "Thanks! We read every message."
+    "feedbackSent": "Thanks! We read every message.",
+    "whatsComing": "What's coming"
   },
   "changeUsername": {
     "title": "Change username",
@@ -230,5 +231,12 @@
     "whatsNew": "What's new",
     "noReleases": "No releases yet.",
     "back": "Back"
+  },
+  "roadmap": {
+    "title": "What's coming",
+    "intro": "Lillyjean grows in small releases. This is what we plan next; your feedback can still change it.",
+    "next": "Next",
+    "version": "v{version}",
+    "empty": "Everything we planned is released. New plans follow soon."
   }
 }
