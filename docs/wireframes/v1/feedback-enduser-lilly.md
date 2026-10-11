@@ -4,7 +4,7 @@
 | -------------- | --------------------------------------------------------------------------------- |
 | **Role**       | End user (reader)                                                                 |
 | **Reviewer**   | Lilly                                                                             |
-| **Wireframes** | v1 (`docs/wireframes/index.html`)                                                 |
+| **Wireframes** | v1 (`docs/wireframes/v1/index.html`)                                              |
 | **Received**   | 2026-10-11, via the feedback email from the wireframes page                       |
 | **Status**     | Recorded. To be consolidated with the Product Owner feedback and Jean's feedback. |
 

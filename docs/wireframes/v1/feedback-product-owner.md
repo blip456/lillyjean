@@ -4,7 +4,7 @@
 | -------------- | ----------------------------------------------------------- |
 | **Role**       | Product Owner                                               |
 | **Reviewer**   | Yoran Broodcooren                                           |
-| **Wireframes** | v1 (`docs/wireframes/index.html`)                           |
+| **Wireframes** | v1 (`docs/wireframes/v1/index.html`)                        |
 | **Received**   | 2026-10-07, via the feedback email from the wireframes page |
 | **Status**     | Recorded. Processing waits until end-user feedback is in.   |
 

@@ -1,7 +1,7 @@
 # Decisions log
 
 Decisions made during project kickoff (2026-10-07) and after the wireframe review round (2026-10-11, feedback
-from the Product Owner, Jean and Lilly in `docs/wireframes/feedback-*.md`). Each entry records what we chose,
+from the Product Owner, Jean and Lilly in `docs/wireframes/v1/feedback-*.md`). Each entry records what we chose,
 the alternatives considered and why. Add a new entry instead of rewriting an old one when a decision changes.
 
 ## Product
