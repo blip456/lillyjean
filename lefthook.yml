@@ -17,3 +17,8 @@ commit-msg:
   jobs:
     - name: commitlint
       run: pnpm exec commitlint --edit {1}
+
+pre-push:
+  jobs:
+    - name: branch name
+      run: node scripts/branch-name.mjs

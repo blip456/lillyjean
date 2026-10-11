@@ -66,6 +66,20 @@ jobs:
             echo "No migrations yet; skipping the types check."
           fi
 
+  branch:
+    name: Branch name
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Branch follows Conventional Branch (<type>/<description>)
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: node scripts/branch-name.mjs "$BRANCH"
+
   commits:
     name: Conventional commits
     if: github.event_name == 'pull_request'
