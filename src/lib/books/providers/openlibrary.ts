@@ -7,13 +7,12 @@ import {
   looksLikeIsbn,
   MAX_TITLE_LENGTH,
   normalizeIsbn,
-  pickIsbn,
 } from "../sanitize";
 import type { BookDetails, ExternalBook, SearchField } from "../types";
 
 /** Open Library (CC0), the primary book database (T3). https://openlibrary.org/developers/api */
 const BASE_URL = "https://openlibrary.org";
-const FIELDS = "key,title,subtitle,author_name,cover_i,first_publish_year,isbn";
+const FIELDS = "key,title,subtitle,author_name,cover_i,first_publish_year";
 
 export function openLibrarySearchUrl(
   query: string,
@@ -42,7 +41,6 @@ type SearchDoc = {
   author_name?: unknown;
   cover_i?: unknown;
   first_publish_year?: unknown;
-  isbn?: unknown;
 };
 
 /** Maps one search result; returns null for results that are not usable works. */
@@ -59,7 +57,9 @@ export function mapOpenLibraryDoc(doc: SearchDoc): ExternalBook | null {
     authors: cleanAuthors(doc.author_name),
     description: null,
     coverUrl: cleanCoverUrl(openLibraryCoverUrl(doc.cover_i)),
-    isbn: pickIsbn(Array.isArray(doc.isbn) ? doc.isbn.slice(0, 50) : null),
+    // A work has many editions; any one ISBN would point Goodreads at an arbitrary edition.
+    // searchExternalBooks sets it only when the search itself was an ISBN.
+    isbn: null,
     publishedYear: cleanYear(doc.first_publish_year),
     googleRating: null,
     googleRatingsCount: null,
