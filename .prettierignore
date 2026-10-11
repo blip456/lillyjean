@@ -5,3 +5,4 @@ node_modules
 supabase/.temp
 src/lib/supabase/database.types.ts
 docs/wireframes/**/*.html
+docs/design-system/**/*.html
