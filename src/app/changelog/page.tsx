@@ -1,22 +1,21 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
+import { PageHeader } from "@/components/page-header";
 import { getChangelog } from "@/lib/release/changelog.server";
 import { APP_VERSION } from "@/lib/release/version";
 
+/** What's new (G3): generated from release-please's CHANGELOG.md. */
 export default async function ChangelogPage() {
   const t = await getTranslations("release");
   const releases = await getChangelog();
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 p-6">
-      <Link href="/" className="text-sm underline-offset-4 hover:underline">
-        {t("back")}
-      </Link>
-      <h1 className="mt-4 text-2xl font-semibold">{t("whatsNew")}</h1>
-      <p className="text-sm opacity-70">
-        {t("version", { version: APP_VERSION })}
-      </p>
+    <div className="mx-auto w-full max-w-md flex-1 px-6 pt-[max(1rem,env(safe-area-inset-top))] pb-10 md:max-w-xl">
+      <PageHeader
+        title={t("whatsNew")}
+        backHref="/settings"
+        intro={t("version", { version: APP_VERSION })}
+      />
 
       {releases.length === 0 ? (
         <p className="mt-8">{t("noReleases")}</p>
@@ -24,17 +23,17 @@ export default async function ChangelogPage() {
         <ol className="mt-8 space-y-8">
           {releases.map((release) => (
             <li key={release.version}>
-              <h2 className="text-lg font-semibold">
-                {release.version}
+              <h2 className="font-serif text-xl font-semibold">
+                v{release.version}
                 {release.date && (
-                  <span className="ml-2 text-sm font-normal opacity-70">
+                  <span className="ml-2 font-sans text-sm font-normal text-muted">
                     {release.date}
                   </span>
                 )}
               </h2>
               {release.sections.map((section) => (
                 <section key={section.title} className="mt-3">
-                  <h3 className="text-sm font-medium uppercase opacity-70">
+                  <h3 className="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
                     {section.title}
                   </h3>
                   <ul className="mt-1 list-disc space-y-1 pl-5">
@@ -51,6 +50,6 @@ export default async function ChangelogPage() {
           ))}
         </ol>
       )}
-    </main>
+    </div>
   );
 }
