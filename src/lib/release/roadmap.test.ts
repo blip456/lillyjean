@@ -3,7 +3,7 @@ import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { parseBacklog, upcomingReleases } from "./roadmap";
+import { parseBacklog, sprintVersion, upcomingReleases } from "./roadmap";
 
 const SAMPLE = `# Backlog
 
@@ -62,6 +62,13 @@ describe("parseBacklog", () => {
     expect(
       upcomingReleases(parseBacklog(SAMPLE)).map((r) => r.version),
     ).toEqual(["0.3.0"]);
+  });
+
+  it("finds the version of a sprint", () => {
+    const releases = parseBacklog(SAMPLE);
+    expect(sprintVersion(releases, 3)).toBe("0.3.0");
+    expect(sprintVersion(releases, 1)).toBeNull();
+    expect(sprintVersion(releases, 9)).toBeNull();
   });
 });
 

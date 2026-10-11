@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
     "/changelog": ["./CHANGELOG.md"],
     // What's coming reads the sprint plan at runtime.
     "/whats-coming": ["./docs/backlog.md"],
+    // The "coming soon" tabs show the version that brings them.
+    "/readlists": ["./docs/backlog.md"],
+    "/challenges": ["./docs/backlog.md"],
+    "/friends": ["./docs/backlog.md"],
   },
   experimental: {
     // Visited and prefetched pages stay in the client cache for 30 s, so links

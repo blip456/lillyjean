@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
+import { OnboardingStep } from "@/components/account/onboarding-step";
 import { PledgeForm } from "@/components/account/pledge-form";
 import { PageHeader } from "@/components/page-header";
 import { requireOnboardedAccount } from "@/lib/account/guards";
@@ -14,14 +15,8 @@ export default async function PledgePage() {
       <PageHeader
         title={t("onboarding.pledge.title")}
         intro={t("onboarding.pledge.intro")}
-        aside={
-          <span className="text-sm font-semibold text-muted">
-            {t("common.stepOf", {
-              step: ONBOARDING_STEPS,
-              total: ONBOARDING_STEPS,
-            })}
-          </span>
-        }
+        backHref="/onboarding/currently-reading"
+        aside={<OnboardingStep step={ONBOARDING_STEPS} />}
       />
       <PledgeForm
         context="onboarding"

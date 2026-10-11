@@ -70,7 +70,7 @@ export async function saveUsername(
   refreshPages();
   redirect(
     context === "onboarding"
-      ? "/onboarding/pledge"
+      ? "/onboarding/currently-reading"
       : "/settings?changed=username",
   );
 }

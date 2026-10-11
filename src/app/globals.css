@@ -47,6 +47,14 @@
   --font-serif: ui-serif, Georgia, "Times New Roman", serif;
 }
 
+/*
+ * Height of the tab bar (N1) above the safe area, while it is shown. Page content and the
+ * snackbar keep this much space free at the bottom.
+ */
+:root:has([data-tab-bar]) {
+  --tab-bar-height: 4rem;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
