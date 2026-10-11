@@ -41,7 +41,8 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
       allows a handful of emails per hour, which breaks sign-up codes during testing. Options:
   - a transactional email service with your **own domain** (e.g. Resend, Postmark): best delivery, needs
     DNS records on a domain you own;
-  - a service that allows a **verified single sender address** without a domain (e.g. Brevo): quicker,
+  - **chosen for now (no own domain yet, decision T13):** a service that allows a **verified single sender
+    address** without a domain (e.g. Brevo): quicker,
     but emails are more likely to land in spam.
     Check the provider's current free-tier limits before choosing.
 - [ ] **(dev)** Link the repo to the project (`supabase link`) and apply migrations from Sprint 2 onwards.
