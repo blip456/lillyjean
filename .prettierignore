@@ -4,4 +4,4 @@ CHANGELOG.md
 node_modules
 supabase/.temp
 src/lib/supabase/database.types.ts
-docs/wireframes/index.html
+docs/wireframes/**/*.html
