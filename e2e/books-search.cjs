@@ -153,7 +153,11 @@ const LONG_DESCRIPTION =
     await row("Emma").getByRole("button", { name: "+ Want to read" }).click();
     check(
       "quick add puts Emma on Want to read",
-      await visible(row("Emma").getByText("Want to read", { exact: true })),
+      await visible(
+        row("Emma").locator('button[aria-haspopup="dialog"]', {
+          hasText: "Want to read",
+        }),
+      ),
     );
 
     // D2: book page
@@ -166,7 +170,11 @@ const LONG_DESCRIPTION =
       (await visible(
         page.getByRole("heading", { level: 1, name: "Pride and Prejudice" }),
       )) &&
-        (await page.getByText("Jane Austen", { exact: true }).isVisible()) &&
+        // The first match is the author line; the status sheets repeat it while closed.
+        (await page
+          .getByText("Jane Austen", { exact: true })
+          .first()
+          .isVisible()) &&
         (await page.getByText("Published in 1813").isVisible()),
     );
     check(
@@ -262,12 +270,17 @@ const LONG_DESCRIPTION =
     );
     check(
       "the results show the new statuses",
+      // The status pill opens the status sheet; the swipe actions repeat the status names.
       (await visible(
-        row("Pride and Prejudice").getByText("Read", { exact: true }),
+        row("Pride and Prejudice").locator('button[aria-haspopup="dialog"]', {
+          hasText: /^Read\b/,
+        }),
       )) &&
-        (await row("Emma")
-          .getByText("Want to read", { exact: true })
-          .count()) === 1,
+        (await visible(
+          row("Emma").locator('button[aria-haspopup="dialog"]', {
+            hasText: /^Want to read\b/,
+          }),
+        )),
     );
 
     // D3: add a book manually
