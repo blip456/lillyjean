@@ -1,16 +1,17 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useId, useState, useTransition } from "react";
+import { useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
-import { useSnackbar } from "@/components/ui/snackbar";
 import { useErrorMessage } from "@/components/use-error-message";
-import { markBookRead, undoMarkBookRead } from "@/lib/books/actions";
 import type { BookListItem } from "@/lib/books/types";
-import { localDate } from "@/lib/books/validation";
+import { finishedOnSchema, localDate } from "@/lib/books/validation";
+import { firstError } from "@/lib/validation";
+
+import { type BookStatusApi, useBookStatus } from "./use-book-status";
 
 export type MarkAsReadSheetProps = {
   book: Pick<
@@ -19,13 +20,22 @@ export type MarkAsReadSheetProps = {
   >;
   open: boolean;
   onClose: () => void;
-  /** Called after the book is marked as read (before the sheet closes). */
+  /**
+   * Called once the server saved the read. The sheet closes straight away (optimistic), so this
+   * runs after `onClose`.
+   */
   onMarked?: (readId: number) => void;
+  /**
+   * The status state of a row or control that opened this sheet, so it shows Read at once.
+   * Without it the sheet keeps its own.
+   */
+  statusApi?: BookStatusApi;
 };
 
 /**
- * Mark as read (D4): finish date (default today, D-PO1) and the re-read note (P28).
- * After saving, a snackbar offers Undo.
+ * Mark as read (D4): finish date (default today, at most today, P35) and the re-read note
+ * (P28). Saving closes the sheet at once; a snackbar offers Undo for 5 s.
+ * Rating (S8) and completed challenges (S5) join in later sprints.
  *
  * Owned by the status-tracking feature (Sprint 3); the props are a shared contract.
  */
@@ -34,18 +44,11 @@ export function MarkAsReadSheet({
   open,
   onClose,
   onMarked,
+  statusApi,
 }: MarkAsReadSheetProps) {
   const t = useTranslations("books");
-  const errorMessage = useErrorMessage();
-  const showSnackbar = useSnackbar();
-  const id = useId();
-  const [error, setError] = useState<string>();
-  const [pending, startTransition] = useTransition();
-  const today = localDate();
-
-  const previous = book.status
-    ? { status: book.status, progress: book.progress }
-    : null;
+  const ownApi = useBookStatus(book);
+  const api = statusApi ?? ownApi;
 
   return (
     <Sheet
@@ -54,57 +57,79 @@ export function MarkAsReadSheet({
       title={t("markAsRead")}
       description={`${book.title} · ${book.authors.join(", ") || t("unknownAuthor")}`}
     >
-      <form
-        className="space-y-5"
-        onSubmit={(event) => {
-          event.preventDefault();
-          const finishedOn = String(
-            new FormData(event.currentTarget).get("finishedOn") ?? "",
-          );
-          startTransition(async () => {
-            const result = await markBookRead(book.id, finishedOn);
-            if (!result.ok) {
-              setError(result.error);
-              return;
-            }
-            setError(undefined);
-            onMarked?.(result.data.readId);
+      {/* Mounted per opening, so the date starts at today and old errors are gone. */}
+      {open && (
+        <MarkAsReadForm
+          isReRead={api.state.readCount > 0}
+          onSubmit={(finishedOn) => {
             onClose();
-            showSnackbar({
-              message: t("markedRead"),
-              actionLabel: t("undo"),
-              onAction: () => {
-                void undoMarkBookRead(result.data.readId, previous);
-              },
-            });
-          });
-        }}
-      >
-        <Field
-          id={`${id}-finished-on`}
-          label={t("finishedOn")}
-          hint={t("finishedOnHint")}
-          error={errorMessage(error)}
-        >
-          {(describedBy, invalid) => (
-            <Input
-              id={`${id}-finished-on`}
-              name="finishedOn"
-              type="date"
-              defaultValue={today}
-              max={today}
-              aria-describedby={describedBy}
-              aria-invalid={invalid}
-            />
-          )}
-        </Field>
-        {book.readCount > 0 && (
-          <p className="text-sm text-muted">{t("reReadNote")}</p>
-        )}
-        <Button type="submit" block disabled={pending}>
-          {t("markAsRead")}
-        </Button>
-      </form>
+            api.markRead(finishedOn, onMarked);
+          }}
+        />
+      )}
     </Sheet>
+  );
+}
+
+function MarkAsReadForm({
+  isReRead,
+  onSubmit,
+}: {
+  isReRead: boolean;
+  onSubmit: (finishedOn: string) => void;
+}) {
+  const t = useTranslations("books");
+  const errorMessage = useErrorMessage();
+  const id = useId();
+  const [error, setError] = useState<string>();
+  const [today] = useState(localDate);
+
+  return (
+    <form
+      className="space-y-5"
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        const finishedOn = String(
+          new FormData(event.currentTarget).get("finishedOn") ?? "",
+        );
+        // Checked here too, so the sheet can close before the server answers.
+        const parsed = finishedOnSchema.safeParse(finishedOn);
+        if (!parsed.success || (finishedOn && finishedOn > today)) {
+          setError(
+            parsed.success ? "finishedOnFuture" : firstError(parsed.error),
+          );
+          return;
+        }
+        onSubmit(finishedOn);
+      }}
+    >
+      <Field
+        id={`${id}-finished-on`}
+        label={t("finishedOn")}
+        hint={t("finishedOnHint")}
+        error={errorMessage(error)}
+      >
+        {(describedBy, invalid) => (
+          <Input
+            id={`${id}-finished-on`}
+            name="finishedOn"
+            type="date"
+            defaultValue={today}
+            max={today}
+            aria-describedby={describedBy}
+            aria-invalid={invalid}
+          />
+        )}
+      </Field>
+      {isReRead && (
+        <p className="rounded-xl border border-border bg-background px-4 py-3 text-sm">
+          {t("reReadNote")}
+        </p>
+      )}
+      <Button type="submit" block>
+        {t("markAsRead")}
+      </Button>
+    </form>
   );
 }
