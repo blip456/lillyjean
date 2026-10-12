@@ -135,16 +135,40 @@
       "noGoal": "No goal, just reading",
       "noGoalHint": "Home shows the books you read, without a target.",
       "finish": "Finish"
+    },
+    "currentlyReading": {
+      "title": "What are you reading now?",
+      "intro": "Optional. Add one or more books.",
+      "search": "Search by title or author",
+      "results": "Search results",
+      "resultCount": "{count, plural, =0 {No books found} one {# book found} other {# books found}}",
+      "searching": "Searching…",
+      "chosen": "Your books",
+      "cantFind": "Can't find it?",
+      "addManually": "Add it manually",
+      "skip": "Skip"
     }
   },
   "home": {
-    "greeting": "Welcome {username}",
     "thisYear": "This year",
-    "booksRead": "{count} of {goal} books read this year",
-    "booksReadNoGoal": "{count} books read this year",
     "pledgeLink": "Set a reading pledge",
-    "comingNext": "Book tracking arrives in the next release: search books, mark them as reading or read, and see them here.",
-    "openProfile": "Open your profile"
+    "openProfile": "Open your profile",
+    "addBook": "Add a book",
+    "booksReadLabel": "Books read this year",
+    "currentlyReading": "Currently reading",
+    "noGoal": "No goal, just reading",
+    "emptyTitle": "Nothing on your nightstand yet",
+    "all": "All ({count})",
+    "emptyText": "Find a book and mark it as Reading.",
+    "pledgeGoal": "Your pledge: {goal, plural, one {# book} other {# books}}",
+    "countOfGoal": "<big>{count}</big> of {goal}",
+    "welcome": "Welcome",
+    "pace": {
+      "reached": "Pledge reached. Well done!",
+      "onTrack": "On track",
+      "ahead": "{books} ahead of your pledge",
+      "behind": "{books} behind your pledge"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -369,5 +393,29 @@
       },
       "findBook": "Find a book"
     }
+  },
+  "markAsReadPicker": {
+    "title": "Mark as read",
+    "intro": "Pick the book you finished.",
+    "readingList": "Books you are reading",
+    "empty": "You are not reading any books right now.",
+    "notInList": "Not in the list?",
+    "search": "Search for a book"
+  },
+  "tabs": {
+    "label": "Main",
+    "home": "Home",
+    "readlists": "Readlists",
+    "challenges": "Challenges",
+    "friends": "Friends",
+    "create": "Create",
+    "closeCreate": "Close the create menu"
+  },
+  "createMenu": {
+    "title": "Create",
+    "addBook": "Add book",
+    "addBookHint": "Search the book database or add one manually",
+    "markAsRead": "Mark as read",
+    "markAsReadHint": "Pick one of your books and finish it"
   }
 }

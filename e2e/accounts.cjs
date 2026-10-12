@@ -118,15 +118,18 @@ const psql = (sql) =>
     check("live availability check says Available", true);
     await shot("03-library-card");
     await page.getByRole("button", { name: "Continue" }).click();
+    await page.waitForURL(/\/onboarding\/currently-reading/);
+    check(
+      "Currently reading is step 2 of 3 and can be skipped",
+      await visible(page.getByText("2 of 3")),
+    );
+    await page.getByRole("link", { name: "Skip" }).click();
     await page.waitForURL(/\/onboarding\/pledge/);
     await page.getByRole("button", { name: "One book more" }).click();
     await shot("04-pledge");
     await page.getByRole("button", { name: "Finish" }).click();
     await page.waitForURL(BASE + "/");
-    check(
-      "Home shows the pledge",
-      await visible(page.getByText("0 of 13 books read this year")),
-    );
+    check("Home shows the pledge", await visible(page.getByText("0 of 13")));
     await shot("05-home");
 
     // 3. Profile and settings

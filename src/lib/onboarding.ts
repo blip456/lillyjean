@@ -1,2 +1,2 @@
-/** Library card + reading pledge; "Currently reading" joins in Sprint 3. */
-export const ONBOARDING_STEPS = 2;
+/** Library card → Currently reading (optional) → reading pledge. */
+export const ONBOARDING_STEPS = 3;
