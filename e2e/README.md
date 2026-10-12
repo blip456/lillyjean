@@ -56,3 +56,17 @@ with a past date, re-reads and keyboard use without swiping.
 ```bash
 BASE_URL=http://localhost:3000 node e2e/book-status.cjs
 ```
+
+## Home, tab bar, + menu and onboarding (Sprint 3)
+
+`home-and-onboarding.cjs` creates an account without a username and goes through onboarding with the
+"Currently reading" step (search, choose books, the manual-entry link, Skip), then checks Home (stats with
+the pace line, currently reading, empty states), the tab bar (only shipped tabs), the + menu and the
+mark-as-read picker.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/home-and-onboarding.cjs
+```
+
+All Sprint 3 checks run against one build with `BOOKS_API=fixtures` (about five minutes in total):
+`accounts.cjs`, `books-search.cjs`, `book-status.cjs` and `home-and-onboarding.cjs`.

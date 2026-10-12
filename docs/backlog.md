@@ -89,6 +89,16 @@ Goal: you can create an account, get your library card and send feedback.
 
 ## Sprint 3 — Track your books · v0.3.0
 
+> Built on 2026-10-12, in review by the Product Owner before the release PR is merged. Shipped in four
+> pull requests: the book tracking foundation (database, Open Library / Google Books, decisions
+> P35–P38, T18, T19), search + book page + manual entry, status tracking (swipe, status sheet, mark as
+> read, Undo, P39) and Home + tab bar + + menu + onboarding. Checked with 189 unit tests, 32 database
+> tests and four end-to-end checks (`e2e/`); the "please try this" list for Jean and Lilly is
+> [`test-checklists/v0.3.0.md`](test-checklists/v0.3.0.md).
+>
+> Still to check before the release: swiping on a real Android phone and an installed iPhone app, and a
+> Google Books API key in Vercel (`GOOGLE_BOOKS_API_KEY`) so Google ratings show reliably.
+
 Goal: the first release for Jean and Lilly: sign up and track what you read.
 
 - Book search (Open Library, with Google Books as fallback); add a book by hand when nothing is found
