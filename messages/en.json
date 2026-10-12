@@ -153,22 +153,22 @@
     "thisYear": "This year",
     "pledgeLink": "Set a reading pledge",
     "openProfile": "Open your profile",
-    "currentlyReading": "Currently reading",
     "addBook": "Add a book",
+    "booksReadLabel": "Books read this year",
+    "currentlyReading": "Currently reading",
+    "noGoal": "No goal, just reading",
+    "emptyTitle": "Nothing on your nightstand yet",
+    "all": "All ({count})",
     "emptyText": "Find a book and mark it as Reading.",
+    "pledgeGoal": "Your pledge: {goal, plural, one {# book} other {# books}}",
+    "countOfGoal": "<big>{count}</big> of {goal}",
     "welcome": "Welcome",
     "pace": {
       "reached": "Pledge reached. Well done!",
       "onTrack": "On track",
       "ahead": "{books} ahead of your pledge",
       "behind": "{books} behind your pledge"
-    },
-    "all": "All ({count})",
-    "booksReadLabel": "Books read this year",
-    "pledgeGoal": "Your pledge: {goal, plural, one {# book} other {# books}}",
-    "noGoal": "No goal, just reading",
-    "countOfGoal": "<big>{count}</big> of {goal}",
-    "emptyTitle": "Nothing on your nightstand yet"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -344,14 +344,63 @@
     "removed": "Removed from your books",
     "markedRead": "Marked as read",
     "myStatus": "My status",
-    "quickAdd": "+ Want to read"
+    "quickAdd": "+ Want to read",
+    "setStatus": "Set status",
+    "changeStatusOf": "change the status of {title}"
   },
-  "createMenu": {
-    "title": "Create",
-    "addBook": "Add book",
-    "addBookHint": "Search the book database or add one manually",
-    "markAsRead": "Mark as read",
-    "markAsReadHint": "Pick one of your books and finish it"
+  "bookStatus": {
+    "statusLegend": "Status",
+    "readHint": "Asks for the finish date",
+    "progressLabel": "Progress (optional)",
+    "progressHint": "Only if you like to keep track",
+    "progressNotSet": "Not set",
+    "progressValue": "{progress}%",
+    "clearProgress": "Clear",
+    "clearProgressLabel": "Clear progress",
+    "remove": "Remove from my books",
+    "save": "Save",
+    "continue": "Continue",
+    "progressSummary": "Progress (optional): {progress}%",
+    "progressSummaryNotSet": "Progress (optional): not set",
+    "editProgress": "Edit",
+    "editProgressLabel": "Edit progress",
+    "progressSaved": "Progress saved",
+    "markedReadAgain": "Marked as read again",
+    "undone": "Change undone",
+    "swipeActions": "Change the status of {title}",
+    "swipeHint": "Tip: swipe a book to change its status",
+    "dismissHint": "Dismiss tip",
+    "shelf": {
+      "count": "{count, plural, =0 {No books} one {# book} other {# books}}",
+      "title": {
+        "want_to_read": "Want to read",
+        "reading": "Reading",
+        "read": "Read"
+      },
+      "empty": {
+        "want_to_read": {
+          "title": "Nothing on your wish list yet",
+          "text": "Find a book you would like to read and set it to Want to read."
+        },
+        "reading": {
+          "title": "Nothing on your nightstand yet",
+          "text": "Find a book and mark it as Reading."
+        },
+        "read": {
+          "title": "No finished books yet",
+          "text": "When you finish a book, mark it as read and it shows up here."
+        }
+      },
+      "findBook": "Find a book"
+    }
+  },
+  "markAsReadPicker": {
+    "title": "Mark as read",
+    "intro": "Pick the book you finished.",
+    "readingList": "Books you are reading",
+    "empty": "You are not reading any books right now.",
+    "notInList": "Not in the list?",
+    "search": "Search for a book"
   },
   "tabs": {
     "label": "Main",
@@ -362,12 +411,11 @@
     "create": "Create",
     "closeCreate": "Close the create menu"
   },
-  "markAsReadPicker": {
-    "title": "Mark as read",
-    "intro": "Pick the book you finished.",
-    "readingList": "Books you are reading",
-    "empty": "You are not reading any books right now.",
-    "notInList": "Not in the list?",
-    "search": "Search for a book"
+  "createMenu": {
+    "title": "Create",
+    "addBook": "Add book",
+    "addBookHint": "Search the book database or add one manually",
+    "markAsRead": "Mark as read",
+    "markAsReadHint": "Pick one of your books and finish it"
   }
 }

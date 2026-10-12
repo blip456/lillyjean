@@ -46,3 +46,13 @@ Goodreads link, status, mark as read with a past date, re-read, remove + Undo), 
 ```bash
 BASE_URL=http://localhost:3000 node e2e/books-search.cjs
 ```
+
+## Status tracking (Sprint 3)
+
+`book-status.cjs` covers the shelf lists (`/books/shelf/*`): the one-time swipe hint, swiping with mouse
+and touch (reveal, long swipe, Undo), the status sheet (percentage, Clear, Remove + Undo), mark as read
+with a past date, re-reads and keyboard use without swiping.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/book-status.cjs
+```
