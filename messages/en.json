@@ -250,6 +250,55 @@
     "version": "v{version}",
     "empty": "Everything we planned is released. New plans follow soon."
   },
+  "bookSearch": {
+    "title": "Add book",
+    "label": "Search by title, author or ISBN",
+    "filter": "Search in",
+    "fields": {
+      "all": "All",
+      "title": "Title",
+      "author": "Author"
+    },
+    "searching": "Searching…",
+    "results": "{count, plural, =0 {No books found} one {# result} other {# results}}",
+    "resultsList": "Search results",
+    "noResultsHint": "Check the spelling, or search for the author instead.",
+    "cantFind": "Can't find it?",
+    "addYourself": "Add the book yourself",
+    "addManually": "Add it manually"
+  },
+  "addBook": {
+    "title": "Add a book manually",
+    "close": "Close",
+    "bookTitle": "Title",
+    "author": "Author",
+    "required": "Required",
+    "isbn": "ISBN (optional)",
+    "isbnHint": "Helps friends find the same book",
+    "description": "Description (optional)",
+    "cover": "Cover",
+    "coverHint": "A plain cover with the title is made for you",
+    "status": "My status",
+    "submit": "Add book"
+  },
+  "bookDetail": {
+    "more": "More options",
+    "published": "Published in {year}",
+    "ratings": "Ratings",
+    "googleRating": "Google rating",
+    "ratingOutOf": "{rating} out of 5 stars",
+    "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
+    "goodreads": "View on Goodreads",
+    "newTab": "(opens in a new tab)",
+    "about": "About this book",
+    "readMore": "Read more",
+    "readLess": "Show less",
+    "markAsReadAgain": "Mark as read again",
+    "remove": "Remove from my books",
+    "notFound": "We can't find this book",
+    "notFoundText": "The link may be wrong, or the book is no longer available.",
+    "searchBooks": "Search for a book"
+  },
   "books": {
     "status": {
       "want_to_read": "Want to read",
