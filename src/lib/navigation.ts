@@ -1,34 +1,38 @@
 /**
- * Tab bar (N1, P21): Home · Readlists · + · Challenges · Friends. The + opens the create menu
- * (N2) instead of a page.
+ * Tab bar (N1, P21): Home · Readlists · + · Challenges · Friends. The + (slot 3) opens the create
+ * menu (N2) instead of a page. A tab only shows once its feature has shipped (N1: no "coming
+ * soon" tabs); its slot stays the same, so tabs never move around. Flip `shipped` in the sprint
+ * that brings the tab: Readlists in Sprint 4, Challenges in Sprint 5, Friends in Sprint 7.
  */
 export const TABS = [
-  { id: "home", href: "/" },
-  { id: "readlists", href: "/readlists" },
-  { id: "challenges", href: "/challenges" },
-  { id: "friends", href: "/friends" },
-] as const;
+  { id: "home", href: "/", slot: 1, shipped: true },
+  { id: "readlists", href: "/readlists", slot: 2, shipped: false },
+  { id: "challenges", href: "/challenges", slot: 4, shipped: false },
+  { id: "friends", href: "/friends", slot: 5, shipped: false },
+] as const satisfies readonly {
+  id: string;
+  href: string;
+  slot: 1 | 2 | 4 | 5;
+  shipped: boolean;
+}[];
 
-export type TabId = (typeof TABS)[number]["id"];
-export type ComingSoonFeature = Exclude<TabId, "home">;
+export type Tab = (typeof TABS)[number];
+export type TabId = Tab["id"];
 
-/**
- * Readlists, Challenges and Friends open a "coming soon" page until the backlog sprint that
- * brings them ships (docs/backlog.md).
- */
-export const COMING_SOON_SPRINT: Record<ComingSoonFeature, number> = {
-  readlists: 4,
-  challenges: 5,
-  friends: 7,
-};
+/** Tabs that are shown in the tab bar. */
+export function shippedTabs(): Tab[] {
+  return TABS.filter((tab) => tab.shipped);
+}
 
-/** The tab that the current page belongs to, if any. */
-export function activeTab(pathname: string): TabId | null {
-  if (pathname === "/") return "home";
-  const tab = TABS.find(
-    (item) =>
-      item.href !== "/" &&
-      (pathname === item.href || pathname.startsWith(`${item.href}/`)),
+/** The shown tab that the current page belongs to, if any. */
+export function activeTab(
+  pathname: string,
+  tabs: readonly Pick<Tab, "id" | "href">[] = shippedTabs(),
+): TabId | null {
+  const tab = tabs.find((item) =>
+    item.href === "/"
+      ? pathname === "/"
+      : pathname === item.href || pathname.startsWith(`${item.href}/`),
   );
   return tab?.id ?? null;
 }

@@ -1,32 +1,25 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-
 import { describe, expect, it } from "vitest";
 
 import {
   activeTab,
   addManuallyHref,
-  COMING_SOON_SPRINT,
   hidesTabBar,
+  shippedTabs,
+  TABS,
 } from "./navigation";
-import { parseBacklog, sprintVersion } from "./release/roadmap";
 
-describe("COMING_SOON_SPRINT", () => {
-  it("points at the backlog sprints that bring each tab", () => {
-    const releases = parseBacklog(
-      readFileSync(path.join(process.cwd(), "docs", "backlog.md"), "utf8"),
-    );
-    const versions = Object.fromEntries(
-      Object.entries(COMING_SOON_SPRINT).map(([feature, sprint]) => [
-        feature,
-        sprintVersion(releases, sprint),
-      ]),
-    );
-    expect(versions).toEqual({
-      readlists: "0.4.0",
-      challenges: "0.5.0",
-      friends: "0.7.0",
-    });
+describe("shippedTabs", () => {
+  it("shows only Home in Sprint 3 (no coming-soon tabs, N1)", () => {
+    expect(shippedTabs().map((tab) => tab.id)).toEqual(["home"]);
+  });
+
+  it("keeps every tab in its own slot around the + (slot 3)", () => {
+    expect(TABS.map((tab) => [tab.id, tab.slot])).toEqual([
+      ["home", 1],
+      ["readlists", 2],
+      ["challenges", 4],
+      ["friends", 5],
+    ]);
   });
 });
 
@@ -37,14 +30,14 @@ describe("activeTab", () => {
     expect(activeTab("/books/search")).toBeNull();
   });
 
-  it("marks a tab on its page and the pages below it", () => {
-    expect(activeTab("/readlists")).toBe("readlists");
-    expect(activeTab("/challenges/abc")).toBe("challenges");
-    expect(activeTab("/friends")).toBe("friends");
+  it("ignores tabs that have not shipped", () => {
+    expect(activeTab("/readlists")).toBeNull();
   });
 
-  it("does not match pages that only start with the same letters", () => {
-    expect(activeTab("/friendship")).toBeNull();
+  it("marks a shipped tab on its page and the pages below it", () => {
+    expect(activeTab("/readlists", TABS)).toBe("readlists");
+    expect(activeTab("/challenges/abc", TABS)).toBe("challenges");
+    expect(activeTab("/friendship", TABS)).toBeNull();
   });
 });
 

@@ -313,13 +313,17 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       })),
     );
     check(
-      "tab bar: Home · Readlists · + · Challenges · Friends",
+      "tab bar shows only shipped tabs: Home and +",
       JSON.stringify(tabs.map((tab) => tab.name)) ===
-        JSON.stringify(["Home", "Readlists", "Challenges", "Friends"]) &&
+        JSON.stringify(["Home"]) &&
         (await nav
           .getByRole("button", { name: "Create", exact: true })
           .count()) === 1,
       tabs.map((tab) => tab.name).join(","),
+    );
+    check(
+      "no Readlists, Challenges or Friends tabs before their sprint (N1)",
+      (await nav.getByText(/Readlists|Challenges|Friends/).count()) === 0,
     );
     check(
       "Home is the current tab (aria-current=page)",
@@ -331,28 +335,32 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
     const plusBox = await nav
       .getByRole("button", { name: "Create", exact: true })
       .boundingBox();
+    const homeBox = await nav.getByRole("link", { name: "Home" }).boundingBox();
     check(
       "tab targets are at least 44 px",
       tabs.every((tab) => tab.height >= 44 && tab.width >= 44) &&
         plusBox.height >= 44 &&
         plusBox.width >= 44,
     );
+    check(
+      "Home keeps its left slot and + stays centred",
+      homeBox.x + homeBox.width < 390 / 3 &&
+        Math.abs(plusBox.x + plusBox.width / 2 - 195) <= 2,
+      `home x=${Math.round(homeBox.x)}, + centre=${Math.round(plusBox.x + plusBox.width / 2)}`,
+    );
     const layout = await page.evaluate(() => {
       const bar = document
         .querySelector("[data-tab-bar]")
         .getBoundingClientRect();
-      const main = document.querySelector("main").getBoundingClientRect();
       const wrapper = document.querySelector("main").parentElement;
       return {
         variable: getComputedStyle(document.documentElement)
           .getPropertyValue("--tab-bar-height")
           .trim(),
-        barTop: bar.top,
         barBottom: bar.bottom,
         viewport: window.innerHeight,
         padding: parseFloat(getComputedStyle(wrapper).paddingBottom),
         barHeight: bar.height,
-        mainBottom: main.bottom,
       };
     });
     check(
@@ -362,6 +370,9 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
         layout.padding >= layout.barHeight,
       JSON.stringify(layout),
     );
+    await page.locator("[data-tab-bar]").screenshot({
+      path: `${SHOTS}/14-tab-bar.png`,
+    });
 
     // 3. + menu (N2)
     const plus = nav.getByRole("button", { name: "Create", exact: true });
@@ -402,39 +413,23 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
     await plus.click();
     await page.mouse.click(195, 120);
     check("a tap outside closes the sheet", (await menu.count()) === 0);
+    await page.goto(`${BASE}/profile`);
     await plus.click();
-    await nav.getByRole("link", { name: "Friends" }).click();
-    await page.waitForURL(/\/friends$/);
+    await nav.getByRole("link", { name: "Home" }).click();
+    await page.waitForURL(`${BASE}/`);
     check(
       "tabs stay usable while the sheet is open",
       (await menu.count()) === 0,
     );
+    await page.goto(`${BASE}/readlists`);
+    check(
+      "unshipped tab pages do not exist yet",
+      (await visible(page.getByText(/could not be found|404/).first())) &&
+        (await page.getByText(/Arrives in version/).count()) === 0,
+    );
 
-    // 4. Coming soon tabs
-    for (const [tab, version] of [
-      ["Friends", "0.7.0"],
-      ["Readlists", "0.4.0"],
-      ["Challenges", "0.5.0"],
-    ]) {
-      await nav.getByRole("link", { name: tab }).click();
-      await page.waitForURL(new RegExp(`/${tab.toLowerCase()}$`));
-      check(
-        `${tab} says it arrives in v${version} and is the current tab`,
-        (await visible(page.getByRole("heading", { level: 1, name: tab }))) &&
-          (await visible(page.getByText(`Arrives in version ${version}.`))) &&
-          (await nav
-            .getByRole("link", { name: tab })
-            .getAttribute("aria-current")) === "page",
-      );
-    }
-    await shot("21-coming-soon-challenges");
-    await page.getByRole("link", { name: "See what's coming" }).click();
-    await page.waitForURL(/\/whats-coming/);
-    check("coming soon links to What's coming", true);
-
-    // 5. Mark as read via the + menu → picker → D4; stats update
-    await nav.getByRole("link", { name: "Home" }).click();
-    await page.waitForURL(`${BASE}/`);
+    // 4. Mark as read via the + menu → picker → D4; stats update
+    await page.goto(`${BASE}/`);
     await plus.click();
     await markAsRead.click();
     await page.waitForURL(/\/books\/mark-as-read/);
@@ -472,7 +467,7 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
     );
     await shot("32-home-after-mark-as-read", false);
 
-    // 6. More than three books: Home shows three and All (n)
+    // 5. More than three books: Home shows three and All (n)
     const persuasion = await user.rpc("save_external_book", {
       p_source: "openlibrary",
       p_source_id: "OL900003W",
@@ -498,7 +493,7 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
     );
     await signOut(page);
 
-    // 7. Skip path, no goal
+    // 6. Skip path, no goal
     page = await newPage();
     const skipper = await createNewcomer("skipper");
     await logInTo(page, skipper, /\/onboarding\/library-card/);
@@ -524,7 +519,7 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
     await shot("40-home-no-goal-empty");
     await signOut(page);
 
-    // 8. Empty Home for a reader with a pledge (B2) and the empty picker
+    // 7. Empty Home for a reader with a pledge (B2) and the empty picker
     page = await newPage();
     const emptyReader = await createReader("empty", { pledge: 24 });
     await logIn(page, emptyReader);

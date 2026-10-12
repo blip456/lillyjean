@@ -85,8 +85,3 @@ export function parseBacklog(markdown: string): RoadmapRelease[] {
 export function upcomingReleases(releases: RoadmapRelease[]) {
   return releases.filter((release) => !release.done && release.version);
 }
-
-/** The version that ships a sprint ("0.4.0"), or null when the backlog has none for it. */
-export function sprintVersion(releases: RoadmapRelease[], sprint: number) {
-  return releases.find((release) => release.sprint === sprint)?.version ?? null;
-}

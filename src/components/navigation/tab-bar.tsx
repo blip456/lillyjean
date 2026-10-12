@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import type { ComponentType, RefObject } from "react";
 
 import { Link } from "@/components/ui/link";
-import { activeTab, type TabId } from "@/lib/navigation";
+import { activeTab, shippedTabs, type Tab, type TabId } from "@/lib/navigation";
 
 import { CREATE_MENU_ID } from "./create-menu";
 import {
@@ -23,6 +23,15 @@ const icons: Record<TabId, ComponentType> = {
   friends: FriendsIcon,
 };
 
+/** Fixed grid columns, so a tab keeps its place whether or not its neighbours have shipped. */
+const slotClass: Record<Tab["slot"] | 3, string> = {
+  1: "col-start-1",
+  2: "col-start-2",
+  3: "col-start-3",
+  4: "col-start-4",
+  5: "col-start-5",
+};
+
 type TabBarProps = {
   pathname: string;
   menuOpen: boolean;
@@ -32,7 +41,8 @@ type TabBarProps = {
 
 /**
  * Classic tab bar (N1, P21): Home · Readlists · + · Challenges · Friends, fixed at the bottom.
- * Its height is `--tab-bar-height` (globals.css), which keeps content and the snackbar clear.
+ * Only tabs whose feature has shipped are shown (TABS in src/lib/navigation.ts). Its height is
+ * `--tab-bar-height` (globals.css), which keeps content and the snackbar clear.
  */
 export function TabBar({
   pathname,
@@ -43,11 +53,13 @@ export function TabBar({
   const t = useTranslations("tabs");
   const current = activeTab(pathname);
 
-  const tab = (id: TabId, href: string) => {
+  const tabs = shippedTabs();
+
+  const tab = ({ id, href, slot }: Tab) => {
     const Icon = icons[id];
     const isCurrent = current === id;
     return (
-      <li>
+      <li key={id} className={`row-start-1 ${slotClass[slot]}`}>
         <Link
           href={href}
           aria-current={isCurrent ? "page" : undefined}
@@ -69,9 +81,8 @@ export function TabBar({
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface pb-[env(safe-area-inset-bottom)]"
     >
       <ul className="mx-auto grid h-(--tab-bar-height) max-w-md grid-cols-5 items-center px-2 md:max-w-xl">
-        {tab("home", "/")}
-        {tab("readlists", "/readlists")}
-        <li className="flex justify-center">
+        {tabs.filter((item) => item.slot < 3).map(tab)}
+        <li className={`row-start-1 flex justify-center ${slotClass[3]}`}>
           <button
             ref={toggleRef}
             type="button"
@@ -84,8 +95,7 @@ export function TabBar({
             {menuOpen ? <CloseIcon /> : <PlusIcon />}
           </button>
         </li>
-        {tab("challenges", "/challenges")}
-        {tab("friends", "/friends")}
+        {tabs.filter((item) => item.slot > 3).map(tab)}
       </ul>
     </nav>
   );

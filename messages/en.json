@@ -186,24 +186,6 @@
     "markAsRead": "Mark as read",
     "markAsReadHint": "Pick one of your books and finish it"
   },
-  "comingSoon": {
-    "badge": "Coming soon",
-    "arrivesIn": "Arrives in version {version}.",
-    "arrivesLater": "Arrives in a later version.",
-    "whatsComing": "See what's coming",
-    "readlists": {
-      "title": "Readlists",
-      "text": "Collect books in readlists, like playlists."
-    },
-    "challenges": {
-      "title": "Challenges",
-      "text": "Set yourself reading challenges: pick a theme and read one book for it."
-    },
-    "friends": {
-      "title": "Friends",
-      "text": "Find friends by username and see what they read."
-    }
-  },
   "markAsReadPicker": {
     "title": "Mark as read",
     "intro": "Pick the book you finished.",
