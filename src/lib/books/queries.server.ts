@@ -215,13 +215,19 @@ export async function getMyBooks(
   );
 }
 
-/** Books the user finished in a calendar year, re-reads included (Home stats, pledge). */
-export async function countBooksRead(year: number): Promise<number> {
+/**
+ * Books the user finished, re-reads included (P28): in one calendar year (Home stats, pledge), or
+ * ever when no year is given (library card).
+ */
+export async function countBooksRead(year?: number): Promise<number> {
   const supabase = await createClient();
-  const { count } = await supabase
+  let query = supabase
     .from("reads")
-    .select("id", { count: "exact", head: true })
-    .gte("finished_on", `${year}-01-01`)
-    .lte("finished_on", `${year}-12-31`);
+    .select("id", { count: "exact", head: true });
+  if (year !== undefined)
+    query = query
+      .gte("finished_on", `${year}-01-01`)
+      .lte("finished_on", `${year}-12-31`);
+  const { count } = await query;
   return count ?? 0;
 }
