@@ -150,49 +150,25 @@
     }
   },
   "home": {
-    "welcome": "Welcome",
-    "openProfile": "Open your profile",
     "thisYear": "This year",
-    "countOfGoal": "<big>{count}</big> of {goal}",
-    "booksReadLabel": "Books read this year",
-    "noGoal": "No goal, just reading",
     "pledgeLink": "Set a reading pledge",
-    "pledgeGoal": "Your pledge: {goal, plural, one {# book} other {# books}}",
+    "openProfile": "Open your profile",
+    "currentlyReading": "Currently reading",
+    "addBook": "Add a book",
+    "emptyText": "Find a book and mark it as Reading.",
+    "welcome": "Welcome",
     "pace": {
       "reached": "Pledge reached. Well done!",
       "onTrack": "On track",
       "ahead": "{books} ahead of your pledge",
       "behind": "{books} behind your pledge"
     },
-    "currentlyReading": "Currently reading",
     "all": "All ({count})",
-    "emptyTitle": "Nothing on your nightstand yet",
-    "emptyText": "Find a book and mark it as Reading.",
-    "addBook": "Add a book"
-  },
-  "tabs": {
-    "label": "Main",
-    "home": "Home",
-    "readlists": "Readlists",
-    "challenges": "Challenges",
-    "friends": "Friends",
-    "create": "Create",
-    "closeCreate": "Close the create menu"
-  },
-  "createMenu": {
-    "title": "Create",
-    "addBook": "Add book",
-    "addBookHint": "Search the book database or add one manually",
-    "markAsRead": "Mark as read",
-    "markAsReadHint": "Pick one of your books and finish it"
-  },
-  "markAsReadPicker": {
-    "title": "Mark as read",
-    "intro": "Pick the book you finished.",
-    "readingList": "Books you are reading",
-    "empty": "You are not reading any books right now.",
-    "notInList": "Not in the list?",
-    "search": "Search for a book"
+    "booksReadLabel": "Books read this year",
+    "pledgeGoal": "Your pledge: {goal, plural, one {# book} other {# books}}",
+    "noGoal": "No goal, just reading",
+    "countOfGoal": "<big>{count}</big> of {goal}",
+    "emptyTitle": "Nothing on your nightstand yet"
   },
   "profile": {
     "title": "Profile",
@@ -298,6 +274,55 @@
     "version": "v{version}",
     "empty": "Everything we planned is released. New plans follow soon."
   },
+  "bookSearch": {
+    "title": "Add book",
+    "label": "Search by title, author or ISBN",
+    "filter": "Search in",
+    "fields": {
+      "all": "All",
+      "title": "Title",
+      "author": "Author"
+    },
+    "searching": "Searching…",
+    "results": "{count, plural, =0 {No books found} one {# result} other {# results}}",
+    "resultsList": "Search results",
+    "noResultsHint": "Check the spelling, or search for the author instead.",
+    "cantFind": "Can't find it?",
+    "addYourself": "Add the book yourself",
+    "addManually": "Add it manually"
+  },
+  "addBook": {
+    "title": "Add a book manually",
+    "close": "Close",
+    "bookTitle": "Title",
+    "author": "Author",
+    "required": "Required",
+    "isbn": "ISBN (optional)",
+    "isbnHint": "Helps friends find the same book",
+    "description": "Description (optional)",
+    "cover": "Cover",
+    "coverHint": "A plain cover with the title is made for you",
+    "status": "My status",
+    "submit": "Add book"
+  },
+  "bookDetail": {
+    "more": "More options",
+    "published": "Published in {year}",
+    "ratings": "Ratings",
+    "googleRating": "Google rating",
+    "ratingOutOf": "{rating} out of 5 stars",
+    "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
+    "goodreads": "View on Goodreads",
+    "newTab": "(opens in a new tab)",
+    "about": "About this book",
+    "readMore": "Read more",
+    "readLess": "Show less",
+    "markAsReadAgain": "Mark as read again",
+    "remove": "Remove from my books",
+    "notFound": "We can't find this book",
+    "notFoundText": "The link may be wrong, or the book is no longer available.",
+    "searchBooks": "Search for a book"
+  },
   "books": {
     "status": {
       "want_to_read": "Want to read",
@@ -320,5 +345,29 @@
     "markedRead": "Marked as read",
     "myStatus": "My status",
     "quickAdd": "+ Want to read"
+  },
+  "createMenu": {
+    "title": "Create",
+    "addBook": "Add book",
+    "addBookHint": "Search the book database or add one manually",
+    "markAsRead": "Mark as read",
+    "markAsReadHint": "Pick one of your books and finish it"
+  },
+  "tabs": {
+    "label": "Main",
+    "home": "Home",
+    "readlists": "Readlists",
+    "challenges": "Challenges",
+    "friends": "Friends",
+    "create": "Create",
+    "closeCreate": "Close the create menu"
+  },
+  "markAsReadPicker": {
+    "title": "Mark as read",
+    "intro": "Pick the book you finished.",
+    "readingList": "Books you are reading",
+    "empty": "You are not reading any books right now.",
+    "notInList": "Not in the list?",
+    "search": "Search for a book"
   }
 }

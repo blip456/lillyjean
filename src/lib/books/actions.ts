@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 import type { FormState } from "@/lib/auth/form-state";
 import { createClient } from "@/lib/supabase/server";
@@ -272,7 +272,8 @@ export async function addManualBook(
   if (returnTo) {
     const url = new URL(returnTo, "http://local");
     url.searchParams.set("added", bookId);
-    redirect(`${url.pathname}${url.search}`);
+    redirect(`${url.pathname}${url.search}`, RedirectType.replace);
   }
-  redirect(`/books/${bookId}`);
+  // Replace the form in the history, so back from the new book goes to where the form came from.
+  redirect(`/books/${bookId}`, RedirectType.replace);
 }

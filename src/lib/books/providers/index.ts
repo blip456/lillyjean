@@ -1,3 +1,4 @@
+import { looksLikeIsbn, normalizeIsbn } from "../sanitize";
 import type { BookDetails, ExternalBook, SearchField } from "../types";
 import { fixtureDetails, searchFixtures } from "./fixtures";
 import {
@@ -29,6 +30,18 @@ function fixturesEnabled() {
   return process.env.BOOKS_API === "fixtures";
 }
 
+/** Network errors (connection reset, timeout) are retried once; HTTP errors are not. */
+async function getJsonWithRetry(url: string): Promise<unknown> {
+  try {
+    return await getJson(url);
+  } catch (error) {
+    if (error instanceof HttpError) throw error;
+    return getJson(url);
+  }
+}
+
+class HttpError extends Error {}
+
 async function getJson(url: string): Promise<unknown> {
   const response = await fetch(url, {
     headers: {
@@ -39,7 +52,7 @@ async function getJson(url: string): Promise<unknown> {
     signal: AbortSignal.timeout(TIMEOUT_MS),
     next: { revalidate: CACHE_SECONDS },
   });
-  if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
+  if (!response.ok) throw new HttpError(`HTTP ${response.status} for ${url}`);
   return response.json();
 }
 
@@ -64,9 +77,12 @@ export async function searchExternalBooks(
   let openLibraryError: unknown;
   try {
     const books = mapOpenLibrarySearch(
-      await getJson(openLibrarySearchUrl(query, field)),
+      await getJsonWithRetry(openLibrarySearchUrl(query, field)),
     );
-    if (books.length > 0) return books;
+    // An ISBN search finds the work of that edition: keep the ISBN the reader typed.
+    const isbn = looksLikeIsbn(query) ? normalizeIsbn(query) : null;
+    if (books.length > 0)
+      return isbn ? books.map((book) => ({ ...book, isbn })) : books;
   } catch (error) {
     openLibraryError = error;
   }
@@ -121,6 +137,7 @@ export async function fetchBookDetails(book: {
     googleRating: rated?.googleRating ?? null,
     googleRatingsCount: rated?.googleRatingsCount ?? null,
     coverUrl: fromWork?.coverUrl ?? first?.coverUrl ?? null,
-    isbn: first?.isbn ?? null,
+    // The Google match is found by title and author, so its ISBN may be another edition.
+    isbn: null,
   };
 }
