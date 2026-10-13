@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/blip456/lillyjean/compare/v0.3.0...v0.3.1) (2026-10-13)
+
+
+### Bug Fixes
+
+* **profile:** let readers clear the pledge field and type a new goal ([#24](https://github.com/blip456/lillyjean/issues/24)) ([7ed4c4d](https://github.com/blip456/lillyjean/commit/7ed4c4d5f7585d3f6765c166044b9a1e4c7174ba))
+
 ## [0.3.0](https://github.com/blip456/lillyjean/compare/v0.2.3...v0.3.0) (2026-10-12)
 
 
