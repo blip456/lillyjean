@@ -12,6 +12,8 @@ import { useFormAction } from "@/components/use-form-action";
 import { savePledge } from "@/lib/account/actions";
 import { PLEDGE_MAX, PLEDGE_MIN } from "@/lib/validation";
 
+import { stepGoal } from "./pledge-goal";
+
 type PledgeFormProps = {
   context: "onboarding" | "settings";
   initialGoal: number | null;
@@ -27,12 +29,10 @@ export function PledgeForm({
   const t = useTranslations("onboarding.pledge");
   const errorMessage = useErrorMessage();
   const { state, onSubmit, pending } = useFormAction(savePledge);
-  const [goal, setGoal] = useState(initialGoal ?? 12);
+  // Text, not a number: an emptied field stays empty while typing (see stepGoal).
+  const [goal, setGoal] = useState(String(initialGoal ?? 12));
 
-  const step = (delta: number) =>
-    setGoal((value) =>
-      Math.min(PLEDGE_MAX, Math.max(PLEDGE_MIN, value + delta)),
-    );
+  const step = (delta: number) => setGoal((value) => stepGoal(value, delta));
 
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-5">
@@ -62,7 +62,7 @@ export function PledgeForm({
               min={PLEDGE_MIN}
               max={PLEDGE_MAX}
               value={goal}
-              onChange={(event) => setGoal(Number(event.target.value))}
+              onChange={(event) => setGoal(event.target.value)}
               aria-describedby={describedBy}
               aria-invalid={invalid}
               className={`${inputClass} text-center font-serif text-3xl font-semibold`}
