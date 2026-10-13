@@ -114,11 +114,19 @@ Goal: the first release for Jean and Lilly: sign up and track what you read.
 
 ## Sprint 4 — Readlists · v0.4.0
 
+> Added after v0.3.0 tester feedback (Jean): covers load slowly, especially for books already on your
+> lists. Plan: copy each cover to Supabase Storage once, when the book is first saved in `books`; serve it
+> with long cache headers so the browser keeps it; copy the covers already in `books` once. This replaces
+> "covers are loaded directly" in T18 (and goes back to T3); add the new decision to `decisions.md` when
+> it is built. The cover mosaic below loads many covers at once, so it builds on this.
+
 Goal: collect books in readlists, like playlists.
 
 - Create, rename and delete readlists; add/remove books; a book in many readlists
 - Add-to-readlist sheet (multi-select + "New readlist")
 - Readlists overview with your three statuses as lists and a filter bar
+- Faster book covers: covers are stored in Lillyjean's own storage, so they load quickly and stay saved
+  on your phone
 - Automatic cover mosaic
 - Home: readlists row; **+** menu: New readlist
 
