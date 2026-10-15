@@ -31,7 +31,8 @@ type BookCoverProps = {
 
 /**
  * Book cover from the book database, or a plain generated cover with the title (D3: no cover
- * upload in v1). Covers are loaded straight from Open Library / Google Books (T18).
+ * upload in v1). `coverUrl` is the copy in Supabase Storage when there is one, else the original
+ * Open Library / Google Books URL (T20).
  */
 export function BookCover({
   title,
@@ -45,7 +46,7 @@ export function BookCover({
   if (coverUrl) {
     return (
       // Covers come from many hosts and sizes; Vercel image optimisation would use up the free
-      // quota quickly, so the browser loads them directly.
+      // quota quickly, so the browser loads them as they are.
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={coverUrl}

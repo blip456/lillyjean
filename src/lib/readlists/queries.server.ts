@@ -3,6 +3,7 @@ import "server-only";
 import { cache } from "react";
 
 import { coverUrlFor } from "@/lib/books/covers";
+import { queueMissingCovers } from "@/lib/books/covers.server";
 import { myStateFor, toListItem } from "@/lib/books/queries.server";
 import { createClient } from "@/lib/supabase/server";
 
@@ -53,6 +54,12 @@ export async function getMyReadlists(limit = 200): Promise<ReadlistSummary[]> {
     byList.set(entry.readlist_id, rows);
   }
 
+  queueMissingCovers(
+    [...byList.values()].flatMap((rows) =>
+      rows.flatMap((row) => row.books ?? []).slice(0, MOSAIC_SIZE),
+    ),
+  );
+
   return lists.map((list) => {
     const rows = byList.get(list.id) ?? [];
     return {
@@ -92,6 +99,7 @@ export const getReadlist = cache(
       .order("added_at", { ascending: false });
 
     const rows = ((entries ?? []) as EntryRow[]).filter((row) => row.books);
+    queueMissingCovers(rows.map((row) => row.books!));
     const state = await myStateFor(
       supabase,
       rows.map((row) => row.books!.id),

@@ -5,6 +5,7 @@ import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 
 import { coverUrlFor } from "./covers";
+import { queueMissingCovers } from "./covers.server";
 import { fetchBookDetails, searchExternalBooks } from "./providers";
 import type {
   BookDetail,
@@ -118,6 +119,7 @@ export async function searchBooks(
     myStateFor(supabase, unique),
   ]);
   const byId = new Map((books ?? []).map((book) => [book.id, book]));
+  queueMissingCovers(books ?? []);
 
   return unique
     .map((id) => byId.get(id))
@@ -168,6 +170,7 @@ export const getBook = cache(async (id: string): Promise<BookDetail | null> => {
       .single();
     if (refreshed) book = refreshed;
   }
+  queueMissingCovers([book]);
 
   const [{ data: shelf }, { data: reads }] = await Promise.all([
     supabase
@@ -210,6 +213,7 @@ export async function getMyBooks(
     .limit(limit);
 
   const rows = (data ?? []).filter((row) => row.books);
+  queueMissingCovers(rows.map((row) => row.books!));
   const { reads } = await myStateFor(
     supabase,
     rows.map((row) => row.book_id),

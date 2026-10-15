@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(20);
+select plan(21);
 
 create function pg_temp.claims_for(user_id uuid) returns void language sql as $$
   select set_config('request.jwt.claims', json_build_object('sub', user_id, 'role', 'authenticated')::text, true);
@@ -16,7 +16,7 @@ values
 
 -- Two shared books, saved as the database owner.
 create temp table ids (name text primary key, id uuid);
-grant all on ids to authenticated;
+grant all on ids to authenticated, service_role;
 with b as (insert into public.books (source, source_id, title) values ('openlibrary', 'OL7001W', 'First Book') returning id)
 insert into ids select 'first', id from b;
 with b as (insert into public.books (source, source_id, title) values ('openlibrary', 'OL7002W', 'Second Book') returning id)
@@ -187,6 +187,16 @@ select throws_ok(
   '42501',
   null,
   'users cannot set where a cover is stored'
+);
+
+reset role;
+set local role service_role;
+update public.books set cover_path = 'ol/x.jpg' where id = (select id from ids where name = 'first');
+reset role;
+select is(
+  (select cover_path from public.books where id = (select id from ids where name = 'first')),
+  'ol/x.jpg',
+  'the server (secret key) records where a cover is stored'
 );
 
 select * from finish();
