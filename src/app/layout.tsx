@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { NativeGestures } from "@/components/native-gestures";
 import { SnackbarProvider } from "@/components/ui/snackbar";
 
 import "./globals.css";
@@ -34,6 +35,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>
           <SnackbarProvider>{children}</SnackbarProvider>
+          <NativeGestures />
         </NextIntlClientProvider>
       </body>
     </html>

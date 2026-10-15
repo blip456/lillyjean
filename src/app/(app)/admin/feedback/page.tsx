@@ -63,7 +63,7 @@ export default async function AdminFeedbackPage({
                 })}
                 {item.app_version && ` · v${item.app_version}`}
               </p>
-              <p className="whitespace-pre-wrap">{item.message}</p>
+              <p className="whitespace-pre-wrap select-text">{item.message}</p>
             </Card>
           </li>
         ))}

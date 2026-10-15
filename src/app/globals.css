@@ -55,11 +55,42 @@
   --tab-bar-height: 4rem;
 }
 
+/*
+ * Feel like an app, not a web page (decision P47):
+ * - no rubber band, pull-to-refresh or sideways swipe to the previous page (overscroll-behavior);
+ *   iOS's edge swipe is handled by src/components/native-gestures.tsx;
+ * - no double-tap zoom delay (touch-action: manipulation); pinch zoom stays, for accessibility;
+ * - no text selection, link preview or "Save image" on a long press, except in fields and in
+ *   longer texts people may want to copy (`select-text`).
+ */
+html {
+  background: var(--background);
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+input,
+textarea,
+[contenteditable="true"],
+.select-text {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+img {
+  -webkit-user-drag: none;
 }
 
 :focus-visible {

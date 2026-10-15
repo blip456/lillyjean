@@ -107,3 +107,16 @@ in the database), including "Add it manually" and where ← and × lead.
 ```bash
 BASE_URL=http://localhost:3000 node e2e/add-from-context.cjs
 ```
+
+## App behaviour on the phone (Sprint 4 fix)
+
+`native-feel.cjs` emulates an iPhone with the app on the home screen and checks P47: touches that start at
+the left or right edge are cancelled (no swipe to the previous or next page) while a tap on ← there still
+works, the middle of the screen is left alone, and there is no text selection, rubber band or double-tap
+zoom, except that fields and book descriptions can still be selected. In a browser tab the edge is left to
+the browser. The link preview on a long press (`-webkit-touch-callout`) only exists in WebKit: check it on an
+iPhone.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/native-feel.cjs
+```

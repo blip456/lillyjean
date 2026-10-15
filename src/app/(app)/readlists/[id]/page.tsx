@@ -63,7 +63,7 @@ export default async function ReadlistPage({
           </div>
         </div>
         {readlist.description && (
-          <p className="break-words whitespace-pre-line">
+          <p className="break-words whitespace-pre-line select-text">
             {readlist.description}
           </p>
         )}
