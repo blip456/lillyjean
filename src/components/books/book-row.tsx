@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
 import { AddToReadlistSheet } from "@/components/readlists/add-to-readlist-sheet";
+import { ReadlistQuickAdd } from "@/components/readlists/readlist-quick-add";
 import { Link } from "@/components/ui/link";
 import { Sheet } from "@/components/ui/sheet";
 import {
@@ -22,12 +23,26 @@ import { SwipeRow } from "./swipe-row";
 import { useBookStatus } from "./use-book-status";
 import { useLongPress } from "./use-long-press";
 
+/**
+ * The quick action on a search result (D1, P45): give a book without a status the status of
+ * the page the search came from ("+ Reading"; Read asks for the date first), or add it to the
+ * readlist the search came from (shown on every result, ticked when it is already in there).
+ */
+export type QuickAdd =
+  | { kind: "status"; status: BookStatus }
+  | {
+      kind: "readlist";
+      readlistId: string;
+      readlistName: string;
+      added: boolean;
+    };
+
 export type BookRowProps = {
   book: BookListItem;
   /** Where a tap on the row goes; defaults to the book page. */
   href?: string;
-  /** Shows "+ Want to read" for books without a status (D1 search results). */
-  quickAdd?: boolean;
+  /** The quick action for search results; without it the row shows my status. */
+  quickAdd?: QuickAdd;
   /**
    * Swipe to change status (B4) and the long-press menu (B5); on by default. Turn off where a
    * row is only picked: a picker has its own tap action, so a menu there would compete with it.
@@ -68,7 +83,7 @@ const statusTone: Record<BookStatus, string> = {
 export function BookRow({
   book,
   href,
-  quickAdd = false,
+  quickAdd,
   swipeable = true,
   menuActions,
 }: BookRowProps) {
@@ -188,7 +203,15 @@ export function BookRow({
                 )}
               </span>
             </Link>
-            {state.status || !quickAdd ? (
+            {quickAdd?.kind === "readlist" ? (
+              <ReadlistQuickAdd
+                bookId={book.id}
+                bookTitle={book.title}
+                readlistId={quickAdd.readlistId}
+                readlistName={quickAdd.readlistName}
+                added={quickAdd.added}
+              />
+            ) : state.status || !quickAdd ? (
               <button
                 type="button"
                 aria-haspopup="dialog"
@@ -205,10 +228,13 @@ export function BookRow({
             ) : (
               <button
                 type="button"
-                onClick={() => api.setStatus("want_to_read", null)}
+                aria-haspopup={
+                  quickAdd.status === "read" ? "dialog" : undefined
+                }
+                onClick={() => choose(quickAdd.status)}
                 className="min-h-11 shrink-0 rounded-full border border-border px-3 text-xs font-semibold"
               >
-                {t("quickAdd")}
+                {t("quickAdd", { status: t(`status.${quickAdd.status}`) })}
               </button>
             )}
           </div>

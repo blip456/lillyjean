@@ -21,7 +21,9 @@ import {
   isSearchable,
   manualEntryHref,
   SEARCH_PATH,
+  type SearchTarget,
   searchHref,
+  targetParams,
 } from "@/lib/books/navigation";
 import {
   type BookListItem,
@@ -30,10 +32,30 @@ import {
 } from "@/lib/books/types";
 import { SEARCH_MAX_LENGTH } from "@/lib/books/validation";
 
-import { BookRow } from "./book-row";
+import { BookRow, type QuickAdd } from "./book-row";
 
 /** Wait this long after the last keystroke before searching. */
 const DEBOUNCE_MS = 300;
+
+/** Where added books go (P45); a readlist comes with its name and the books already in it. */
+export type AddTarget =
+  | Extract<SearchTarget, { kind: "status" }>
+  | (Extract<SearchTarget, { kind: "readlist" }> & {
+      name: string;
+      bookIds: string[];
+    });
+
+/** The quick action on a result: the target's, or "+ Want to read" for a plain search. */
+function quickAddFor(book: BookListItem, target: AddTarget | null): QuickAdd {
+  if (target?.kind === "readlist")
+    return {
+      kind: "readlist",
+      readlistId: target.readlistId,
+      readlistName: target.name,
+      added: target.bookIds.includes(book.id),
+    };
+  return { kind: "status", status: target?.status ?? "want_to_read" };
+}
 
 type BookSearchProps = {
   /** Search text and filter the results belong to (from the URL). */
@@ -42,6 +64,8 @@ type BookSearchProps = {
   results: BookListItem[];
   /** Error key under `errors` when the search failed. */
   error: string | null;
+  /** The page the search was opened from (P45); null for a plain search. */
+  target?: AddTarget | null;
 };
 
 /**
@@ -49,7 +73,13 @@ type BookSearchProps = {
  * page renders the results on the server, so back, refresh and a status change on a result
  * (which refreshes the page) always show the current state. Works without JavaScript too.
  */
-export function BookSearch({ query, field, results, error }: BookSearchProps) {
+export function BookSearch({
+  query,
+  field,
+  results,
+  error,
+  target = null,
+}: BookSearchProps) {
   const t = useTranslations("bookSearch");
   const errorMessage = useErrorMessage();
   const router = useRouter();
@@ -65,7 +95,9 @@ export function BookSearch({ query, field, results, error }: BookSearchProps) {
     clearTimeout(timer.current);
     startTransition(() => {
       setActiveField(nextField);
-      router.replace(searchHref(nextText, nextField), { scroll: false });
+      router.replace(searchHref(nextText, nextField, target), {
+        scroll: false,
+      });
     });
   };
 
@@ -119,6 +151,9 @@ export function BookSearch({ query, field, results, error }: BookSearchProps) {
         {activeField !== "all" && (
           <input type="hidden" name="field" value={activeField} />
         )}
+        {Object.entries(targetParams(target)).map(([name, value]) => (
+          <input key={name} type="hidden" name={name} value={value} />
+        ))}
         <div
           role="group"
           aria-label={t("filter")}
@@ -129,7 +164,7 @@ export function BookSearch({ query, field, results, error }: BookSearchProps) {
             return (
               <Link
                 key={option}
-                href={searchHref(text, option)}
+                href={searchHref(text, option, target)}
                 prefetch={false}
                 replace
                 scroll={false}
@@ -170,7 +205,7 @@ export function BookSearch({ query, field, results, error }: BookSearchProps) {
             >
               {results.map((book) => (
                 <li key={book.id}>
-                  <BookRow book={book} quickAdd />
+                  <BookRow book={book} quickAdd={quickAddFor(book, target)} />
                 </li>
               ))}
             </ul>
@@ -187,7 +222,7 @@ export function BookSearch({ query, field, results, error }: BookSearchProps) {
           <p className="text-sm text-muted">{t("addYourself")}</p>
         </div>
         <ButtonLink
-          href={manualEntryHref(text)}
+          href={manualEntryHref(text, null, target)}
           // The title changes with every keystroke; prefetching each version is wasteful.
           prefetch={false}
           variant="secondary"

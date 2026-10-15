@@ -8,7 +8,7 @@ import { ReadlistMosaic } from "@/components/readlists/readlist-mosaic";
 import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "@/components/ui/link";
-import { SEARCH_PATH } from "@/lib/books/navigation";
+import { searchHref } from "@/lib/books/navigation";
 import { READLISTS_PATH } from "@/lib/readlists/links";
 import { findReadlist } from "@/lib/readlists/find-readlist.server";
 
@@ -30,6 +30,11 @@ export default async function ReadlistPage({
   if (!readlist) notFound();
   const t = await getTranslations("readlists");
   const summary = t("bookCount", { count: readlist.bookCount });
+  // The search adds books straight to this readlist (P45).
+  const addHref = searchHref("", "all", {
+    kind: "readlist",
+    readlistId: readlist.id,
+  });
 
   return (
     <div className="space-y-6">
@@ -63,7 +68,7 @@ export default async function ReadlistPage({
           </p>
         )}
         {readlist.books.length > 0 && (
-          <ButtonLink href={SEARCH_PATH} className="px-4 text-sm">
+          <ButtonLink href={addHref} className="px-4 text-sm">
             <span aria-hidden="true">+</span>
             {t("addBooks")}
           </ButtonLink>
@@ -74,7 +79,7 @@ export default async function ReadlistPage({
         <Card className="flex flex-col items-center gap-3 border-dashed text-center">
           <p className="font-semibold">{t("detailEmptyTitle")}</p>
           <p className="text-sm text-muted">{t("detailEmptyText")}</p>
-          <ButtonLink href={SEARCH_PATH}>{t("addBook")}</ButtonLink>
+          <ButtonLink href={addHref}>{t("addBook")}</ButtonLink>
         </Card>
       ) : (
         <ReadlistBooks readlistId={readlist.id} books={readlist.books} />

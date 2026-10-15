@@ -6,6 +6,7 @@ import { BookRow } from "@/components/books/book-row";
 import { PageHeader } from "@/components/page-header";
 import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { searchHref } from "@/lib/books/navigation";
 import { getMyBooks } from "@/lib/books/queries.server";
 import { shelfStatus } from "@/lib/books/shelves";
 
@@ -47,7 +48,10 @@ export default async function ShelfPage({
             {t(`empty.${status}.title`)}
           </h2>
           <p className="text-muted">{t(`empty.${status}.text`)}</p>
-          <ButtonLink href="/books/search" variant="secondary">
+          <ButtonLink
+            href={searchHref("", "all", { kind: "status", status })}
+            variant="secondary"
+          >
             {t("findBook")}
           </ButtonLink>
         </Card>

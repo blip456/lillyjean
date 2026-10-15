@@ -534,10 +534,10 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
         (await visible(page.getByText("Find a book and mark it as Reading."))),
     );
     check(
-      "Add a book goes to book search",
+      "Add a book goes to book search, adding as Reading (P45)",
       (await page
         .getByRole("link", { name: "Add a book" })
-        .getAttribute("href")) === "/books/search",
+        .getAttribute("href")) === "/books/search?add=reading",
     );
     check(
       "B2: readlists empty state after Currently reading; no challenges section yet",
@@ -553,7 +553,7 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       )) &&
         (await page
           .getByRole("link", { name: "Search for a book" })
-          .getAttribute("href")) === "/books/search",
+          .getAttribute("href")) === "/books/search?add=read",
     );
     await shot("42-mark-as-read-empty");
   } catch (error) {

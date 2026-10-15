@@ -96,3 +96,14 @@ internet is needed.
 ```bash
 BASE_URL=http://localhost:3000 node e2e/readlists.cjs
 ```
+
+## Adding from where you came from (Sprint 4 fix)
+
+`add-from-context.cjs` opens the search from Home's empty Currently reading, the empty Want to read and
+Read lists, Mark as read and a readlist, and checks that the quick add does that page's job (P45):
+"+ Reading", "+ Want to read", "+ Read" with the date sheet, and **Add** / **Added** for the readlist (checked
+in the database), including "Add it manually" and where ← and × lead.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/add-from-context.cjs
+```

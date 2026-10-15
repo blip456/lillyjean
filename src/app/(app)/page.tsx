@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Link } from "@/components/ui/link";
 import { WhatsNewBanner } from "@/components/whats-new-banner";
 import { requireOnboardedAccount } from "@/lib/account/guards";
+import { searchHref } from "@/lib/books/navigation";
 import { countBooksRead, getMyBooks } from "@/lib/books/queries.server";
 import { getMyReadlists } from "@/lib/readlists/queries.server";
 
@@ -75,7 +76,14 @@ export default async function HomePage() {
             <BookCover title="" coverUrl={null} size="sm" />
             <p className="font-semibold">{t("emptyTitle")}</p>
             <p className="text-sm text-muted">{t("emptyText")}</p>
-            <ButtonLink href="/books/search">{t("addBook")}</ButtonLink>
+            <ButtonLink
+              href={searchHref("", "all", {
+                kind: "status",
+                status: "reading",
+              })}
+            >
+              {t("addBook")}
+            </ButtonLink>
           </Card>
         ) : (
           <ul className="divide-y divide-border rounded-2xl border border-border bg-surface px-4">
