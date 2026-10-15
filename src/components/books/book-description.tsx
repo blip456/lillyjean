@@ -17,7 +17,7 @@ export function BookDescription({ text }: { text: string }) {
     <div className="space-y-2">
       <p
         id={id}
-        className={`leading-relaxed whitespace-pre-line ${long && !expanded ? "line-clamp-4" : ""}`}
+        className={`leading-relaxed whitespace-pre-line select-text ${long && !expanded ? "line-clamp-4" : ""}`}
       >
         {text}
       </p>
