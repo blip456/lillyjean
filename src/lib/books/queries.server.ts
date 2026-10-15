@@ -4,6 +4,7 @@ import { cache } from "react";
 
 import { createClient } from "@/lib/supabase/server";
 
+import { coverUrlFor } from "./covers";
 import { fetchBookDetails, searchExternalBooks } from "./providers";
 import type {
   BookDetail,
@@ -16,11 +17,12 @@ import { SEARCH_MIN_LENGTH } from "./validation";
 
 type Supabase = Awaited<ReturnType<typeof createClient>>;
 
-type BookRow = {
+export type BookRow = {
   id: string;
   title: string;
   authors: string[];
   cover_url: string | null;
+  cover_path?: string | null;
 };
 
 type ShelfRow = {
@@ -29,7 +31,7 @@ type ShelfRow = {
   progress: number | null;
 };
 
-function toListItem(
+export function toListItem(
   book: BookRow,
   shelf: ShelfRow | undefined,
   readCount: number,
@@ -38,7 +40,7 @@ function toListItem(
     id: book.id,
     title: book.title,
     authors: book.authors,
-    coverUrl: book.cover_url,
+    coverUrl: coverUrlFor(book),
     status: shelf?.status ?? null,
     progress: shelf?.progress ?? null,
     readCount,
@@ -46,7 +48,7 @@ function toListItem(
 }
 
 /** The signed-in user's status and read count for the given books. */
-async function myStateFor(supabase: Supabase, bookIds: string[]) {
+export async function myStateFor(supabase: Supabase, bookIds: string[]) {
   if (bookIds.length === 0)
     return {
       shelf: new Map<string, ShelfRow>(),
@@ -111,7 +113,7 @@ export async function searchBooks(
   const [{ data: books }, state] = await Promise.all([
     supabase
       .from("books")
-      .select("id, title, authors, cover_url")
+      .select("id, title, authors, cover_url, cover_path")
       .in("id", unique),
     myStateFor(supabase, unique),
   ]);
@@ -119,7 +121,7 @@ export async function searchBooks(
 
   return unique
     .map((id) => byId.get(id))
-    .filter((book): book is BookRow => Boolean(book))
+    .filter((book) => book !== undefined)
     .map((book) =>
       toListItem(book, state.shelf.get(book.id), state.reads.get(book.id) ?? 0),
     );
@@ -200,7 +202,9 @@ export async function getMyBooks(
   const supabase = await createClient();
   const { data } = await supabase
     .from("user_books")
-    .select("book_id, status, progress, books(id, title, authors, cover_url)")
+    .select(
+      "book_id, status, progress, books(id, title, authors, cover_url, cover_path)",
+    )
     .eq("status", status)
     .order("status_changed_at", { ascending: false })
     .limit(limit);

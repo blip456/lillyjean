@@ -55,7 +55,10 @@
     "authorRequired": "Enter the author.",
     "authorTooLong": "Use at most 200 characters.",
     "isbnInvalid": "This is not a valid ISBN. Check the 10 or 13 digits, or leave it empty.",
-    "descriptionTooLong": "Use at most 2000 characters."
+    "descriptionTooLong": "Use at most 2000 characters.",
+    "readlistNameRequired": "Give your readlist a name.",
+    "readlistNameTooLong": "Use at most 60 characters.",
+    "readlistDescriptionTooLong": "Use at most 500 characters."
   },
   "welcome": {
     "title": "Track what you read. Share it with friends.",
