@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.0](https://github.com/blip456/lillyjean/compare/v0.3.1...v0.4.0) (2026-10-15)
+
+
+### Features
+
+* **books:** store book covers in Supabase Storage ([#29](https://github.com/blip456/lillyjean/issues/29)) ([4d586be](https://github.com/blip456/lillyjean/commit/4d586be9756485286e0096752053a7ebbf236c53))
+* **readlists:** add books to readlists from the book menu and the book page ([#30](https://github.com/blip456/lillyjean/issues/30)) ([be1fd10](https://github.com/blip456/lillyjean/commit/be1fd10ac210c4c42fbe82f23d2c1ba31915ec3a))
+* **readlists:** add the readlist screens, Readlists tab and Home row ([#31](https://github.com/blip456/lillyjean/issues/31)) ([e81c335](https://github.com/blip456/lillyjean/commit/e81c33564dd49a95ec9982d97c5c43f607a448df))
+* **readlists:** add the readlists foundation and stored covers ([#27](https://github.com/blip456/lillyjean/issues/27)) ([cb772bd](https://github.com/blip456/lillyjean/commit/cb772bde63738f62410633886ab3f9e283dfadce))
+
 ## [0.3.1](https://github.com/blip456/lillyjean/compare/v0.3.0...v0.3.1) (2026-10-13)
 
 
