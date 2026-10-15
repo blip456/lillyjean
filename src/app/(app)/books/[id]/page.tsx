@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { AddToReadlistButton } from "@/components/books/add-to-readlist-button";
-import { BackLink } from "@/components/books/back-link";
+import { BackLink } from "@/components/back-link";
 import { BookCover } from "@/components/books/book-cover";
 import { BookDescription } from "@/components/books/book-description";
 import { BookDetailMenu } from "@/components/books/book-detail-menu";

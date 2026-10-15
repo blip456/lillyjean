@@ -3,11 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
+import { hasInAppHistory } from "@/components/navigation/in-app-history";
 import { Link } from "@/components/ui/link";
 
 /**
- * ← on the book page (D2): goes back to where the book was opened from (search results, Home,
- * a list), or to `fallback` when the page was opened directly (shared link, new tab).
+ * ← that goes back to the screen you came from (P46): a book from the search, Home or a list; a
+ * shelf list from Home or the Readlists tab; the search from the list it was opened on. When the
+ * screen was opened directly (shared link, new tab, fresh start) it goes to `fallback`.
  */
 export function BackLink({ fallback = "/" }: { fallback?: string }) {
   const t = useTranslations("common");
@@ -19,7 +21,7 @@ export function BackLink({ fallback = "/" }: { fallback?: string }) {
       prefetch={false}
       aria-label={t("back")}
       onClick={(event) => {
-        if (window.history.length > 1) {
+        if (hasInAppHistory()) {
           event.preventDefault();
           router.back();
         }

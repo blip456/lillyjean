@@ -17,7 +17,12 @@ export default async function MarkAsReadPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title={t("title")} backHref="/" intro={t("intro")} />
+      <PageHeader
+        title={t("title")}
+        backHref="/"
+        backToPrevious
+        intro={t("intro")}
+      />
       <MarkAsReadPicker books={books} />
     </div>
   );

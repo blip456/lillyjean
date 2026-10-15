@@ -40,6 +40,7 @@ export default async function ShelfPage({
       <PageHeader
         title={t(`title.${status}`)}
         backHref="/"
+        backToPrevious
         intro={t("count", { count: books.length })}
       />
       {books.length === 0 ? (

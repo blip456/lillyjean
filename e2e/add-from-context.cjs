@@ -234,6 +234,47 @@ const SEARCH_LABEL = "Search by title, author or ISBN";
           .getByRole("link", { name: "Back" })
           .getAttribute("href")) === "/",
     );
+
+    // 9. ← goes back to the screen you came from (P46): Readlists tab → Reading → search.
+    await page.goto(`${BASE}/`);
+    await page
+      .getByRole("navigation", { name: "Main" })
+      .getByRole("link", { name: "Readlists" })
+      .click();
+    await page.waitForURL(`${BASE}/readlists`);
+    await page
+      .getByRole("region", { name: "Your books" })
+      .getByRole("link", { name: /Reading/ })
+      .click();
+    await page.waitForURL(`${BASE}/books/shelf/reading`);
+    await page.getByRole("link", { name: "Find a book" }).click();
+    await page.waitForURL(/\/books\/search\?add=reading$/);
+    await search("austen");
+    await row("Emma").getByRole("button", { name: "+ Reading" }).click();
+    await eventually(() => statusOf("Emma"), "reading");
+    await page.getByRole("link", { name: "Back" }).click();
+    await page.waitForURL(`${BASE}/books/shelf/reading`);
+    check(
+      "← on the search goes back to the Reading list, now with the book",
+      await visible(page.getByRole("link", { name: /Emma/ })),
+    );
+    await page.getByRole("link", { name: "Back" }).click();
+    await page.waitForURL(`${BASE}/readlists`).catch(() => {});
+    check(
+      "← on the Reading list goes back to the Readlists tab, not Home",
+      page.url() === `${BASE}/readlists`,
+      page.url(),
+    );
+
+    // A list opened directly (shared link, fresh start) still has a way back: Home.
+    await page.goto(`${BASE}/books/shelf/read`);
+    await page.getByRole("link", { name: "Back" }).click();
+    await page.waitForURL(`${BASE}/`).catch(() => {});
+    check(
+      "← on a list opened directly goes Home",
+      page.url() === `${BASE}/`,
+      page.url(),
+    );
   } catch (error) {
     check("unexpected error", false, error.message.split("\n")[0]);
     await shot("context-error").catch(() => {});

@@ -69,6 +69,7 @@ export default async function BookSearchPage({
       <PageHeader
         title={t("title")}
         backHref={targetHref(target)}
+        backToPrevious
         intro={
           target &&
           t("addingTo", {
