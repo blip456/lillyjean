@@ -171,7 +171,14 @@
       "onTrack": "On track",
       "ahead": "{books} ahead of your pledge",
       "behind": "{books} behind your pledge"
-    }
+    },
+    "yourReadlists": "Your readlists",
+    "allReadlists": "All",
+    "allReadlistsLabel": "All readlists",
+    "newReadlistTile": "New",
+    "newReadlist": "New readlist",
+    "readlistsEmptyTitle": "Make your first readlist",
+    "readlistsEmptyText": "Collect books, like a playlist."
   },
   "profile": {
     "title": "Profile",
@@ -446,6 +453,52 @@
     "addBook": "Add book",
     "addBookHint": "Search the book database or add one manually",
     "markAsRead": "Mark as read",
-    "markAsReadHint": "Pick one of your books and finish it"
+    "markAsReadHint": "Pick one of your books and finish it",
+    "newReadlist": "New readlist",
+    "newReadlistHint": "Collect books, like a playlist"
+  },
+  "readlists": {
+    "title": "Readlists",
+    "newReadlist": "New readlist",
+    "openProfile": "Open your profile",
+    "yourBooks": "Your books",
+    "yourReadlists": "Your readlists",
+    "bookCount": "{count, plural, =0 {No books} one {# book} other {# books}}",
+    "emptyTitle": "Make your first readlist",
+    "emptyText": "Collect books, like a playlist.",
+    "back": "Back to readlists",
+    "more": "More actions for this readlist",
+    "edit": "Edit",
+    "delete": "Delete",
+    "addBooks": "Add books",
+    "detailEmptyTitle": "No books in this readlist yet",
+    "detailEmptyText": "Find a book, then add it to this readlist from the book’s page.",
+    "addBook": "Add a book",
+    "booksLabel": "Books in this readlist",
+    "removeFromReadlist": "Remove from this readlist",
+    "removed": "Removed from this readlist",
+    "undo": "Undo",
+    "confirmDelete": {
+      "title": "Delete this readlist?",
+      "text": "“{name}” will be deleted. The books stay on your shelf.",
+      "confirm": "Delete readlist",
+      "cancel": "Keep it"
+    },
+    "deleted": "Readlist deleted",
+    "form": {
+      "newTitle": "New readlist",
+      "editTitle": "Edit readlist",
+      "close": "Close",
+      "name": "Name",
+      "nameHint": "Required",
+      "description": "Description (optional)",
+      "descriptionHint": "A sentence about what this list is for",
+      "create": "Create readlist",
+      "save": "Save",
+      "delete": "Delete readlist"
+    },
+    "notFound": "Readlist not found",
+    "notFoundText": "This readlist does not exist, or it is not yours.",
+    "allReadlists": "All readlists"
   }
 }

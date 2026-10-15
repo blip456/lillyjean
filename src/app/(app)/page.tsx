@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Avatar } from "@/components/avatar";
 import { BookCover } from "@/components/books/book-cover";
 import { BookRow } from "@/components/books/book-row";
+import { ReadlistsRow } from "@/components/home/readlists-row";
 import { YearStats } from "@/components/home/year-stats";
 import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -10,20 +11,25 @@ import { Link } from "@/components/ui/link";
 import { WhatsNewBanner } from "@/components/whats-new-banner";
 import { requireOnboardedAccount } from "@/lib/account/guards";
 import { countBooksRead, getMyBooks } from "@/lib/books/queries.server";
+import { getMyReadlists } from "@/lib/readlists/queries.server";
 
 /** Books shown under "Currently reading"; "All (n)" opens the full list. */
 const HOME_READING_LIMIT = 3;
 
+/** Readlists in the Home row; "All" opens the overview (C1). */
+const HOME_READLISTS_LIMIT = 6;
+
 /**
- * Home (B1, B2; P23): stats → currently reading. Ongoing challenges (S5) and readlists (S4) are
- * added when their sprints ship.
+ * Home (B1, B2; P23): stats → currently reading → (ongoing challenges, S5) → readlists. Ongoing
+ * challenges are added when Sprint 5 ships.
  */
 export default async function HomePage() {
   const { profile, pledge, year } = await requireOnboardedAccount();
   const t = await getTranslations("home");
-  const [read, reading] = await Promise.all([
+  const [read, reading, readlists] = await Promise.all([
     countBooksRead(year),
     getMyBooks("reading"),
+    getMyReadlists(HOME_READLISTS_LIMIT),
   ]);
 
   return (
@@ -81,6 +87,8 @@ export default async function HomePage() {
           </ul>
         )}
       </section>
+
+      <ReadlistsRow readlists={readlists} />
     </div>
   );
 }

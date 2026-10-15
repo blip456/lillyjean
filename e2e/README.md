@@ -82,3 +82,17 @@ rolling back, the loading state; and on the book page (D2) "+ Add to readlist" a
 ```bash
 BASE_URL=http://localhost:3000 node e2e/add-to-readlist.cjs
 ```
+
+## Readlist screens (Sprint 4)
+
+`readlists.cjs` checks the Readlists tab, the overview (C1: your three statuses as system lists, tiles with
+the cover mosaic, empty state, no filter bar), creating a readlist (C3, with validation errors first and
+with `?bookId=&returnTo=`), the readlist page (C2: mosaic, count, books newest first, ⋯ with Edit and
+Delete), removing a book through the book menu (B5) and Undo, renaming, deleting with confirmation (the
+books stay on the shelf), the Home row ("All", "+ New", empty state), "New readlist" in the + menu and
+404 for someone else's readlist. Covers for the mosaic are uploaded to the local `covers` bucket, so no
+internet is needed.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/readlists.cjs
+```
