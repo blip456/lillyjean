@@ -25,14 +25,14 @@ export type Database = {
           Tables: {
             "books": {
                   Row: {
-                    "authors": (string)[],"cover_url": string | null,"created_at": string,"created_by": string | null,"description": string | null,"details_checked": boolean,"google_rating": number | null,"google_ratings_count": number | null,"id": string,"isbn": string | null,"published_year": number | null,"source": Database["public"]['Enums']["book_source"],"source_id": string | null,"title": string
+                    "authors": (string)[],"cover_path": string | null,"cover_url": string | null,"created_at": string,"created_by": string | null,"description": string | null,"details_checked": boolean,"google_rating": number | null,"google_ratings_count": number | null,"id": string,"isbn": string | null,"published_year": number | null,"source": Database["public"]['Enums']["book_source"],"source_id": string | null,"title": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "authors"?: (string)[],"cover_url"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"details_checked"?: boolean,"google_rating"?: number | null,"google_ratings_count"?: number | null,"id"?: string,"isbn"?: string | null,"published_year"?: number | null,"source": Database["public"]['Enums']["book_source"],"source_id"?: string | null,"title": string
+                    "authors"?: (string)[],"cover_path"?: string | null,"cover_url"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"details_checked"?: boolean,"google_rating"?: number | null,"google_ratings_count"?: number | null,"id"?: string,"isbn"?: string | null,"published_year"?: number | null,"source": Database["public"]['Enums']["book_source"],"source_id"?: string | null,"title": string
                   }
                   Update: {
-                    "authors"?: (string)[],"cover_url"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"details_checked"?: boolean,"google_rating"?: number | null,"google_ratings_count"?: number | null,"id"?: string,"isbn"?: string | null,"published_year"?: number | null,"source"?: Database["public"]['Enums']["book_source"],"source_id"?: string | null,"title"?: string
+                    "authors"?: (string)[],"cover_path"?: string | null,"cover_url"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"details_checked"?: boolean,"google_rating"?: number | null,"google_ratings_count"?: number | null,"id"?: string,"isbn"?: string | null,"published_year"?: number | null,"source"?: Database["public"]['Enums']["book_source"],"source_id"?: string | null,"title"?: string
                   }
                   Relationships: [
                     {
@@ -92,6 +92,58 @@ isOneToOne: false
                     {
       foreignKeyName: "reading_pledges_user_id_fkey"
       columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"readlist_books": {
+                  Row: {
+                    "added_at": string,"added_by": string | null,"book_id": string,"readlist_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "added_at"?: string,"added_by"?: string | null,"book_id": string,"readlist_id": string
+                  }
+                  Update: {
+                    "added_at"?: string,"added_by"?: string | null,"book_id"?: string,"readlist_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "readlist_books_added_by_fkey"
+      columns: ["added_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "readlist_books_book_id_fkey"
+      columns: ["book_id"]
+isOneToOne: false
+      referencedRelation: "books"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "readlist_books_readlist_id_fkey"
+      columns: ["readlist_id"]
+isOneToOne: false
+      referencedRelation: "readlists"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"readlists": {
+                  Row: {
+                    "created_at": string,"description": string | null,"id": string,"name": string,"owner_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"description"?: string | null,"id"?: string,"name": string,"owner_id"?: string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"description"?: string | null,"id"?: string,"name"?: string,"owner_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "readlists_owner_id_fkey"
+      columns: ["owner_id"]
 isOneToOne: false
       referencedRelation: "profiles"
       referencedColumns: ["id"]
@@ -166,6 +218,9 @@ isOneToOne: false
                            },
 "mark_book_read":
 { Args: { "p_book_id": string,"p_finished_on"?: string }; Returns: number
+                           },
+"owns_readlist":
+{ Args: { "p_readlist_id": string }; Returns: boolean
                            },
 "purge_deleted_accounts":
 { Args: Record<PropertyKey, never>; Returns: number
