@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.1](https://github.com/blip456/lillyjean/compare/v0.4.0...v0.4.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **books:** add found books to the list the search was opened from ([#32](https://github.com/blip456/lillyjean/issues/32)) ([54aff36](https://github.com/blip456/lillyjean/commit/54aff36221a8e8de49d6daa98d21198d7ff76220))
+* **books:** go back to the previous screen from lists and the search ([#34](https://github.com/blip456/lillyjean/issues/34)) ([080974f](https://github.com/blip456/lillyjean/commit/080974f46d606b76c4dd082c0c54dd6fa76bdbb5))
+* **ui:** behave like an app on the phone, not like a web page ([#35](https://github.com/blip456/lillyjean/issues/35)) ([5f34107](https://github.com/blip456/lillyjean/commit/5f34107c8524bfcc487067396c7cfc2d74bef17f))
+
 ## [0.4.0](https://github.com/blip456/lillyjean/compare/v0.3.1...v0.4.0) (2026-10-15)
 
 
