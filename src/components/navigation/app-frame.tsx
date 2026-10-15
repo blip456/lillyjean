@@ -12,6 +12,7 @@ import {
 import { hidesTabBar } from "@/lib/navigation";
 
 import { CreateMenu } from "./create-menu";
+import { useTrackInAppHistory } from "./in-app-history";
 import { TabBar } from "./tab-bar";
 
 /**
@@ -20,6 +21,7 @@ import { TabBar } from "./tab-bar";
  */
 export function AppFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  useTrackInAppHistory();
   // The menu belongs to the screen it was opened on, so any navigation closes it.
   const [openOn, setOpenOn] = useState<string | null>(null);
   // Forget it after leaving that screen, so coming back does not reopen it.

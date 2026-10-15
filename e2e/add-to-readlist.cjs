@@ -423,7 +423,21 @@ async function rowPoint(page, title) {
     const nameField = sheet.getByLabel("Name of the new readlist");
     report.check(
       "New readlist opens a labelled name field with focus",
-      await nameField.evaluate((el) => el === document.activeElement),
+      // Focus moves after the field renders; wait for it instead of reading it at once.
+      await page
+        .waitForFunction(
+          () =>
+            document.activeElement?.getAttribute("aria-label") ===
+              "Name of the new readlist" ||
+            document.activeElement?.labels?.[0]?.textContent ===
+              "Name of the new readlist",
+          null,
+          { timeout: 3000 },
+        )
+        .then(
+          () => true,
+          () => false,
+        ),
     );
     await sheet.getByRole("button", { name: "Create" }).click();
     report.check(

@@ -1,22 +1,36 @@
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
+import { BackLink } from "@/components/back-link";
 import { Link } from "@/components/ui/link";
 
 type PageHeaderProps = {
   title: ReactNode;
   backHref?: string;
+  /**
+   * ← goes back to the previous screen, with `backHref` only as the fallback (P46). For screens
+   * that are opened from several places, such as the shelf lists and the search.
+   */
+  backToPrevious?: boolean;
   intro?: ReactNode;
   aside?: ReactNode;
 };
 
-export function PageHeader({ title, backHref, intro, aside }: PageHeaderProps) {
+export function PageHeader({
+  title,
+  backHref,
+  backToPrevious = false,
+  intro,
+  aside,
+}: PageHeaderProps) {
   const t = useTranslations("common");
 
   return (
     <header className="space-y-3">
       <div className="flex min-h-11 items-center justify-between gap-3">
-        {backHref ? (
+        {backHref && backToPrevious ? (
+          <BackLink fallback={backHref} />
+        ) : backHref ? (
           <Link
             href={backHref}
             aria-label={t("back")}
