@@ -9,7 +9,14 @@ import { MarkAsReadSheet } from "@/components/books/mark-as-read-sheet";
 import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "@/components/ui/link";
+import { searchHref } from "@/lib/books/navigation";
 import type { BookListItem } from "@/lib/books/types";
+
+/** Books found from here are marked as read too (P45). */
+const SEARCH_TO_READ = searchHref("", "all", {
+  kind: "status",
+  status: "read",
+});
 
 /**
  * The books you are reading as buttons; picking one opens the mark-as-read sheet (D4). After
@@ -26,7 +33,7 @@ export function MarkAsReadPicker({ books }: { books: BookListItem[] }) {
     return (
       <Card className="space-y-4 border-dashed text-center">
         <p>{t("empty")}</p>
-        <ButtonLink href="/books/search">{t("search")}</ButtonLink>
+        <ButtonLink href={SEARCH_TO_READ}>{t("search")}</ButtonLink>
       </Card>
     );
   }
@@ -78,7 +85,7 @@ export function MarkAsReadPicker({ books }: { books: BookListItem[] }) {
       <p className="text-sm">
         {t("notInList")}{" "}
         <Link
-          href="/books/search"
+          href={SEARCH_TO_READ}
           className="font-semibold underline underline-offset-4"
         >
           {t("search")}

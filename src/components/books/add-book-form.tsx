@@ -9,7 +9,7 @@ import { FormMessage } from "@/components/ui/form-message";
 import { useErrorMessage } from "@/components/use-error-message";
 import { useFormAction } from "@/components/use-form-action";
 import { addManualBook } from "@/lib/books/actions";
-import { BOOK_STATUSES } from "@/lib/books/types";
+import { BOOK_STATUSES, type BookStatus } from "@/lib/books/types";
 import { MANUAL_DESCRIPTION_MAX_LENGTH } from "@/lib/books/validation";
 
 import { BookCover } from "./book-cover";
@@ -17,12 +17,21 @@ import { BookCover } from "./book-cover";
 type AddBookFormProps = {
   /** Prefilled from the search text (D1, A10). */
   defaultTitle: string;
+  /** The status of the shelf list the search came from (P45); otherwise Want to read. */
+  defaultStatus?: BookStatus;
+  /** The readlist the search came from (P45): the new book goes in it too. */
+  readlistId?: string | null;
   /** Same-site path to go back to after adding, e.g. onboarding; otherwise the book page. */
   returnTo: string | null;
 };
 
 /** Add a book manually (D3): title and author required (P36), a generated cover. */
-export function AddBookForm({ defaultTitle, returnTo }: AddBookFormProps) {
+export function AddBookForm({
+  defaultTitle,
+  defaultStatus = "want_to_read",
+  readlistId = null,
+  returnTo,
+}: AddBookFormProps) {
   const t = useTranslations();
   const errorMessage = useErrorMessage();
   const { state, onSubmit, pending } = useFormAction(addManualBook);
@@ -32,6 +41,9 @@ export function AddBookForm({ defaultTitle, returnTo }: AddBookFormProps) {
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-5">
       {returnTo && <input type="hidden" name="returnTo" value={returnTo} />}
+      {readlistId && (
+        <input type="hidden" name="readlistId" value={readlistId} />
+      )}
       <FormMessage message={errorMessage(state.error)} />
 
       <Field
@@ -134,7 +146,7 @@ export function AddBookForm({ defaultTitle, returnTo }: AddBookFormProps) {
                 type="radio"
                 name="status"
                 value={status}
-                defaultChecked={status === "want_to_read"}
+                defaultChecked={status === defaultStatus}
                 className="sr-only"
               />
               {t(`books.status.${status}`)}

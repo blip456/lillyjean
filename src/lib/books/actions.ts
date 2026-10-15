@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 
 import type { FormState } from "@/lib/auth/form-state";
+import { readlistIdSchema } from "@/lib/readlists/validation";
 import { createClient } from "@/lib/supabase/server";
 import { firstError } from "@/lib/validation";
 
@@ -267,6 +268,15 @@ export async function addManualBook(
     return { error: "unknown" };
   }
 
+  // From a search opened on a readlist (P45): the new book goes in that readlist too.
+  const readlist = readlistIdSchema.safeParse(formData.get("readlistId"));
+  if (readlist.success) {
+    const { error: addError } = await supabase
+      .from("readlist_books")
+      .insert({ readlist_id: readlist.data, book_id: bookId });
+    if (addError) console.error(addError);
+  }
+
   refreshPages();
   const returnTo = safeReturnTo(formData.get("returnTo"));
   if (returnTo) {
@@ -274,6 +284,8 @@ export async function addManualBook(
     url.searchParams.set("added", bookId);
     redirect(`${url.pathname}${url.search}`, RedirectType.replace);
   }
+  if (readlist.success)
+    redirect(`/readlists/${readlist.data}`, RedirectType.replace);
   // Replace the form in the history, so back from the new book goes to where the form came from.
   redirect(`/books/${bookId}`, RedirectType.replace);
 }

@@ -3,7 +3,13 @@ import { getTranslations } from "next-intl/server";
 
 import { AddBookForm } from "@/components/books/add-book-form";
 import { Link } from "@/components/ui/link";
-import { addBookCloseHref, safeReturnTo } from "@/lib/books/navigation";
+import {
+  addBookCloseHref,
+  manualEntryReadlist,
+  manualEntryStatus,
+  safeReturnTo,
+  type SearchTarget,
+} from "@/lib/books/navigation";
 import { MAX_TITLE_LENGTH } from "@/lib/books/sanitize";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,7 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /**
  * D3 Add a book manually. `?title=` comes from the search text; `?returnTo=` (e.g. onboarding)
- * is where the form goes after adding and where × leads.
+ * is where the form goes after adding and where × leads. From a search opened on a shelf list
+ * or a readlist (P45), `?status=` picks the status and `?readlist=` adds the book to that list.
  */
 export default async function AddBookPage({
   searchParams,
@@ -25,13 +32,20 @@ export default async function AddBookPage({
       ? params.title.trim().slice(0, MAX_TITLE_LENGTH)
       : "";
   const returnTo = safeReturnTo(params.returnTo);
+  const status = manualEntryStatus(params.status);
+  const readlistId = manualEntryReadlist(params.readlist);
+  const target: SearchTarget | null = readlistId
+    ? { kind: "readlist", readlistId }
+    : params.status
+      ? { kind: "status", status }
+      : null;
 
   return (
     <div className="space-y-6">
       <header className="space-y-3">
         <div className="flex min-h-11 items-center">
           <Link
-            href={addBookCloseHref(returnTo, title)}
+            href={addBookCloseHref(returnTo, title, target)}
             aria-label={t("close")}
             className="-ml-2 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-2xl"
           >
@@ -42,7 +56,12 @@ export default async function AddBookPage({
           {t("title")}
         </h1>
       </header>
-      <AddBookForm defaultTitle={title} returnTo={returnTo} />
+      <AddBookForm
+        defaultTitle={title}
+        defaultStatus={status}
+        readlistId={readlistId}
+        returnTo={returnTo}
+      />
     </div>
   );
 }

@@ -265,11 +265,11 @@ const count = (query) => Number(psql(query));
         (await nav.count()) === 1,
     );
     check(
-      "C2 empty state: Add a book → search",
+      "C2 empty state: Add a book → search for this readlist (P45)",
       (await visible(page.getByText("No books in this readlist yet"))) &&
         (await page
           .getByRole("link", { name: "Add a book" })
-          .getAttribute("href")) === "/books/search",
+          .getAttribute("href")) === `/books/search?readlist=${listId}`,
     );
     await shot("54-readlist-empty");
 
@@ -351,10 +351,10 @@ const count = (query) => Number(psql(query));
       JSON.stringify(mosaic),
     );
     check(
-      "+ Add books links to the search",
+      "+ Add books links to the search for this readlist (P45)",
       (await page
         .getByRole("link", { name: "Add books" })
-        .getAttribute("href")) === "/books/search",
+        .getAttribute("href")) === `/books/search?readlist=${listId}`,
     );
     await shot("55-readlist-detail");
 

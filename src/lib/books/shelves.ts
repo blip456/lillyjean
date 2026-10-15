@@ -14,6 +14,11 @@ export function shelfStatus(slug: string): BookStatus | null {
     : null;
 }
 
+/** The URL slug of a status: want_to_read → want-to-read. */
+export function shelfSlug(status: BookStatus) {
+  return status.replaceAll("_", "-");
+}
+
 export function shelfHref(status: BookStatus) {
-  return `/books/shelf/${status.replaceAll("_", "-")}`;
+  return `/books/shelf/${shelfSlug(status)}`;
 }

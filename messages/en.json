@@ -299,7 +299,8 @@
     "noResultsHint": "Check the spelling, or search for the author instead.",
     "cantFind": "Can't find it?",
     "addYourself": "Add the book yourself",
-    "addManually": "Add it manually"
+    "addManually": "Add it manually",
+    "addingTo": "Books you add go to {list}."
   },
   "addBook": {
     "title": "Add a book manually",
@@ -356,7 +357,7 @@
     "removed": "Removed from your books",
     "markedRead": "Marked as read",
     "myStatus": "My status",
-    "quickAdd": "+ Want to read",
+    "quickAdd": "+ {status}",
     "setStatus": "Set status",
     "changeStatusOf": "change the status of {title}"
   },
@@ -499,6 +500,11 @@
     },
     "notFound": "Readlist not found",
     "notFoundText": "This readlist does not exist, or it is not yours.",
-    "allReadlists": "All readlists"
+    "allReadlists": "All readlists",
+    "quickAdd": {
+      "add": "Add",
+      "added": "Added",
+      "label": "{title} in {name}"
+    }
   }
 }
