@@ -331,7 +331,9 @@
     "remove": "Remove from my books",
     "notFound": "We can't find this book",
     "notFoundText": "The link may be wrong, or the book is no longer available.",
-    "searchBooks": "Search for a book"
+    "searchBooks": "Search for a book",
+    "addToReadlist": "Add to readlist",
+    "inYourReadlists": "In your readlists"
   },
   "books": {
     "status": {
@@ -403,6 +405,31 @@
       },
       "findBook": "Find a book"
     }
+  },
+  "bookMenu": {
+    "addToReadlist": "Add to readlist…",
+    "changeStatus": "Change status…",
+    "openBook": "Open book"
+  },
+  "addToReadlist": {
+    "title": "Add to readlist",
+    "book": "{title} by {authors}",
+    "legend": "Your readlists",
+    "count": "{count, plural, =0 {No books} one {# book} other {# books}}",
+    "loading": "Loading your readlists…",
+    "loadFailed": "We couldn't load your readlists.",
+    "retry": "Try again",
+    "emptyTitle": "No readlists yet",
+    "emptyText": "Give your first readlist a name and this book goes straight in.",
+    "newReadlist": "New readlist",
+    "nameLabel": "Name of the new readlist",
+    "create": "Create",
+    "cancel": "Cancel",
+    "created": "Created {name} with this book",
+    "added": "Added to {name}",
+    "removed": "Removed from {name}",
+    "saveFailed": "Couldn't update {name}. Please try again.",
+    "done": "Done"
   },
   "markAsReadPicker": {
     "title": "Mark as read",

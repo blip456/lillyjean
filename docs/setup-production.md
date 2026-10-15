@@ -36,8 +36,8 @@ are shared. Never paste secret keys into chat, issues or commits; use the Vercel
 - [ ] Create a project at [supabase.com](https://supabase.com) (region close to the testers, e.g. an EU
       region). Note: free projects pause after a period of inactivity.
 - [ ] **API keys:** Project Settings → API Keys. Copy the **project URL** and the **publishable key** for
-      Vercel (step 3). The **secret key** is only needed later for server-side tasks; keep it out of the
-      frontend.
+      Vercel (step 3). The **secret key** is only needed later for server-side tasks (stored covers, step 6); keep
+      it out of the frontend.
 - [ ] **Auth settings:** Authentication → Sign In / Providers → Email:
   - email provider on, **confirm email** on (decision A3);
   - minimum password length **12** (decision A5);
@@ -152,7 +152,52 @@ Do these before you test Sprint 2 on production; the app only works with **codes
    that removes accounts 14 days after deletion. Check it under Integrations → Cron after the first
    database deploy.
 
-## 6. Testers
+## 6. Faster covers: stored copies in Supabase Storage (Sprint 4)
+
+From Sprint 4 the app copies each book cover once into the public `covers` bucket and shows that copy,
+which the browser keeps for a year (decision T20). The bucket itself is created by the Sprint 4 database
+migration. The app needs the project's **secret key** to write to it; this key stays on the server.
+
+1. **Copy the secret key:** in Supabase, Project Settings → **API Keys** → **Secret keys**. Copy the
+   `default` secret key (it starts with `sb_secret_`), or click **Add new secret key** and name it
+   `vercel-covers`, so you can revoke it later without affecting anything else. Never paste it into
+   chat, issues or commits.
+2. **Add it to Vercel:** Settings → **Environment Variables** → **Add**:
+   - Key: `SUPABASE_SECRET_KEY` (exactly this name; **never** with a `NEXT_PUBLIC_` prefix, which would
+     send it to every browser);
+   - Value: the secret key from step 1;
+   - Environments: **Production** and **Preview** (not Development);
+   - optional but recommended: tick **Sensitive**, so nobody can read it back in the dashboard.
+3. **Redeploy:** Deployments → the latest production deployment → **⋯** → **Redeploy**. Environment
+   variables only reach new deployments.
+
+What changes:
+
+- **Before** (no key, or before the redeploy): everything works as in v0.3; covers load from Open
+  Library and Google Books. The server log shows "SUPABASE_SECRET_KEY is not set" once per instance.
+- **After:** the first time a book is shown (search results, the book page, Home, shelves, readlists)
+  the server copies its cover in the background, after the page has been sent; nobody waits for it.
+  From the next visit on, that book's cover loads from Supabase Storage. Books with no real cover
+  (Open Library's empty placeholder) keep the generated title cover.
+- **Check it worked:** open a few books, wait a minute, then in Supabase → **Storage** → `covers` you
+  see files named `<book id>.jpg`. In the app, right-click a cover → Open image in new tab: the address
+  starts with your Supabase project URL.
+
+**Covers of books saved before Sprint 4 (optional):** they are copied automatically the first time
+someone looks at them, so you can skip this. To copy them all at once instead, a developer (or you, with
+the repository on your computer and `pnpm install` done) runs once:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://<project-id>.supabase.co \
+SUPABASE_SECRET_KEY=<secret key> \
+node scripts/backfill-covers.mjs --dry-run   # lists the books it would copy, writes nothing
+# then the same command without --dry-run
+```
+
+It prints a summary (stored / skipped / failed), only touches books without a stored copy and is safe to
+run again. A `MODULE_TYPELESS_PACKAGE_JSON` warning at the start is harmless. Needs Node 22.18 or newer.
+
+## 7. Testers
 
 - [ ] Share the production URL with Jean and Lilly after Sprint 3 (decision D2).
 - [ ] Ask them to "Add to Home Screen" so the app behaves like an installed app.

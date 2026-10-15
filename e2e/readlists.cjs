@@ -358,6 +358,41 @@ const count = (query) => Number(psql(query));
     );
     await shot("55-readlist-detail");
 
+    // Remove from this readlist via the book menu (B5, right-click on desktop), then Undo.
+    const inList = () =>
+      count(
+        `select count(*) from public.readlist_books where readlist_id = '${listId}'`,
+      );
+    const middleRow = rows
+      .getByRole("listitem")
+      .filter({ hasText: "Middlemarch" });
+    await middleRow.getByRole("link").first().click({ button: "right" });
+    const bookMenu = page.getByRole("dialog", { name: /Middlemarch/ });
+    await bookMenu
+      .getByRole("button", { name: "Remove from this readlist" })
+      .click();
+    await middleRow.waitFor({ state: "detached" }).catch(() => {});
+    const undo = page.getByRole("button", { name: "Undo" });
+    await undo.waitFor().catch(() => {});
+    check(
+      "the book menu removes a book from the readlist and offers Undo",
+      (await middleRow.count()) === 0 &&
+        (await visible(page.getByText("Removed from this readlist"))) &&
+        inList() === 4,
+    );
+    await undo.click();
+    await middleRow.waitFor().catch(() => {});
+    check(
+      "Undo puts the book back in its old place",
+      (await visible(middleRow)) &&
+        inList() === 5 &&
+        (await rows
+          .getByRole("listitem")
+          .last()
+          .textContent()
+          .then((text) => text.includes("Middlemarch"))),
+    );
+
     await page.getByRole("link", { name: "Back to readlists" }).click();
     await page.waitForURL(`${BASE}/readlists`);
     const tile = overviewLists.getByRole("link", { name: /Summer reads/ });

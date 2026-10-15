@@ -3,15 +3,18 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { AddToReadlistButton } from "@/components/books/add-to-readlist-button";
 import { BackLink } from "@/components/books/back-link";
 import { BookCover } from "@/components/books/book-cover";
 import { BookDescription } from "@/components/books/book-description";
 import { BookDetailMenu } from "@/components/books/book-detail-menu";
 import { BookStatusControl } from "@/components/books/book-status-control";
 import { RatingStars } from "@/components/books/rating-stars";
+import { Link } from "@/components/ui/link";
 import { goodreadsUrl } from "@/lib/books/links";
 import { getBook } from "@/lib/books/queries.server";
 import { bookIdSchema } from "@/lib/books/validation";
+import { getReadlistsWithBook } from "@/lib/readlists/book-readlists.server";
 
 async function findBook(id: string) {
   if (!bookIdSchema.safeParse(id).success) return null;
@@ -26,15 +29,19 @@ export async function generateMetadata({
 }
 
 /**
- * D2 Book detail: cover, title, author, Google rating, my status, Goodreads link and the
- * description. Readlists (S4), challenges (S5) and friends' ratings (S8) come later.
+ * D2 Book detail: cover, title, author, Google rating, my status, "+ Add to readlist" (C4),
+ * Goodreads link, the description and the readlists that hold the book. Challenges (S5) and
+ * friends' ratings (S8) come later.
  */
 export default async function BookDetailPage({
   params,
 }: PageProps<"/books/[id]">) {
   const book = await findBook((await params).id);
   if (!book) notFound();
-  const t = await getTranslations();
+  const [t, readlists] = await Promise.all([
+    getTranslations(),
+    getReadlistsWithBook(book.id),
+  ]);
   const authors = book.authors.join(", ") || t("books.unknownAuthor");
 
   return (
@@ -75,6 +82,8 @@ export default async function BookDetailPage({
         <BookStatusControl book={book} />
       </section>
 
+      <AddToReadlistButton book={book} />
+
       <a
         href={goodreadsUrl(book)}
         target="_blank"
@@ -89,6 +98,23 @@ export default async function BookDetailPage({
       {book.description && (
         <Section title={t("bookDetail.about")}>
           <BookDescription text={book.description} />
+        </Section>
+      )}
+
+      {readlists.length > 0 && (
+        <Section title={t("bookDetail.inYourReadlists")}>
+          <ul className="flex flex-wrap gap-2">
+            {readlists.map((list) => (
+              <li key={list.id} className="max-w-full">
+                <Link
+                  href={`/readlists/${list.id}`}
+                  className="inline-flex min-h-11 max-w-full items-center rounded-full border border-border bg-surface px-4 text-sm font-semibold hover:bg-border/40"
+                >
+                  <span className="truncate">{list.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Section>
       )}
     </div>
