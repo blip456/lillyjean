@@ -114,6 +114,17 @@ Goal: the first release for Jean and Lilly: sign up and track what you read.
 
 ## Sprint 4 — Readlists · v0.4.0
 
+> Built on 2026-10-15, in review by the Product Owner before the release PR is merged. Shipped in four
+> pull requests: the readlists foundation (database, covers bucket, decisions P40–P42, T20), stored
+> covers, the book menu + add-to-readlist sheet + readlists on the book page (P43), and the readlist
+> screens + Readlists tab + Home row + "New readlist" (P44). Checked with unit tests, 78 database tests
+> and six end-to-end checks (`e2e/`); the "please try this" list for Jean and Lilly is
+> [`test-checklists/v0.4.0.md`](test-checklists/v0.4.0.md).
+>
+> Still to check before the release: `SUPABASE_SECRET_KEY` in Vercel so covers are stored (until then
+> they load from Open Library / Google Books as before), and the long press on a real Android phone and
+> an installed iPhone app. The filter bar on the overview waits until sharing ships (P42).
+
 > Added after v0.3.0 tester feedback (Jean): covers load slowly, especially for books already on your
 > lists. Plan: copy each cover to Supabase Storage once, when the book is first saved in `books`; serve it
 > with long cache headers so the browser keeps it; copy the covers already in `books` once. This replaces
