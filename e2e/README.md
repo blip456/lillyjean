@@ -70,3 +70,15 @@ BASE_URL=http://localhost:3000 node e2e/home-and-onboarding.cjs
 
 All Sprint 3 checks run against one build with `BOOKS_API=fixtures` (about five minutes in total):
 `accounts.cjs`, `books-search.cjs`, `book-status.cjs` and `home-and-onboarding.cjs`.
+
+## Book menu and add to readlist (Sprint 4)
+
+`add-to-readlist.cjs` covers the long-press menu on book rows (B5): a held touch on a shelf row and on a
+search result, a short tap still opening the book, a swipe and a vertical drag not opening the menu,
+right-click and Shift+F10 on desktop; then the add-to-readlist sheet (C4): empty state, ticking and
+unticking readlists (checked in the database), "New readlist" with an empty-name error, a failed tick
+rolling back, the loading state; and on the book page (D2) "+ Add to readlist" and "In your readlists".
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/add-to-readlist.cjs
+```
