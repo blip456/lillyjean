@@ -14,7 +14,7 @@ const tones = [
   "bg-[#e3e0cc] text-[#36331f]",
 ];
 
-function tone(title: string) {
+export function coverTone(title: string) {
   let hash = 0;
   for (const char of title) hash = (hash * 31 + char.charCodeAt(0)) | 0;
   return tones[Math.abs(hash) % tones.length];
@@ -63,7 +63,7 @@ export function BookCover({
       role={alt ? "img" : undefined}
       aria-label={alt || undefined}
       aria-hidden={alt ? undefined : true}
-      className={`${frame} ${tone(title)} flex items-center justify-center p-1.5 text-center font-serif leading-tight font-semibold`}
+      className={`${frame} ${coverTone(title)} flex items-center justify-center p-1.5 text-center font-serif leading-tight font-semibold`}
     >
       <span className="line-clamp-4">{title}</span>
     </span>

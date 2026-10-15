@@ -5,7 +5,7 @@ import { type ComponentType, useEffect, useId, useRef } from "react";
 
 import { Link } from "@/components/ui/link";
 
-import { CheckIcon, ChevronIcon, SearchIcon } from "./icons";
+import { CheckIcon, ChevronIcon, ReadlistsIcon, SearchIcon } from "./icons";
 
 export const CREATE_MENU_ID = "create-menu";
 
@@ -16,7 +16,8 @@ type CreateMenuProps = {
 
 /**
  * The + menu (N2, P22) as a bottom sheet above the tab bar, so the tabs stay usable. Add book and
- * Mark as read ship in Sprint 3; New readlist (S4) and New challenge (S5) join when they ship.
+ * Mark as read ship in Sprint 3, New readlist in Sprint 4; New challenge (S5) joins when it ships,
+ * between Mark as read and New readlist.
  */
 export function CreateMenu({ onClose }: CreateMenuProps) {
   const t = useTranslations("createMenu");
@@ -44,6 +45,12 @@ export function CreateMenu({ onClose }: CreateMenuProps) {
       title: t("markAsRead"),
       hint: t("markAsReadHint"),
       Icon: CheckIcon,
+    },
+    {
+      href: "/readlists/new",
+      title: t("newReadlist"),
+      hint: t("newReadlistHint"),
+      Icon: ReadlistsIcon,
     },
   ];
 

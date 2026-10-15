@@ -313,17 +313,17 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       })),
     );
     check(
-      "tab bar shows only shipped tabs: Home and +",
+      "tab bar shows only shipped tabs: Home, Readlists and +",
       JSON.stringify(tabs.map((tab) => tab.name)) ===
-        JSON.stringify(["Home"]) &&
+        JSON.stringify(["Home", "Readlists"]) &&
         (await nav
           .getByRole("button", { name: "Create", exact: true })
           .count()) === 1,
       tabs.map((tab) => tab.name).join(","),
     );
     check(
-      "no Readlists, Challenges or Friends tabs before their sprint (N1)",
-      (await nav.getByText(/Readlists|Challenges|Friends/).count()) === 0,
+      "no Challenges or Friends tabs before their sprint (N1)",
+      (await nav.getByText(/Challenges|Friends/).count()) === 0,
     );
     check(
       "Home is the current tab (aria-current=page)",
@@ -386,11 +386,14 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
     );
     const addBook = menu.getByRole("link", { name: /^Add book/ });
     const markAsRead = menu.getByRole("link", { name: /^Mark as read/ });
+    const newReadlist = menu.getByRole("link", { name: /^New readlist/ });
     check(
-      "sheet offers Add book and Mark as read only",
+      "sheet offers Add book, Mark as read and New readlist (no New challenge yet)",
       (await addBook.getAttribute("href")) === "/books/search" &&
         (await markAsRead.getAttribute("href")) === "/books/mark-as-read" &&
-        (await menu.getByRole("link").count()) === 2 &&
+        (await newReadlist.getAttribute("href")) === "/readlists/new" &&
+        (await menu.getByRole("link").count()) === 3 &&
+        (await visible(menu.getByText("Collect books, like a playlist"))) &&
         (await visible(
           menu.getByText("Search the book database or add one manually"),
         )) &&
@@ -421,7 +424,7 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       "tabs stay usable while the sheet is open",
       (await menu.count()) === 0,
     );
-    await page.goto(`${BASE}/readlists`);
+    await page.goto(`${BASE}/challenges`);
     check(
       "unshipped tab pages do not exist yet",
       (await visible(page.getByText(/could not be found|404/).first())) &&
@@ -537,8 +540,9 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
         .getAttribute("href")) === "/books/search",
     );
     check(
-      "no challenges or readlists sections yet",
-      (await page.getByText(/Ongoing challenges|Your readlists/).count()) === 0,
+      "B2: readlists empty state after Currently reading; no challenges section yet",
+      (await visible(page.getByText("Make your first readlist"))) &&
+        (await page.getByText(/Ongoing challenges/).count()) === 0,
     );
     await shot("41-home-empty");
     await page.goto(`${BASE}/books/mark-as-read`);

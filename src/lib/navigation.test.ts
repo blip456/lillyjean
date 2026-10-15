@@ -9,8 +9,8 @@ import {
 } from "./navigation";
 
 describe("shippedTabs", () => {
-  it("shows only Home in Sprint 3 (no coming-soon tabs, N1)", () => {
-    expect(shippedTabs().map((tab) => tab.id)).toEqual(["home"]);
+  it("shows Home and Readlists in Sprint 4 (no coming-soon tabs, N1)", () => {
+    expect(shippedTabs().map((tab) => tab.id)).toEqual(["home", "readlists"]);
   });
 
   it("keeps every tab in its own slot around the + (slot 3)", () => {
@@ -31,7 +31,16 @@ describe("activeTab", () => {
   });
 
   it("ignores tabs that have not shipped", () => {
-    expect(activeTab("/readlists")).toBeNull();
+    expect(activeTab("/challenges")).toBeNull();
+    expect(activeTab("/friends/abc")).toBeNull();
+  });
+
+  it("marks Readlists on the overview and every readlist page (Sprint 4)", () => {
+    expect(activeTab("/readlists")).toBe("readlists");
+    expect(activeTab("/readlists/0b6f1c1e-7d4f-4c1a-9a43-1f2a3b4c5d6e")).toBe(
+      "readlists",
+    );
+    expect(activeTab("/readlistsx")).toBeNull();
   });
 
   it("marks a shipped tab on its page and the pages below it", () => {
@@ -45,6 +54,8 @@ describe("hidesTabBar", () => {
   it("hides the tab bar in forms", () => {
     expect(hidesTabBar("/books/new")).toBe(true);
     expect(hidesTabBar("/settings/username")).toBe(true);
+    expect(hidesTabBar("/readlists/new")).toBe(true);
+    expect(hidesTabBar("/readlists/abc/edit")).toBe(true);
   });
 
   it("shows the tab bar on main and detail screens", () => {
@@ -52,6 +63,9 @@ describe("hidesTabBar", () => {
     expect(hidesTabBar("/settings")).toBe(false);
     expect(hidesTabBar("/books/search")).toBe(false);
     expect(hidesTabBar("/books/mark-as-read")).toBe(false);
+    expect(hidesTabBar("/readlists")).toBe(false);
+    expect(hidesTabBar("/readlists/abc")).toBe(false);
+    expect(hidesTabBar("/readlists/abc/edit/more")).toBe(false);
   });
 });
 

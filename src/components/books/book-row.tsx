@@ -26,6 +26,7 @@ export type BookRowProps = {
   quickAdd?: boolean;
   /** Swipe to change status (B4); on by default. Turn off where a row is only picked. */
   swipeable?: boolean;
+  menuActions?: { label: string; onSelect: () => void }[];
 };
 
 /** Colours of the revealed statuses, light to dark in the order of a reading life. */
