@@ -313,17 +313,17 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       })),
     );
     check(
-      "tab bar shows only shipped tabs: Home, Readlists and +",
+      "tab bar shows only shipped tabs: Home, Readlists, + and Challenges",
       JSON.stringify(tabs.map((tab) => tab.name)) ===
-        JSON.stringify(["Home", "Readlists"]) &&
+        JSON.stringify(["Home", "Readlists", "Challenges"]) &&
         (await nav
           .getByRole("button", { name: "Create", exact: true })
           .count()) === 1,
       tabs.map((tab) => tab.name).join(","),
     );
     check(
-      "no Challenges or Friends tabs before their sprint (N1)",
-      (await nav.getByText(/Challenges|Friends/).count()) === 0,
+      "no Friends tab before its sprint (N1)",
+      (await nav.getByText(/Friends/).count()) === 0,
     );
     check(
       "Home is the current tab (aria-current=page)",
@@ -386,13 +386,16 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
     );
     const addBook = menu.getByRole("link", { name: /^Add book/ });
     const markAsRead = menu.getByRole("link", { name: /^Mark as read/ });
+    const newChallenge = menu.getByRole("link", { name: /^New challenge/ });
     const newReadlist = menu.getByRole("link", { name: /^New readlist/ });
     check(
-      "sheet offers Add book, Mark as read and New readlist (no New challenge yet)",
+      "sheet offers Add book, Mark as read, New challenge and New readlist (P22)",
       (await addBook.getAttribute("href")) === "/books/search" &&
         (await markAsRead.getAttribute("href")) === "/books/mark-as-read" &&
+        (await newChallenge.getAttribute("href")) === "/challenges/new" &&
         (await newReadlist.getAttribute("href")) === "/readlists/new" &&
-        (await menu.getByRole("link").count()) === 3 &&
+        (await menu.getByRole("link").count()) === 4 &&
+        (await visible(menu.getByText("Read one book that fits a theme"))) &&
         (await visible(menu.getByText("Collect books, like a playlist"))) &&
         (await visible(
           menu.getByText("Search the book database or add one manually"),
@@ -424,7 +427,7 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       "tabs stay usable while the sheet is open",
       (await menu.count()) === 0,
     );
-    await page.goto(`${BASE}/challenges`);
+    await page.goto(`${BASE}/friends`);
     check(
       "unshipped tab pages do not exist yet",
       (await visible(page.getByText(/could not be found|404/).first())) &&

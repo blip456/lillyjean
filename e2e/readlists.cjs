@@ -129,9 +129,10 @@ const count = (query) => Number(psql(query));
       .getByRole("link")
       .evaluateAll((links) => links.map((link) => link.textContent.trim()));
     check(
-      "tab bar shows Home and Readlists; Challenges and Friends are still absent",
-      JSON.stringify(tabNames) === JSON.stringify(["Home", "Readlists"]) &&
-        (await nav.getByText(/Challenges|Friends/).count()) === 0,
+      "tab bar shows Home, Readlists and Challenges; Friends is still absent",
+      JSON.stringify(tabNames) ===
+        JSON.stringify(["Home", "Readlists", "Challenges"]) &&
+        (await nav.getByText(/Friends/).count()) === 0,
       tabNames.join(","),
     );
     const readlistsTab = nav.getByRole("link", { name: "Readlists" });
@@ -209,11 +210,12 @@ const count = (query) => Number(psql(query));
       .getByRole("link")
       .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
     check(
-      "+ menu: Add book, Mark as read, New readlist (in that order)",
+      "+ menu: Add book, Mark as read, New challenge, New readlist (in that order)",
       JSON.stringify(menuLinks) ===
         JSON.stringify([
           "/books/search",
           "/books/mark-as-read",
+          "/challenges/new",
           "/readlists/new",
         ]) && (await visible(menu.getByText("Collect books, like a playlist"))),
       menuLinks.join(","),

@@ -121,6 +121,38 @@ iPhone.
 BASE_URL=http://localhost:3000 node e2e/native-feel.cjs
 ```
 
+## Create and edit a challenge (Sprint 5)
+
+`challenge-form.cjs` opens "New challenge" from the + menu (N2, order checked) and covers E6: the empty form
+(today as start date, no placeholders, tab bar hidden, × back to Home), Create disabled under 5 books with
+the live "n / 5" counter, adding and untapping "austen" results in the search sheet, importing a readlist
+seeded with psql (duplicates skipped, empty lists not selectable), removing a book, field errors from the
+server, and Create landing on `/challenges/<id>` (checked in the database, not on the page). Then E8: before
+the start everything is editable (title change saved); after the start (dates moved with psql) the title and
+theme are Locked, removing my pick shows "Removed · stays your pick" with Undo, the end date and candidates
+are saved and the removed pick stays in `challenge_members`; Save is disabled under 5; someone else and
+unknown ids get a 404.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/challenge-form.cjs
+```
+
+## Challenge screens (Sprint 5)
+
+`challenge-screens.cjs` makes challenges through the database functions as the reader (`create_challenge`,
+`pick_challenge_book`, `mark_book_read` with `set local role authenticated` and the reader's JWT claims):
+running, upcoming, completed and one that ended without a completion. It checks the Challenges tab (N1, current
+on every `/challenges` page), Active (E1: order, "Upcoming", the plain counter, missed challenges absent), Past
+(E3: completed only, DONE, the note), the challenge page (E4: dates, theme, rule, 4 candidates and "+ n more ·
+Show all", Add this book and "Replace your pick?" checked in the database, a pick of a book already read after
+the start completing the challenge at once, read-only when completed, ⋯ Edit / Delete with "Keep it" focused),
+Submit my own pick (E5: search, and "Add it manually" coming back with the new book chosen), the empty states
+and 404 for a missed, invalid or someone else's challenge. Needs `BOOKS_API=fixtures`.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/challenge-screens.cjs
+```
+
 ## Challenges in the rest of the app (Sprint 5)
 
 `challenge-integration.cjs` seeds challenges for a new reader straight in the database (as `postgres`) and

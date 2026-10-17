@@ -7,7 +7,7 @@
 export const TABS = [
   { id: "home", href: "/", slot: 1, shipped: true },
   { id: "readlists", href: "/readlists", slot: 2, shipped: true },
-  { id: "challenges", href: "/challenges", slot: 4, shipped: false },
+  { id: "challenges", href: "/challenges", slot: 4, shipped: true },
   { id: "friends", href: "/friends", slot: 5, shipped: false },
 ] as const satisfies readonly {
   id: string;
@@ -38,14 +38,16 @@ export function activeTab(
 }
 
 /**
- * The tab bar hides in forms (N1): adding a book by hand, creating or editing a readlist (C3) and
- * the settings forms, which have their own way back.
+ * The tab bar hides in forms (N1): adding a book by hand, creating or editing a readlist (C3) or
+ * a challenge (E6, E8) and the settings forms, which have their own way back.
  */
 export function hidesTabBar(pathname: string) {
   return (
     pathname === "/books/new" ||
     pathname === "/readlists/new" ||
     /^\/readlists\/[^/]+\/edit$/.test(pathname) ||
+    pathname === "/challenges/new" ||
+    /^\/challenges\/[^/]+\/edit$/.test(pathname) ||
     pathname.startsWith("/settings/")
   );
 }
