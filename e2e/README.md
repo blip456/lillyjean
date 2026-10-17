@@ -121,6 +121,22 @@ iPhone.
 BASE_URL=http://localhost:3000 node e2e/native-feel.cjs
 ```
 
+## Create and edit a challenge (Sprint 5)
+
+`challenge-form.cjs` opens "New challenge" from the + menu (N2, order checked) and covers E6: the empty form
+(today as start date, no placeholders, tab bar hidden, × back to Home), Create disabled under 5 books with
+the live "n / 5" counter, adding and untapping "austen" results in the search sheet, importing a readlist
+seeded with psql (duplicates skipped, empty lists not selectable), removing a book, field errors from the
+server, and Create landing on `/challenges/<id>` (checked in the database, not on the page). Then E8: before
+the start everything is editable (title change saved); after the start (dates moved with psql) the title and
+theme are Locked, removing my pick shows "Removed · stays your pick" with Undo, the end date and candidates
+are saved and the removed pick stays in `challenge_members`; Save is disabled under 5; someone else and
+unknown ids get a 404.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/challenge-form.cjs
+```
+
 ## Challenge screens (Sprint 5)
 
 `challenge-screens.cjs` makes challenges through the database functions as the reader (`create_challenge`,

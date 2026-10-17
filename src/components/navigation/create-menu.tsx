@@ -4,8 +4,15 @@ import { useTranslations } from "next-intl";
 import { type ComponentType, useEffect, useId, useRef } from "react";
 
 import { Link } from "@/components/ui/link";
+import { NEW_CHALLENGE_PATH } from "@/lib/challenges/links";
 
-import { CheckIcon, ChevronIcon, ReadlistsIcon, SearchIcon } from "./icons";
+import {
+  ChallengesIcon,
+  CheckIcon,
+  ChevronIcon,
+  ReadlistsIcon,
+  SearchIcon,
+} from "./icons";
 
 export const CREATE_MENU_ID = "create-menu";
 
@@ -15,9 +22,8 @@ type CreateMenuProps = {
 };
 
 /**
- * The + menu (N2, P22) as a bottom sheet above the tab bar, so the tabs stay usable. Add book and
- * Mark as read ship in Sprint 3, New readlist in Sprint 4; New challenge (S5) joins when it ships,
- * between Mark as read and New readlist.
+ * The + menu (N2, P22) as a bottom sheet above the tab bar, so the tabs stay usable. Four actions
+ * in this order: Add book · Mark as read · New challenge · New readlist.
  */
 export function CreateMenu({ onClose }: CreateMenuProps) {
   const t = useTranslations("createMenu");
@@ -45,6 +51,12 @@ export function CreateMenu({ onClose }: CreateMenuProps) {
       title: t("markAsRead"),
       hint: t("markAsReadHint"),
       Icon: CheckIcon,
+    },
+    {
+      href: NEW_CHALLENGE_PATH,
+      title: t("newChallenge"),
+      hint: t("newChallengeHint"),
+      Icon: ChallengesIcon,
     },
     {
       href: "/readlists/new",
