@@ -25,9 +25,9 @@ export type ChallengeSummary = {
 export type ChallengeDetail = ChallengeSummary & {
   ownerId: string;
   isOwner: boolean;
-  /** Started (start date today or earlier): title and theme are locked (P48). */
+  /** Started (start date today or earlier): title and theme are locked (P49). */
   started: boolean;
-  /** The creator can delete it while it is not completed (P49). */
+  /** The creator can delete it while it is not completed (P50). */
   canDelete: boolean;
   /** The candidate books with my status, in the order they were added. */
   candidates: BookListItem[];

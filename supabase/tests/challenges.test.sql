@@ -151,7 +151,7 @@ select is(
   'undoing the read takes the completion back'
 );
 
--- An own pick (not a candidate) that was already read inside the window completes at once (P50).
+-- An own pick (not a candidate) that was already read inside the window completes at once (P51).
 select public.mark_book_read(pg_temp.book(6), current_date - 1);
 select is(
   public.pick_challenge_book((select id from ids where name = 'running'), pg_temp.book(6)),

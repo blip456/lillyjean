@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 
 import type { FormState } from "@/lib/auth/form-state";
 import { bookIdSchema } from "@/lib/books/validation";
+import { refreshScreens } from "@/lib/refresh-screens.server";
 import { createClient } from "@/lib/supabase/server";
 
 import { CHALLENGES_PATH, challengeHref } from "./links";
@@ -43,11 +43,6 @@ async function requireUser() {
   const { data } = await supabase.auth.getClaims();
   if (!data?.claims?.sub) redirect("/welcome");
   return supabase;
-}
-
-/** Pages stay in the client cache for a while (T17); drop them so every screen shows the change. */
-function refreshPages() {
-  revalidatePath("/", "layout");
 }
 
 function field(formData: FormData, name: string) {
@@ -94,7 +89,7 @@ export async function createChallenge(
   });
   if (error || !id) return { error: errorKey(error) };
 
-  refreshPages();
+  refreshScreens();
   redirect(challengeHref(id), RedirectType.replace);
 }
 
@@ -120,13 +115,13 @@ export async function updateChallenge(
   });
   if (error) return { error: errorKey(error) };
 
-  refreshPages();
+  refreshScreens();
   redirect(challengeHref(id.data), RedirectType.replace);
 }
 
 /**
  * E4 ⋯ Delete (after a confirmation in the UI): goes to the Challenges tab. Completed
- * challenges cannot be deleted (P49). Returns only on an error.
+ * challenges cannot be deleted (P50). Returns only on an error.
  */
 export async function deleteChallenge(
   challengeId: string,
@@ -138,14 +133,14 @@ export async function deleteChallenge(
     p_challenge_id: id.data,
   });
   if (error) return { ok: false, error: errorKey(error) };
-  refreshPages();
+  refreshScreens();
   redirect(CHALLENGES_PATH, RedirectType.replace);
 }
 
 /**
  * Pick a book for a challenge (E4 "Add this book", E5 own pick, D2 "Add this book"). Any book can
  * be picked (P11). When the book was already read inside the window, the challenge completes
- * at once (P50) and `completed` says what the celebration (E7) shows.
+ * at once (P51) and `completed` says what the celebration (E7) shows.
  */
 export async function pickChallengeBook(
   challengeId: string,
@@ -161,7 +156,7 @@ export async function pickChallengeBook(
     { p_challenge_id: challenge.data, p_book_id: book.data },
   );
   if (error) return { ok: false, error: errorKey(error) };
-  refreshPages();
+  refreshScreens();
 
   if (!completedOn) return { ok: true, data: { completed: null } };
   const detail = await getChallenge(challenge.data);

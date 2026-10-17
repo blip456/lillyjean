@@ -7,7 +7,7 @@
 -- answer, and one read completes every challenge the book is picked for (P10).
 -- In Sprint 5 every challenge is personal (only the creator is a member); official challenges
 -- (Sprint 6) and challenges shared with friends (Sprint 8) extend `kind` and the policies.
--- All changes go through the functions below, which keep the rules (P48–P50).
+-- All changes go through the functions below, which keep the rules (P49–P51).
 
 -- ---------------------------------------------------------------------------
 -- Tables
@@ -164,7 +164,7 @@ end;
 $$;
 
 -- E6 before the start, E8 after: the creator changes the challenge. After the start the title
--- and theme are locked (P48); the dates and candidates can change (P13). Candidates left out are
+-- and theme are locked (P49); the dates and candidates can change (P13). Candidates left out are
 -- removed; picks of removed candidates stay (they count as own picks).
 create function public.update_challenge(
   p_challenge_id uuid,
@@ -217,7 +217,7 @@ end;
 $$;
 
 -- E4 ⋯ Delete: the creator deletes a challenge, but not one that is completed, so the completed
--- counter and the stamps on the library card stay (P49).
+-- counter and the stamps on the library card stay (P50).
 create function public.delete_challenge(p_challenge_id uuid)
 returns void
 language plpgsql
@@ -245,7 +245,7 @@ $$;
 
 -- E4 "Add this book", E5 own pick, D2 "Add this book": sets my pick. Any book can be picked
 -- (P11). A completed challenge keeps its pick; an ended one cannot be picked for any more. Returns the completion date: a read of the book
--- inside the window completes the challenge right away (P50).
+-- inside the window completes the challenge right away (P51).
 create function public.pick_challenge_book(p_challenge_id uuid, p_book_id uuid)
 returns date
 language plpgsql

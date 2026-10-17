@@ -43,6 +43,8 @@ export type BookRowProps = {
   href?: string;
   /** The quick action for search results; without it the row shows my status. */
   quickAdd?: QuickAdd;
+  /** Runs once the quick action saved the book (D1: clears the search for the next book). */
+  onQuickAdded?: () => void;
   /**
    * Swipe to change status (B4) and the long-press menu (B5); on by default. Turn off where a
    * row is only picked: a picker has its own tap action, so a menu there would compete with it.
@@ -84,6 +86,7 @@ export function BookRow({
   book,
   href,
   quickAdd,
+  onQuickAdded,
   swipeable = true,
   menuActions,
 }: BookRowProps) {
@@ -210,6 +213,7 @@ export function BookRow({
                 readlistId={quickAdd.readlistId}
                 readlistName={quickAdd.readlistName}
                 added={quickAdd.added}
+                onAdded={onQuickAdded}
               />
             ) : state.status || !quickAdd ? (
               <button
@@ -231,7 +235,11 @@ export function BookRow({
                 aria-haspopup={
                   quickAdd.status === "read" ? "dialog" : undefined
                 }
-                onClick={() => choose(quickAdd.status)}
+                onClick={() =>
+                  quickAdd.status === "read"
+                    ? openSheet("read")
+                    : api.setStatus(quickAdd.status, null, onQuickAdded)
+                }
                 className="min-h-11 shrink-0 rounded-full border border-border px-3 text-xs font-semibold"
               >
                 {t("quickAdd", { status: t(`status.${quickAdd.status}`) })}
@@ -300,6 +308,12 @@ export function BookRow({
             statusApi={api}
             open={sheet === "read"}
             onClose={() => closeSheet("read")}
+            // On a search for the Read list, marking a result as read is its quick action.
+            onMarked={
+              quickAdd?.kind === "status" && quickAdd.status === "read"
+                ? onQuickAdded
+                : undefined
+            }
           />
           <AddToReadlistSheet
             book={book}

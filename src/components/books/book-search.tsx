@@ -88,6 +88,9 @@ export function BookSearch({
   const [activeField, setActiveField] = useOptimistic(field);
   const [pending, startTransition] = useTransition();
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const input = useRef<HTMLInputElement>(null);
+  // The text right now, for saves that finish after the reader typed on.
+  const latestText = useRef(text);
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
@@ -99,6 +102,22 @@ export function BookSearch({
         scroll: false,
       });
     });
+  };
+
+  const changeText = (value: string) => {
+    latestText.current = value;
+    setText(value);
+  };
+
+  /**
+   * After a result was added, empty the search for the next book, unless the reader already
+   * started another search while the book was being saved.
+   */
+  const clearAfterAdd = (addedFrom: string) => {
+    if (latestText.current !== addedFrom) return;
+    changeText("");
+    search("", activeField);
+    input.current?.focus();
   };
 
   const searchable = isSearchable(text);
@@ -120,6 +139,10 @@ export function BookSearch({
         onSubmit={(event) => {
           event.preventDefault();
           search(text, activeField);
+          // The Search key on a phone keyboard: close the keyboard so the results get the whole
+          // screen. With a mouse and keyboard the field keeps focus to type on.
+          if (window.matchMedia("(pointer: coarse)").matches)
+            input.current?.blur();
         }}
         className="space-y-3"
       >
@@ -127,13 +150,14 @@ export function BookSearch({
           {t("label")}
         </label>
         <input
+          ref={input}
           id={`${id}-q`}
           name="q"
           type="search"
           value={text}
           onChange={(event) => {
             const value = event.target.value;
-            setText(value);
+            changeText(value);
             clearTimeout(timer.current);
             timer.current = setTimeout(
               () => search(value, activeField),
@@ -205,7 +229,11 @@ export function BookSearch({
             >
               {results.map((book) => (
                 <li key={book.id}>
-                  <BookRow book={book} quickAdd={quickAddFor(book, target)} />
+                  <BookRow
+                    book={book}
+                    quickAdd={quickAddFor(book, target)}
+                    onQuickAdded={() => clearAfterAdd(text)}
+                  />
                 </li>
               ))}
             </ul>

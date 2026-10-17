@@ -8,7 +8,6 @@ import {
   type BookWithMyState,
   toListItemWithState,
 } from "@/lib/books/queries.server";
-import type { BookListItem } from "@/lib/books/types";
 import { createClient } from "@/lib/supabase/server";
 
 import { appToday, challengeState } from "./dates";
@@ -28,49 +27,43 @@ type ChallengeRow = {
   starts_on: string;
   ends_on: string | null;
   challenge_candidates: { book_id: string }[];
+  /** Only my own membership (row level security), with the picked book and my state for it. */
+  challenge_members: { books: BookWithMyState | null }[];
 };
 
-/** My challenges with their candidate ids and my pick: one round of queries per request. */
+/**
+ * My challenges with their candidate ids and my pick, in one round of parallel queries (T21):
+ * the challenges embed the candidate ids and my picked book; the completion comes from the
+ * `challenge_progress` view.
+ */
 const loadMine = cache(async () => {
   const supabase = await createClient();
   const [{ data: challenges }, { data: progress }] = await Promise.all([
     supabase
       .from("challenges")
       .select(
-        "id, kind, owner_id, title, theme, starts_on, ends_on, challenge_candidates(book_id)",
+        `id, kind, owner_id, title, theme, starts_on, ends_on, challenge_candidates(book_id), challenge_members(books(${BOOK_WITH_MY_STATE}))`,
       )
       .order("starts_on", { ascending: true }),
-    supabase
-      .from("challenge_progress")
-      .select("challenge_id, book_id, completed_on"),
+    supabase.from("challenge_progress").select("challenge_id, completed_on"),
   ]);
-  const rows = (challenges ?? []) as ChallengeRow[];
-  const mine = new Map(
-    (progress ?? []).map((row) => [row.challenge_id, row] as const),
-  );
-
-  const pickIds = [
-    ...new Set(
-      [...mine.values()].flatMap((row) => (row.book_id ? [row.book_id] : [])),
+  const rows = (challenges ?? []) as unknown as ChallengeRow[];
+  const completed = new Map(
+    (progress ?? []).map(
+      (row) => [row.challenge_id, row.completed_on] as const,
     ),
-  ];
-  const picks = new Map<string, BookListItem>();
-  if (pickIds.length) {
-    const { data: books } = await supabase
-      .from("books")
-      .select(BOOK_WITH_MY_STATE)
-      .in("id", pickIds);
-    const typed = (books ?? []) as unknown as BookWithMyState[];
-    queueMissingCovers(typed);
-    for (const book of typed) picks.set(book.id, toListItemWithState(book));
-  }
+  );
+  const pickBooks = rows.flatMap((row) =>
+    row.challenge_members.flatMap((m) => (m.books ? [m.books] : [])),
+  );
+  queueMissingCovers(pickBooks);
 
   const today = appToday();
   return rows.map((row) => {
-    const own = mine.get(row.id);
     const candidateIds = row.challenge_candidates.map((c) => c.book_id);
-    const pickBook = own?.book_id ? picks.get(own.book_id) : undefined;
-    const completedOn = own?.completed_on ?? null;
+    const pickRow = row.challenge_members[0]?.books;
+    const pickBook = pickRow ? toListItemWithState(pickRow) : undefined;
+    const completedOn = completed.get(row.id) ?? null;
     const summary: ChallengeSummary = {
       id: row.id,
       kind: row.kind,
@@ -126,18 +119,21 @@ export async function countCompletedChallenges(): Promise<number> {
 /** One challenge with its candidates (E4, E8). Null when it does not exist or is not mine. */
 export const getChallenge = cache(
   async (id: string): Promise<ChallengeDetail | null> => {
-    const entry = (await loadMine()).find((e) => e.summary.id === id);
-    if (!entry) return null;
-
     const supabase = await createClient();
-    const [{ data: candidates }, { data: claims }] = await Promise.all([
-      supabase
-        .from("challenge_candidates")
-        .select(`added_at, books(${BOOK_WITH_MY_STATE})`)
-        .eq("challenge_id", id)
-        .order("added_at", { ascending: true }),
-      supabase.auth.getClaims(),
-    ]);
+    // One round (T21): my challenges, this challenge's candidates and who I am, in parallel.
+    const [entries, { data: candidates }, { data: claims }] = await Promise.all(
+      [
+        loadMine(),
+        supabase
+          .from("challenge_candidates")
+          .select(`added_at, books(${BOOK_WITH_MY_STATE})`)
+          .eq("challenge_id", id)
+          .order("added_at", { ascending: true }),
+        supabase.auth.getClaims(),
+      ],
+    );
+    const entry = entries.find((e) => e.summary.id === id);
+    if (!entry) return null;
     const books = (candidates ?? [])
       .map((row) => row.books as unknown as BookWithMyState | null)
       .filter((book): book is BookWithMyState => book !== null);
