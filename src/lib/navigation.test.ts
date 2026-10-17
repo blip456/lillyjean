@@ -9,8 +9,12 @@ import {
 } from "./navigation";
 
 describe("shippedTabs", () => {
-  it("shows Home and Readlists in Sprint 4 (no coming-soon tabs, N1)", () => {
-    expect(shippedTabs().map((tab) => tab.id)).toEqual(["home", "readlists"]);
+  it("shows Home, Readlists and Challenges in Sprint 5 (no coming-soon tabs, N1)", () => {
+    expect(shippedTabs().map((tab) => tab.id)).toEqual([
+      "home",
+      "readlists",
+      "challenges",
+    ]);
   });
 
   it("keeps every tab in its own slot around the + (slot 3)", () => {
@@ -31,8 +35,16 @@ describe("activeTab", () => {
   });
 
   it("ignores tabs that have not shipped", () => {
-    expect(activeTab("/challenges")).toBeNull();
+    expect(activeTab("/friends")).toBeNull();
     expect(activeTab("/friends/abc")).toBeNull();
+  });
+
+  it("marks Challenges on Active, Past, a challenge and its pick page (Sprint 5)", () => {
+    expect(activeTab("/challenges")).toBe("challenges");
+    expect(activeTab("/challenges/past")).toBe("challenges");
+    expect(activeTab("/challenges/abc")).toBe("challenges");
+    expect(activeTab("/challenges/abc/pick")).toBe("challenges");
+    expect(activeTab("/challengesx")).toBeNull();
   });
 
   it("marks Readlists on the overview and every readlist page (Sprint 4)", () => {
@@ -68,6 +80,10 @@ describe("hidesTabBar", () => {
     expect(hidesTabBar("/readlists")).toBe(false);
     expect(hidesTabBar("/readlists/abc")).toBe(false);
     expect(hidesTabBar("/readlists/abc/edit/more")).toBe(false);
+    expect(hidesTabBar("/challenges")).toBe(false);
+    expect(hidesTabBar("/challenges/past")).toBe(false);
+    expect(hidesTabBar("/challenges/abc")).toBe(false);
+    expect(hidesTabBar("/challenges/abc/pick")).toBe(false);
   });
 });
 

@@ -128,7 +128,9 @@ export const getChallenge = cache(
           .from("challenge_candidates")
           .select(`added_at, books(${BOOK_WITH_MY_STATE})`)
           .eq("challenge_id", id)
-          .order("added_at", { ascending: true }),
+          // Candidates added together share added_at; the book id keeps their order stable.
+          .order("added_at", { ascending: true })
+          .order("book_id", { ascending: true }),
         supabase.auth.getClaims(),
       ],
     );

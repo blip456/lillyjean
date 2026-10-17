@@ -129,9 +129,10 @@ const count = (query) => Number(psql(query));
       .getByRole("link")
       .evaluateAll((links) => links.map((link) => link.textContent.trim()));
     check(
-      "tab bar shows Home and Readlists; Challenges and Friends are still absent",
-      JSON.stringify(tabNames) === JSON.stringify(["Home", "Readlists"]) &&
-        (await nav.getByText(/Challenges|Friends/).count()) === 0,
+      "tab bar shows Home, Readlists and Challenges; Friends is still absent",
+      JSON.stringify(tabNames) ===
+        JSON.stringify(["Home", "Readlists", "Challenges"]) &&
+        (await nav.getByText(/Friends/).count()) === 0,
       tabNames.join(","),
     );
     const readlistsTab = nav.getByRole("link", { name: "Readlists" });

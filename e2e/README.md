@@ -136,3 +136,19 @@ unknown ids get a 404.
 ```bash
 BASE_URL=http://localhost:3000 node e2e/challenge-form.cjs
 ```
+
+## Challenge screens (Sprint 5)
+
+`challenge-screens.cjs` makes challenges through the database functions as the reader (`create_challenge`,
+`pick_challenge_book`, `mark_book_read` with `set local role authenticated` and the reader's JWT claims):
+running, upcoming, completed and one that ended without a completion. It checks the Challenges tab (N1, current
+on every `/challenges` page), Active (E1: order, "Upcoming", the plain counter, missed challenges absent), Past
+(E3: completed only, DONE, the note), the challenge page (E4: dates, theme, rule, 4 candidates and "+ n more ·
+Show all", Add this book and "Replace your pick?" checked in the database, a pick of a book already read after
+the start completing the challenge at once, read-only when completed, ⋯ Edit / Delete with "Keep it" focused),
+Submit my own pick (E5: search, and "Add it manually" coming back with the new book chosen), the empty states
+and 404 for a missed, invalid or someone else's challenge. Needs `BOOKS_API=fixtures`.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/challenge-screens.cjs
+```
