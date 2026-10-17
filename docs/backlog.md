@@ -169,6 +169,8 @@ Goal: set yourself reading challenges and complete them.
 
 ## Sprint 6 — Official challenges and admin · v0.6.0
 
+> Before this sprint starts: decide the [open questions from Sprint 5](#open-questions).
+
 Goal: the Product Owner publishes app-wide challenges that everyone can join.
 
 - Admin screen: create, edit and end official challenges (same rules as personal challenges)
@@ -203,6 +205,20 @@ Goal: make it feel like Lillyjean.
 - First-open splash animation as an "unboxing" moment (moved from Sprint 2)
 - Accessibility pass (WCAG 2.2 AA), performance and offline shell for the PWA
 - Fixes from tester feedback
+
+## Open questions
+
+Raised while building Sprint 5 (2026-10-17). Decide before Sprint 6 starts; each answer becomes a decision
+in `decisions.md` and, where needed, a small task in the next sprint.
+
+| #    | Question                                                                                                                                | Now (v0.5.0)                                         | Options                                                                   |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| OQ-1 | Date format: "7 October" (wireframes, British) or "October 7"?                                                                          | "October 7" everywhere                               | Switch the app to British English dates, or keep American                 |
+| OQ-2 | Can the start date still change after a challenge has started? Moving it into the future makes it upcoming and unlocks title and theme. | Can change (P49)                                     | Lock the start date after the start; or allow only earlier dates; or keep |
+| OQ-3 | What does "Change" next to your pick do on the challenge page?                                                                          | Opens the full list of candidate books               | Go straight to "Submit my own pick"; or keep                              |
+| OQ-4 | Should a completed challenge still be editable (dates, books)?                                                                          | No ⋯ menu: read-only                                 | Allow Edit (but not Delete); or keep read-only                            |
+| OQ-5 | "Add it manually" in the book search of the New challenge form?                                                                         | Left out: leaving the form would lose what was typed | Add it and keep the form's state while away; or keep                      |
+| OQ-6 | Home without challenges: show "No challenges yet" + New challenge, or hide the section (wireframe note "empty sections collapse")?      | Empty state shown                                    | Hide the section; or keep the empty state                                 |
 
 ## Later
 
