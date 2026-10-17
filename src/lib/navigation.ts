@@ -38,14 +38,16 @@ export function activeTab(
 }
 
 /**
- * The tab bar hides in forms (N1): adding a book by hand, creating or editing a readlist (C3) and
- * the settings forms, which have their own way back.
+ * The tab bar hides in forms (N1): adding a book by hand, creating or editing a readlist (C3) or a
+ * challenge (E6, E8) and the settings forms, which have their own way back.
  */
 export function hidesTabBar(pathname: string) {
   return (
     pathname === "/books/new" ||
     pathname === "/readlists/new" ||
     /^\/readlists\/[^/]+\/edit$/.test(pathname) ||
+    pathname === "/challenges/new" ||
+    /^\/challenges\/[^/]+\/edit$/.test(pathname) ||
     pathname.startsWith("/settings/")
   );
 }

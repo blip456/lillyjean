@@ -56,6 +56,8 @@ describe("hidesTabBar", () => {
     expect(hidesTabBar("/settings/username")).toBe(true);
     expect(hidesTabBar("/readlists/new")).toBe(true);
     expect(hidesTabBar("/readlists/abc/edit")).toBe(true);
+    expect(hidesTabBar("/challenges/new")).toBe(true);
+    expect(hidesTabBar("/challenges/abc/edit")).toBe(true);
   });
 
   it("shows the tab bar on main and detail screens", () => {
