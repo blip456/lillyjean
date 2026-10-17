@@ -4,113 +4,92 @@ import { cache } from "react";
 
 import { coverUrlFor } from "@/lib/books/covers";
 import { queueMissingCovers } from "@/lib/books/covers.server";
-import { myStateFor, toListItem } from "@/lib/books/queries.server";
+import {
+  BOOK_WITH_MY_STATE,
+  type BookWithMyState,
+  toListItemWithState,
+} from "@/lib/books/queries.server";
 import { createClient } from "@/lib/supabase/server";
 
 import type { ReadlistDetail, ReadlistSummary } from "./types";
 
 const MOSAIC_SIZE = 4;
 
-type EntryRow = {
-  readlist_id: string;
-  added_at: string;
-  books: {
-    id: string;
-    title: string;
-    authors: string[];
-    cover_url: string | null;
-    cover_path: string | null;
-  } | null;
+type MosaicBook = {
+  id: string;
+  title: string;
+  authors: string[];
+  cover_url: string | null;
+  cover_path: string | null;
 };
 
 /**
  * The signed-in user's readlists, most recently changed first (C1, Home row, pickers), with the
- * book count and up to four covers for the mosaic. `limit` caps the number of lists.
+ * book count and up to four covers for the mosaic. `limit` caps the number of lists. One query:
+ * the books of each list are embedded, most recently added first.
  */
 export async function getMyReadlists(limit = 200): Promise<ReadlistSummary[]> {
   const supabase = await createClient();
   const { data: lists } = await supabase
     .from("readlists")
-    .select("id, name, description, updated_at")
+    .select(
+      "id, name, description, updated_at, readlist_books(added_at, books(id, title, authors, cover_url, cover_path))",
+    )
     .order("updated_at", { ascending: false })
+    .order("added_at", { referencedTable: "readlist_books", ascending: false })
     .limit(limit);
   if (!lists?.length) return [];
 
-  const { data: entries } = await supabase
-    .from("readlist_books")
-    .select(
-      "readlist_id, added_at, books(id, title, authors, cover_url, cover_path)",
-    )
-    .in(
-      "readlist_id",
-      lists.map((list) => list.id),
-    )
-    .order("added_at", { ascending: false });
+  const mosaicBooks = (list: (typeof lists)[number]) =>
+    list.readlist_books
+      .map((entry) => entry.books as MosaicBook | null)
+      .filter((book) => book !== null)
+      .slice(0, MOSAIC_SIZE);
 
-  const byList = new Map<string, EntryRow[]>();
-  for (const entry of (entries ?? []) as EntryRow[]) {
-    const rows = byList.get(entry.readlist_id) ?? [];
-    rows.push(entry);
-    byList.set(entry.readlist_id, rows);
-  }
+  queueMissingCovers(lists.flatMap(mosaicBooks));
 
-  queueMissingCovers(
-    [...byList.values()].flatMap((rows) =>
-      rows.flatMap((row) => row.books ?? []).slice(0, MOSAIC_SIZE),
-    ),
-  );
-
-  return lists.map((list) => {
-    const rows = byList.get(list.id) ?? [];
-    return {
-      id: list.id,
-      name: list.name,
-      description: list.description,
-      bookCount: rows.length,
-      mosaic: rows
-        .filter((row) => row.books)
-        .slice(0, MOSAIC_SIZE)
-        .map((row) => ({
-          title: row.books!.title,
-          coverUrl: coverUrlFor(row.books!),
-        })),
-      updatedAt: list.updated_at,
-    };
-  });
+  return lists.map((list) => ({
+    id: list.id,
+    name: list.name,
+    description: list.description,
+    bookCount: list.readlist_books.length,
+    mosaic: mosaicBooks(list).map((book) => ({
+      title: book.title,
+      coverUrl: coverUrlFor(book),
+    })),
+    updatedAt: list.updated_at,
+  }));
 }
 
-/** One readlist with its books (C2), most recently added first (P40). Null when not found. */
+/**
+ * One readlist with its books (C2), most recently added first (P40). Null when not found. The list
+ * and its books (with the user's status and read count) load in parallel.
+ */
 export const getReadlist = cache(
   async (id: string): Promise<ReadlistDetail | null> => {
     const supabase = await createClient();
-    const { data: list } = await supabase
-      .from("readlists")
-      .select("id, name, description, updated_at")
-      .eq("id", id)
-      .maybeSingle();
+    const [{ data: list }, { data: entries }] = await Promise.all([
+      supabase
+        .from("readlists")
+        .select("id, name, description, updated_at")
+        .eq("id", id)
+        .maybeSingle(),
+      supabase
+        .from("readlist_books")
+        .select(`added_at, books(${BOOK_WITH_MY_STATE})`)
+        .eq("readlist_id", id)
+        .order("added_at", { ascending: false }),
+    ]);
     if (!list) return null;
 
-    const { data: entries } = await supabase
-      .from("readlist_books")
-      .select(
-        "readlist_id, added_at, books(id, title, authors, cover_url, cover_path)",
-      )
-      .eq("readlist_id", id)
-      .order("added_at", { ascending: false });
-
-    const rows = ((entries ?? []) as EntryRow[]).filter((row) => row.books);
-    queueMissingCovers(rows.map((row) => row.books!));
-    const state = await myStateFor(
-      supabase,
-      rows.map((row) => row.books!.id),
-    );
-    const books = rows.map((row) => ({
-      ...toListItem(
-        row.books!,
-        state.shelf.get(row.books!.id),
-        state.reads.get(row.books!.id) ?? 0,
-      ),
-      addedAt: row.added_at,
+    const rows = (entries ?? []).flatMap((row) => {
+      const book = row.books as BookWithMyState | null;
+      return book ? [{ book, addedAt: row.added_at }] : [];
+    });
+    queueMissingCovers(rows.map((row) => row.book));
+    const books = rows.map(({ book, addedAt }) => ({
+      ...toListItemWithState(book),
+      addedAt,
     }));
 
     return {

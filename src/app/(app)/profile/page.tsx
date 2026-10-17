@@ -6,14 +6,16 @@ import { Card } from "@/components/ui/card";
 import { Link } from "@/components/ui/link";
 import { requireOnboardedAccount } from "@/lib/account/guards";
 import { countBooksRead } from "@/lib/books/queries.server";
+import { currentYear } from "@/lib/profile";
 
 export default async function ProfilePage() {
-  const { profile, pledge, year } = await requireOnboardedAccount();
-  const t = await getTranslations("profile");
-  const [booksRead, booksReadThisYear] = await Promise.all([
-    countBooksRead(),
-    countBooksRead(year),
-  ]);
+  const [{ profile, pledge }, t, booksRead, booksReadThisYear] =
+    await Promise.all([
+      requireOnboardedAccount(),
+      getTranslations("profile"),
+      countBooksRead(),
+      countBooksRead(currentYear()),
+    ]);
 
   return (
     <div className="space-y-6">
