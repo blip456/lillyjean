@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.3](https://github.com/blip456/lillyjean/compare/v0.4.2...v0.4.3) (2026-10-17)
+
+
+### Bug Fixes
+
+* **books:** clear the search after adding a book and close the keyboard on Search ([#39](https://github.com/blip456/lillyjean/issues/39)) ([030f2c4](https://github.com/blip456/lillyjean/commit/030f2c45afb0cd33e079b27719a758bcf296b408))
+* **books:** keep the book search working while adding many books ([#38](https://github.com/blip456/lillyjean/issues/38)) ([f71a067](https://github.com/blip456/lillyjean/commit/f71a0676a9e45e6158d69aeecec59c9d7af80256))
+
 ## [0.4.2](https://github.com/blip456/lillyjean/compare/v0.4.1...v0.4.2) (2026-10-17)
 
 
