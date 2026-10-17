@@ -209,11 +209,12 @@ const count = (query) => Number(psql(query));
       .getByRole("link")
       .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
     check(
-      "+ menu: Add book, Mark as read, New readlist (in that order)",
+      "+ menu: Add book, Mark as read, New challenge, New readlist (in that order)",
       JSON.stringify(menuLinks) ===
         JSON.stringify([
           "/books/search",
           "/books/mark-as-read",
+          "/challenges/new",
           "/readlists/new",
         ]) && (await visible(menu.getByText("Collect books, like a playlist"))),
       menuLinks.join(","),
