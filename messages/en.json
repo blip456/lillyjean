@@ -655,7 +655,6 @@
       "cancel": "Keep my pick"
     },
     "picked": "“{title}” is your pick",
-    "completedSnack": "Challenge completed! You read {title}",
     "notFound": "Challenge not found",
     "notFoundText": "This challenge does not exist, or it is not yours.",
     "allChallenges": "All challenges",
