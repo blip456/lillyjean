@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 
 import type { FormState } from "@/lib/auth/form-state";
 import { readlistIdSchema } from "@/lib/readlists/validation";
+import { refreshScreens } from "@/lib/refresh-screens.server";
 import { createClient } from "@/lib/supabase/server";
 import { firstError } from "@/lib/validation";
 
@@ -40,11 +40,6 @@ async function requireUser() {
   const { data } = await supabase.auth.getClaims();
   if (!data?.claims?.sub) redirect("/welcome");
   return supabase;
-}
-
-/** Pages stay in the client cache for 30 s (T17); drop them so every screen shows the change. */
-function refreshPages() {
-  revalidatePath("/", "layout");
 }
 
 function failed(error: unknown): { ok: false; error: string } {
@@ -96,7 +91,7 @@ export async function setBookStatus(
         : undefined,
   });
   if (error) return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: undefined };
 }
 
@@ -119,7 +114,7 @@ export async function markBookRead(
     p_finished_on: date.data,
   });
   if (error || data === null) return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: { readId: data } };
 }
 
@@ -143,7 +138,7 @@ export async function undoMarkBookRead(
         : previous.progress,
   });
   if (error) return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: undefined };
 }
 
@@ -164,7 +159,7 @@ export async function restoreBookStatus(
       .delete()
       .eq("book_id", id.data);
     if (error) return failed(error);
-    refreshPages();
+    refreshScreens();
     return { ok: true, data: undefined };
   }
   if (previous.status === "read") {
@@ -177,7 +172,7 @@ export async function restoreBookStatus(
       .update({ status: "read", progress: null })
       .eq("book_id", id.data);
     if (error) return failed(error);
-    refreshPages();
+    refreshScreens();
     return { ok: true, data: undefined };
   }
   return setBookStatus(bookId, previous.status, previous.progress);
@@ -194,7 +189,7 @@ export async function removeMyBook(
     p_book_id: id.data,
   });
   if (error || !data) return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: data as unknown as RemovedBookSnapshot };
 }
 
@@ -212,7 +207,7 @@ export async function restoreMyBook(
     p_snapshot: snapshot,
   });
   if (error) return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: undefined };
 }
 
@@ -277,7 +272,7 @@ export async function addManualBook(
     if (addError) console.error(addError);
   }
 
-  refreshPages();
+  refreshScreens();
   const returnTo = safeReturnTo(formData.get("returnTo"));
   if (returnTo) {
     const url = new URL(returnTo, "http://local");
