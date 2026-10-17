@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
     // Visited pages stay in the client cache for 30 s; prefetched pages (every link prefetches,
     // src/components/ui/link.tsx) for the default 5 minutes, so a tap opens the next screen from
     // the cache even after reading a page for a while or when the server has gone cold. Every
-    // action that changes data calls revalidatePath(), which clears this cache (T17, T21).
+    // action that changes data calls refreshScreens(), which clears this cache (T17, T21, T22).
     staleTimes: { dynamic: 30 },
   },
   turbopack: {

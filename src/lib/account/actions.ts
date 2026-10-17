@@ -1,13 +1,13 @@
 "use server";
 
 import type { PostgrestError } from "@supabase/supabase-js";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { authErrorKey } from "@/lib/auth/errors";
 import type { FormState } from "@/lib/auth/form-state";
 import { APP_VERSION } from "@/lib/release/version";
+import { refreshScreens } from "@/lib/refresh-screens.server";
 import { createClient } from "@/lib/supabase/server";
 import {
   emailSchema,
@@ -32,14 +32,6 @@ async function requireUser() {
   const claims = data?.claims;
   if (!claims?.sub) redirect("/welcome");
   return { supabase, user: { id: claims.sub, email: claims.email } };
-}
-
-/**
- * Pages stay in the client cache for a short while (staleTimes in next.config.ts);
- * drop them after a change so no screen shows the old value.
- */
-function refreshPages() {
-  revalidatePath("/", "layout");
 }
 
 /** Database rule violations raised by the profiles trigger and constraints. */
@@ -67,7 +59,7 @@ export async function saveUsername(
     .eq("id", user.id);
   if (error) return { fieldErrors: { username: usernameErrorKey(error) } };
 
-  refreshPages();
+  refreshScreens();
   redirect(
     context === "onboarding"
       ? "/onboarding/currently-reading"
@@ -103,7 +95,7 @@ export async function savePledge(
     if (error) return { error: "unknown" };
   }
 
-  refreshPages();
+  refreshScreens();
   redirect(context === "onboarding" ? "/" : "/settings?changed=pledge");
 }
 
@@ -174,7 +166,7 @@ export async function sendFeedback(
     .insert({ message: message.data, app_version: APP_VERSION });
   if (error) return { error: "unknown" };
 
-  refreshPages();
+  refreshScreens();
   redirect("/settings?changed=feedback");
 }
 

@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 
 import type { FormState } from "@/lib/auth/form-state";
 import { bookIdSchema } from "@/lib/books/validation";
+import { refreshScreens } from "@/lib/refresh-screens.server";
 import { createClient } from "@/lib/supabase/server";
 
 import type { ReadlistSummary, RemovedReadlistBook } from "./types";
@@ -23,11 +23,6 @@ async function requireUser() {
   const { data } = await supabase.auth.getClaims();
   if (!data?.claims?.sub) redirect("/welcome");
   return supabase;
-}
-
-/** Pages stay in the client cache for 30 s (T17); drop them so every screen shows the change. */
-function refreshPages() {
-  revalidatePath("/", "layout");
 }
 
 function failed(error: unknown): { ok: false; error: string } {
@@ -89,7 +84,7 @@ export async function createReadlist(
     if (addError) console.error(addError);
   }
 
-  refreshPages();
+  refreshScreens();
   const returnTo = safeReturnTo(field(formData, "returnTo"));
   redirect(returnTo ?? `/readlists/${list.id}`, RedirectType.replace);
 }
@@ -116,7 +111,7 @@ export async function updateReadlist(
     console.error(error);
     return { error: "unknown" };
   }
-  refreshPages();
+  refreshScreens();
   redirect(`/readlists/${id.data}`, RedirectType.replace);
 }
 
@@ -129,7 +124,7 @@ export async function deleteReadlist(
   const supabase = await requireUser();
   const { error } = await supabase.from("readlists").delete().eq("id", id.data);
   if (error) return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: undefined };
 }
 
@@ -156,7 +151,7 @@ export async function createReadlistWithBook(
     .insert({ readlist_id: list.id, book_id: book.data });
   if (addError) return failed(addError);
 
-  refreshPages();
+  refreshScreens();
   return {
     ok: true,
     data: {
@@ -183,7 +178,7 @@ export async function addBookToReadlist(
     .from("readlist_books")
     .insert({ readlist_id: list.data, book_id: book.data });
   if (error && error.code !== "23505") return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: undefined };
 }
 
@@ -204,7 +199,7 @@ export async function removeBookFromReadlist(
     .select("readlist_id, book_id, added_at")
     .maybeSingle();
   if (error) return failed(error);
-  refreshPages();
+  refreshScreens();
   return {
     ok: true,
     data: data
@@ -236,6 +231,6 @@ export async function restoreBookInReadlist(
     .from("readlist_books")
     .insert({ readlist_id: list.data, book_id: book.data, added_at: addedAt });
   if (error && error.code !== "23505") return failed(error);
-  refreshPages();
+  refreshScreens();
   return { ok: true, data: undefined };
 }
