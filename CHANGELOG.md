@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/blip456/lillyjean/compare/v0.4.1...v0.4.2) (2026-10-17)
+
+
+### Performance
+
+* **ui:** load each page in one round of queries and keep prefetches longer ([#36](https://github.com/blip456/lillyjean/issues/36)) ([42267b8](https://github.com/blip456/lillyjean/commit/42267b8797a89fb788aef528494493921ecefe51))
+
 ## [0.4.1](https://github.com/blip456/lillyjean/compare/v0.4.0...v0.4.1) (2026-10-15)
 
 
