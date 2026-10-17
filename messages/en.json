@@ -58,7 +58,19 @@
     "descriptionTooLong": "Use at most 2000 characters.",
     "readlistNameRequired": "Give your readlist a name.",
     "readlistNameTooLong": "Use at most 60 characters.",
-    "readlistDescriptionTooLong": "Use at most 500 characters."
+    "readlistDescriptionTooLong": "Use at most 500 characters.",
+    "challengeTitleRequired": "Give your challenge a title.",
+    "challengeTitleTooLong": "Use at most 80 characters.",
+    "challengeThemeTooLong": "Use at most 300 characters.",
+    "challengeStartRequired": "Choose a start date.",
+    "challengeDateInvalid": "Enter a date like the ones in the calendar.",
+    "challengeEndBeforeStart": "The end date can't be before the start date.",
+    "challengeTooFewCandidates": "Add at least 5 books.",
+    "challengeTooManyCandidates": "Use at most 100 books.",
+    "challengeLocked": "This challenge has started: the title and theme can't change any more.",
+    "challengeCompleted": "You already completed this challenge.",
+    "challengeEnded": "This challenge has ended.",
+    "challengeNotFound": "This challenge doesn't exist any more."
   },
   "welcome": {
     "title": "Track what you read. Share it with friends.",
@@ -506,5 +518,22 @@
       "added": "Added",
       "label": "{title} in {name}"
     }
+  },
+  "challenges": {
+    "kind": {
+      "personal": "Personal"
+    },
+    "when": {
+      "startsIn": "{count, plural, =0 {Starts today} one {Starts tomorrow} other {Starts in # days}}",
+      "endsIn": "{count, plural, =0 {Ends today} one {Ends tomorrow} other {Ends in # days}}",
+      "noEnd": "No end date"
+    },
+    "completedOn": "Completed {date}",
+    "yourPick": "Your pick: {title}",
+    "youRead": "You read {title}",
+    "noPick": "No book picked yet",
+    "choose": "Choose a book",
+    "doneStamp": "DONE",
+    "completedCount": "{count, plural, =0 {No challenges completed yet} one {# challenge completed} other {# challenges completed}}"
   }
 }
