@@ -149,8 +149,19 @@ const LONG_DESCRIPTION =
           .getAttribute("aria-current")) === "true",
     );
 
-    // Quick add
+    // Quick add. P48 (v0.4.3): once saved, the search empties for the next book.
     await row("Emma").getByRole("button", { name: "+ Want to read" }).click();
+    check(
+      "quick add empties the search once Emma is saved (P48)",
+      await page
+        .waitForURL((url) => !url.search.includes("q="), { timeout: 8000 })
+        .then(
+          () => true,
+          () => false,
+        ),
+    );
+    await input.fill("austen");
+    await page.getByText("3 results").waitFor();
     check(
       "quick add puts Emma on Want to read",
       await visible(
