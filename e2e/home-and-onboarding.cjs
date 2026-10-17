@@ -313,17 +313,17 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       })),
     );
     check(
-      "tab bar shows only shipped tabs: Home, Readlists and +",
+      "tab bar shows only shipped tabs: Home, Readlists, + and Challenges",
       JSON.stringify(tabs.map((tab) => tab.name)) ===
-        JSON.stringify(["Home", "Readlists"]) &&
+        JSON.stringify(["Home", "Readlists", "Challenges"]) &&
         (await nav
           .getByRole("button", { name: "Create", exact: true })
           .count()) === 1,
       tabs.map((tab) => tab.name).join(","),
     );
     check(
-      "no Challenges or Friends tabs before their sprint (N1)",
-      (await nav.getByText(/Challenges|Friends/).count()) === 0,
+      "no Friends tab before its sprint (N1)",
+      (await nav.getByText(/Friends/).count()) === 0,
     );
     check(
       "Home is the current tab (aria-current=page)",
@@ -424,7 +424,7 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
       "tabs stay usable while the sheet is open",
       (await menu.count()) === 0,
     );
-    await page.goto(`${BASE}/challenges`);
+    await page.goto(`${BASE}/friends`);
     check(
       "unshipped tab pages do not exist yet",
       (await visible(page.getByText(/could not be found|404/).first())) &&
