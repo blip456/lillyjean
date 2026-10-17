@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { type AddTarget, BookSearch } from "@/components/books/book-search";
+import type { ChallengeIndicator } from "@/components/challenges/integration/indicator";
+import {
+  getBookIndicators,
+  preloadBookIndicators,
+} from "@/components/challenges/integration/indicators.server";
 import { PageHeader } from "@/components/page-header";
 import {
   isSearchable,
@@ -50,8 +55,11 @@ export default async function BookSearchPage({
   const target = await loadTarget(params.target);
 
   let results: BookListItem[] = [];
+  let indicators: Record<string, ChallengeIndicator> = {};
   let error: string | null = null;
   if (isSearchable(query)) {
+    // My challenges load while the book databases are searched (T21).
+    preloadBookIndicators();
     try {
       results = await searchBooks(query, field);
     } catch (cause) {
@@ -63,6 +71,9 @@ export default async function BookSearchPage({
       }
     }
   }
+
+  if (results.length)
+    indicators = await getBookIndicators(results.map((book) => book.id));
 
   return (
     <div className="space-y-6">
@@ -86,6 +97,7 @@ export default async function BookSearchPage({
         results={results}
         error={error}
         target={target}
+        indicators={indicators}
       />
     </div>
   );

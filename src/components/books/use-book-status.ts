@@ -15,6 +15,7 @@ import {
   undoMarkBookRead,
 } from "@/lib/books/actions";
 import type { BookListItem, PreviousBookState } from "@/lib/books/types";
+import type { CompletedChallenge } from "@/lib/challenges/types";
 
 import {
   applyChange,
@@ -34,8 +35,14 @@ export type BookStatusApi = {
     progress: number | null,
     onSaved?: () => void,
   ) => void;
-  /** `finishedOn` is YYYY-MM-DD (validated by the caller) or empty for today. */
-  markRead: (finishedOn: string, onMarked?: (readId: number) => void) => void;
+  /**
+   * `finishedOn` is YYYY-MM-DD (validated by the caller) or empty for today. `onMarked` also
+   * gets the challenges the read completed (E7).
+   */
+  markRead: (
+    finishedOn: string,
+    onMarked?: (readId: number, completed: CompletedChallenge[]) => void,
+  ) => void;
   remove: () => void;
 };
 
@@ -132,7 +139,7 @@ export function useBookStatus(
         { kind: "read" },
         () => markBookRead(book.id, finishedOn),
         ({ readId }, previous) => undoMarkBookRead(readId, previous),
-        ({ readId }) => onMarked?.(readId),
+        ({ readId, completed }) => onMarked?.(readId, completed),
       ),
     remove: () =>
       run(

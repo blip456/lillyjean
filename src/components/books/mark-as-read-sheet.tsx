@@ -1,14 +1,17 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
+import { useCelebrate } from "@/components/challenges/celebration";
+import { previewCompletedChallenges } from "@/components/challenges/integration/actions";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
 import { useErrorMessage } from "@/components/use-error-message";
 import type { BookListItem } from "@/lib/books/types";
 import { finishedOnSchema, localDate } from "@/lib/books/validation";
+import type { CompletedChallenge } from "@/lib/challenges/types";
 import { firstError } from "@/lib/validation";
 
 import { type BookStatusApi, useBookStatus } from "./use-book-status";
@@ -33,9 +36,12 @@ export type MarkAsReadSheetProps = {
 };
 
 /**
- * Mark as read (D4): finish date (default today, at most today, P35) and the re-read note
- * (P28). Saving closes the sheet at once; a snackbar offers Undo for 5 s.
- * Rating (S8) and completed challenges (S5) join in later sprints.
+ * Mark as read (D4): finish date (default today, at most today, P35), the challenges this read
+ * completes ("This completes 2 challenges", P10: only my picks, only for a date inside their
+ * window, P13) and the re-read note (P28). Saving closes the sheet at once; a snackbar offers
+ * Undo for 5 s, and when challenges were completed the celebration (E7) follows. Every way to
+ * Read goes through this sheet (B3, B4, D2, the + menu, the search), so all of them celebrate.
+ * Rating (S8) joins in a later sprint.
  *
  * Owned by the status-tracking feature (Sprint 3); the props are a shared contract.
  */
@@ -49,6 +55,7 @@ export function MarkAsReadSheet({
   const t = useTranslations("books");
   const ownApi = useBookStatus(book);
   const api = statusApi ?? ownApi;
+  const celebrate = useCelebrate();
 
   return (
     <Sheet
@@ -60,10 +67,14 @@ export function MarkAsReadSheet({
       {/* Mounted per opening, so the date starts at today and old errors are gone. */}
       {open && (
         <MarkAsReadForm
+          bookId={book.id}
           isReRead={api.state.readCount > 0}
           onSubmit={(finishedOn) => {
             onClose();
-            api.markRead(finishedOn, onMarked);
+            api.markRead(finishedOn, (readId, completed) => {
+              celebrate(completed);
+              onMarked?.(readId);
+            });
           }}
         />
       )}
@@ -72,9 +83,11 @@ export function MarkAsReadSheet({
 }
 
 function MarkAsReadForm({
+  bookId,
   isReRead,
   onSubmit,
 }: {
+  bookId: string;
   isReRead: boolean;
   onSubmit: (finishedOn: string) => void;
 }) {
@@ -83,6 +96,8 @@ function MarkAsReadForm({
   const id = useId();
   const [error, setError] = useState<string>();
   const [today] = useState(localDate);
+  const [finishedOn, setFinishedOn] = useState(today);
+  const completes = useCompletesPreview(bookId, finishedOn, today);
 
   return (
     <form
@@ -117,11 +132,13 @@ function MarkAsReadForm({
             type="date"
             defaultValue={today}
             max={today}
+            onChange={(event) => setFinishedOn(event.target.value)}
             aria-describedby={describedBy}
             aria-invalid={invalid}
           />
         )}
       </Field>
+      <CompletesPreview challenges={completes} />
       {isReRead && (
         <p className="rounded-xl border border-border bg-background px-4 py-3 text-sm">
           {t("reReadNote")}
@@ -131,5 +148,66 @@ function MarkAsReadForm({
         {t("markAsRead")}
       </Button>
     </form>
+  );
+}
+
+/**
+ * The challenges that marking the book as read on `finishedOn` would complete, asked again when
+ * the date changes (an empty field means today). Answers to an older date are ignored.
+ */
+function useCompletesPreview(
+  bookId: string,
+  finishedOn: string,
+  today: string,
+) {
+  const [preview, setPreview] = useState<{
+    date: string;
+    challenges: CompletedChallenge[];
+  } | null>(null);
+  const latest = useRef(0);
+  const date = finishedOn || today;
+  const valid = finishedOnSchema.safeParse(date).success && date <= today;
+
+  useEffect(() => {
+    if (!valid) return;
+    const request = ++latest.current;
+    previewCompletedChallenges(bookId, date).then(
+      (challenges) => {
+        if (request === latest.current) setPreview({ date, challenges });
+      },
+      () => {},
+    );
+  }, [bookId, date, valid]);
+
+  return valid && preview?.date === date ? preview.challenges : [];
+}
+
+function CompletesPreview({
+  challenges,
+}: {
+  challenges: CompletedChallenge[];
+}) {
+  const t = useTranslations("challengeHints");
+  return (
+    <div aria-live="polite">
+      {challenges.length > 0 && (
+        <div className="space-y-2 rounded-xl border border-border bg-background px-4 py-3 text-sm">
+          <p className="flex items-center gap-1 font-semibold">
+            <span aria-hidden="true">⚑</span>
+            {t("completes", { count: challenges.length })}
+          </p>
+          <ul className="flex flex-wrap gap-2">
+            {challenges.map((challenge) => (
+              <li
+                key={challenge.id}
+                className="max-w-full rounded-full border border-border px-3 py-1 break-words"
+              >
+                {challenge.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }

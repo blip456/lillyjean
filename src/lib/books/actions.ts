@@ -3,6 +3,8 @@
 import { redirect, RedirectType } from "next/navigation";
 
 import type { FormState } from "@/lib/auth/form-state";
+import { challengesCompletedBy } from "@/lib/challenges/queries.server";
+import type { CompletedChallenge } from "@/lib/challenges/types";
 import { readlistIdSchema } from "@/lib/readlists/validation";
 import { refreshScreens } from "@/lib/refresh-screens.server";
 import { createClient } from "@/lib/supabase/server";
@@ -97,25 +99,31 @@ export async function setBookStatus(
 
 /**
  * Marks a book as read (D4) on `finishedOn` (YYYY-MM-DD, empty = today). Also for re-reads.
- * Returns the read id for Undo.
+ * Returns the read id for Undo and the challenges this read completed, for the celebration (E7):
+ * open challenges where the book is my pick and the date is inside the window (P10, P13).
+ * Completion is derived from the reads (T23), so they are worked out before the read is saved;
+ * Undo takes the completion back by removing the read.
  */
 export async function markBookRead(
   bookId: string,
   finishedOn = "",
-): Promise<ActionResult<{ readId: number }>> {
+): Promise<ActionResult<{ readId: number; completed: CompletedChallenge[] }>> {
   const id = bookIdSchema.safeParse(bookId);
   if (!id.success) return { ok: false, error: "unknown" };
   const date = finishedOnSchema.safeParse(finishedOn);
   if (!date.success) return { ok: false, error: firstError(date.error) };
 
-  const supabase = await requireUser();
+  const [supabase, completed] = await Promise.all([
+    requireUser(),
+    challengesCompletedBy(id.data, date.data),
+  ]);
   const { data, error } = await supabase.rpc("mark_book_read", {
     p_book_id: id.data,
     p_finished_on: date.data,
   });
   if (error || data === null) return failed(error);
   refreshScreens();
-  return { ok: true, data: { readId: data } };
+  return { ok: true, data: { readId: data, completed } };
 }
 
 /** Undo for markBookRead: removes that read and restores the previous state. */

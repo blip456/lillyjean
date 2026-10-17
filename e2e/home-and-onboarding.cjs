@@ -539,10 +539,18 @@ const sorted = (rows) => JSON.stringify([...rows].sort());
         .getByRole("link", { name: "Add a book" })
         .getAttribute("href")) === "/books/search?add=reading",
     );
+    // Sprint 5: the Ongoing challenges section sits between them, with its own empty state.
+    const headingY = async (name) =>
+      (await page.getByRole("heading", { name, exact: true }).boundingBox()).y;
     check(
-      "B2: readlists empty state after Currently reading; no challenges section yet",
+      "B2: currently reading → ongoing challenges (empty) → readlists (empty), 0 challenges completed",
       (await visible(page.getByText("Make your first readlist"))) &&
-        (await page.getByText(/Ongoing challenges/).count()) === 0,
+        (await visible(page.getByText("No challenges yet"))) &&
+        (await visible(page.getByText("0 challenges completed"))) &&
+        (await headingY("Currently reading")) <
+          (await headingY("Ongoing challenges")) &&
+        (await headingY("Ongoing challenges")) <
+          (await headingY("Your readlists")),
     );
     await shot("41-home-empty");
     await page.goto(`${BASE}/books/mark-as-read`);

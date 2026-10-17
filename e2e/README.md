@@ -120,3 +120,22 @@ iPhone.
 ```bash
 BASE_URL=http://localhost:3000 node e2e/native-feel.cjs
 ```
+
+## Challenges in the rest of the app (Sprint 5)
+
+`challenge-integration.cjs` seeds challenges for a new reader straight in the database (as `postgres`) and
+checks the challenge indicator on search results and Home ("Part of" for my pick, "Candidate in" otherwise,
+P25), "Fits your challenges" on the book page (D2) with Add this book and the replace confirmation (picks
+checked in the database), the "This completes n challenges" preview in Mark as read (D4), which disappears
+for a date before the start, and the completion celebration (E7) from the book page, a swipe on Home (one
+read completing two challenges, P10), the + menu picker and picking a book already read (P51): title, book,
+the new counter, no share button, focus on Done, Done and Escape closing it and focus going back. Undo after
+marking takes the completion back (database). Then the Home counter and section (All (n), empty state), and
+the profile count and stamps.
+
+```bash
+BASE_URL=http://localhost:3000 node e2e/challenge-integration.cjs
+```
+
+Since P48 (v0.4.3) a saved quick add on a search result empties the search, so `books-search.cjs` and
+`add-from-context.cjs` search again before checking the added book's status.
