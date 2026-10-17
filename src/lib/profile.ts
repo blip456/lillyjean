@@ -4,6 +4,11 @@ import { cache } from "react";
 
 import { createClient } from "@/lib/supabase/server";
 
+/** The calendar year used for pledges and "books read this year". */
+export function currentYear() {
+  return new Date().getFullYear();
+}
+
 /**
  * The signed-in user with their profile and this year's pledge, once per request.
  * The email comes from the verified JWT claims instead of `auth.getUser()`, which would
@@ -15,7 +20,7 @@ export const getCurrentAccount = cache(async () => {
   const claims = data?.claims;
   if (!claims?.sub) return null;
 
-  const year = new Date().getFullYear();
+  const year = currentYear();
   const [{ data: profile }, { data: pledge }] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", claims.sub).single(),
     supabase

@@ -36,13 +36,15 @@ const sectionTitle =
 export default async function ReadlistsPage({
   searchParams,
 }: PageProps<"/readlists">) {
-  const { profile } = await requireOnboardedAccount();
-  const justDeleted = (await searchParams)[DELETED_PARAM] === "1";
-  const t = await getTranslations();
-  const [counts, readlists] = await Promise.all([
-    countMyShelves(),
-    getMyReadlists(),
-  ]);
+  const [{ profile }, { [DELETED_PARAM]: deleted }, t, counts, readlists] =
+    await Promise.all([
+      requireOnboardedAccount(),
+      searchParams,
+      getTranslations(),
+      countMyShelves(),
+      getMyReadlists(),
+    ]);
+  const justDeleted = deleted === "1";
 
   return (
     <div className="space-y-6">

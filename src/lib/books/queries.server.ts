@@ -48,6 +48,28 @@ export function toListItem(
   };
 }
 
+/**
+ * Book columns plus the signed-in user's status and read count, for embedding in one query. Row
+ * level security keeps `user_books` and `reads` to the user's own rows.
+ */
+export const BOOK_WITH_MY_STATE =
+  "id, title, authors, cover_url, cover_path, user_books(status, progress), reads(count)";
+
+export type BookWithMyState = BookRow & {
+  user_books: { status: BookStatus; progress: number | null }[];
+  reads: { count: number }[];
+};
+
+/** A list item from a row selected with BOOK_WITH_MY_STATE. */
+export function toListItemWithState(book: BookWithMyState): BookListItem {
+  const shelf = book.user_books[0];
+  return toListItem(
+    book,
+    shelf && { book_id: book.id, ...shelf },
+    book.reads[0]?.count ?? 0,
+  );
+}
+
 /** The signed-in user's status and read count for the given books. */
 export async function myStateFor(supabase: Supabase, bookIds: string[]) {
   if (bookIds.length === 0)
@@ -197,7 +219,10 @@ export const getBook = cache(async (id: string): Promise<BookDetail | null> => {
   };
 });
 
-/** The user's books with one status, most recently changed first (Home, + menu, lists). */
+/**
+ * The user's books with one status, most recently changed first (Home, + menu, lists). One query:
+ * the read count is embedded (row level security keeps it to the user's own reads).
+ */
 export async function getMyBooks(
   status: BookStatus,
   limit = 50,
@@ -206,7 +231,7 @@ export async function getMyBooks(
   const { data } = await supabase
     .from("user_books")
     .select(
-      "book_id, status, progress, books(id, title, authors, cover_url, cover_path)",
+      "book_id, status, progress, books(id, title, authors, cover_url, cover_path, reads(count))",
     )
     .eq("status", status)
     .order("status_changed_at", { ascending: false })
@@ -214,12 +239,8 @@ export async function getMyBooks(
 
   const rows = (data ?? []).filter((row) => row.books);
   queueMissingCovers(rows.map((row) => row.books!));
-  const { reads } = await myStateFor(
-    supabase,
-    rows.map((row) => row.book_id),
-  );
   return rows.map((row) =>
-    toListItem(row.books!, row, reads.get(row.book_id) ?? 0),
+    toListItem(row.books!, row, row.books!.reads[0]?.count ?? 0),
   );
 }
 

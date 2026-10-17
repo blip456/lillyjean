@@ -12,6 +12,7 @@ import { WhatsNewBanner } from "@/components/whats-new-banner";
 import { requireOnboardedAccount } from "@/lib/account/guards";
 import { searchHref } from "@/lib/books/navigation";
 import { countBooksRead, getMyBooks } from "@/lib/books/queries.server";
+import { currentYear } from "@/lib/profile";
 import { getMyReadlists } from "@/lib/readlists/queries.server";
 
 /** Books shown under "Currently reading"; "All (n)" opens the full list. */
@@ -25,10 +26,12 @@ const HOME_READLISTS_LIMIT = 6;
  * challenges are added when Sprint 5 ships.
  */
 export default async function HomePage() {
-  const { profile, pledge, year } = await requireOnboardedAccount();
-  const t = await getTranslations("home");
-  const [read, reading, readlists] = await Promise.all([
-    countBooksRead(year),
+  // Everything loads in parallel with the account check; row level security keeps the queries
+  // to the signed-in user, and the check redirects before anything is shown.
+  const [{ profile, pledge }, t, read, reading, readlists] = await Promise.all([
+    requireOnboardedAccount(),
+    getTranslations("home"),
+    countBooksRead(currentYear()),
     getMyBooks("reading"),
     getMyReadlists(HOME_READLISTS_LIMIT),
   ]);
