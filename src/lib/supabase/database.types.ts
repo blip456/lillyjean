@@ -43,6 +43,84 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"challenge_candidates": {
+                  Row: {
+                    "added_at": string,"book_id": string,"challenge_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "added_at"?: string,"book_id": string,"challenge_id": string
+                  }
+                  Update: {
+                    "added_at"?: string,"book_id"?: string,"challenge_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "challenge_candidates_book_id_fkey"
+      columns: ["book_id"]
+isOneToOne: false
+      referencedRelation: "books"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "challenge_candidates_challenge_id_fkey"
+      columns: ["challenge_id"]
+isOneToOne: false
+      referencedRelation: "challenges"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"challenge_members": {
+                  Row: {
+                    "book_id": string | null,"challenge_id": string,"joined_at": string,"picked_at": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "book_id"?: string | null,"challenge_id": string,"joined_at"?: string,"picked_at"?: string | null,"user_id"?: string
+                  }
+                  Update: {
+                    "book_id"?: string | null,"challenge_id"?: string,"joined_at"?: string,"picked_at"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "challenge_members_book_id_fkey"
+      columns: ["book_id"]
+isOneToOne: false
+      referencedRelation: "books"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "challenge_members_challenge_id_fkey"
+      columns: ["challenge_id"]
+isOneToOne: false
+      referencedRelation: "challenges"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "challenge_members_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"challenges": {
+                  Row: {
+                    "created_at": string,"ends_on": string | null,"id": string,"kind": string,"owner_id": string,"starts_on": string,"theme": string | null,"title": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"ends_on"?: string | null,"id"?: string,"kind"?: string,"owner_id"?: string,"starts_on": string,"theme"?: string | null,"title": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"ends_on"?: string | null,"id"?: string,"kind"?: string,"owner_id"?: string,"starts_on"?: string,"theme"?: string | null,"title"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "challenges_owner_id_fkey"
+      columns: ["owner_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"feedback": {
                   Row: {
                     "app_version": string,"created_at": string,"id": number,"message": string,"user_id": string | null
@@ -204,14 +282,52 @@ isOneToOne: false
                 }
           }
           Views: {
-            [_ in never]: never
+            "challenge_progress": {
+                  Row: {
+                    "book_id": string | null,"challenge_id": string | null,"completed_on": string | null,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "challenge_members_book_id_fkey"
+      columns: ["book_id"]
+isOneToOne: false
+      referencedRelation: "books"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "challenge_members_challenge_id_fkey"
+      columns: ["challenge_id"]
+isOneToOne: false
+      referencedRelation: "challenges"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "challenge_members_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                }
           }
           Functions: {
             "add_manual_book":
 { Args: { "p_authors": (string)[],"p_description"?: string,"p_isbn"?: string,"p_status": Database["public"]['Enums']["book_status"],"p_title": string }; Returns: string
                            },
+"check_challenge_candidates":
+{ Args: { "p_book_ids": (string)[] }; Returns: (string)[]
+                           },
+"create_challenge":
+{ Args: { "p_book_ids": (string)[],"p_ends_on": string,"p_starts_on": string,"p_theme": string,"p_title": string }; Returns: string
+                           },
+"delete_challenge":
+{ Args: { "p_challenge_id": string }; Returns: undefined
+                           },
 "is_admin":
 { Args: Record<PropertyKey, never>; Returns: boolean
+                           },
+"is_challenge_member":
+{ Args: { "p_challenge_id": string }; Returns: boolean
                            },
 "is_reserved_username":
 { Args: { "name": string }; Returns: boolean
@@ -221,6 +337,9 @@ isOneToOne: false
                            },
 "owns_readlist":
 { Args: { "p_readlist_id": string }; Returns: boolean
+                           },
+"pick_challenge_book":
+{ Args: { "p_book_id": string,"p_challenge_id": string }; Returns: string
                            },
 "purge_deleted_accounts":
 { Args: Record<PropertyKey, never>; Returns: number
@@ -245,6 +364,9 @@ isOneToOne: false
                            },
 "undo_mark_book_read":
 { Args: { "p_previous_progress"?: number,"p_previous_status"?: Database["public"]['Enums']["book_status"],"p_read_id": number }; Returns: undefined
+                           },
+"update_challenge":
+{ Args: { "p_book_ids": (string)[],"p_challenge_id": string,"p_ends_on": string,"p_starts_on": string,"p_theme": string,"p_title": string }; Returns: undefined
                            },
 "username_available":
 { Args: { "name": string }; Returns: boolean
