@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.5.0](https://github.com/blip456/lillyjean/compare/v0.4.3...v0.5.0) (2026-10-17)
+
+
+### Features
+
+* **challenges:** add the Challenges tab, Active, Past, the challenge page and own picks ([#44](https://github.com/blip456/lillyjean/issues/44)) ([d8c2ee4](https://github.com/blip456/lillyjean/commit/d8c2ee4608975b4718d3474acd39004cc1e1eded))
+* **challenges:** add the personal challenges foundation ([#41](https://github.com/blip456/lillyjean/issues/41)) ([6d314b4](https://github.com/blip456/lillyjean/commit/6d314b43a7f0943086023045b32668e875fc4f79))
+* **challenges:** create and edit challenges ([#43](https://github.com/blip456/lillyjean/issues/43)) ([2b3ad86](https://github.com/blip456/lillyjean/commit/2b3ad86c5950a9b1f99e98e22ec6c270eca3f8ad))
+* **challenges:** show challenges across the app and celebrate completions ([#45](https://github.com/blip456/lillyjean/issues/45)) ([9a4ef8b](https://github.com/blip456/lillyjean/commit/9a4ef8b29fd9c51da492a7432202ac60bf471ecf))
+
 ## [0.4.3](https://github.com/blip456/lillyjean/compare/v0.4.2...v0.4.3) (2026-10-17)
 
 
