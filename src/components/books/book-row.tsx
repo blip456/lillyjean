@@ -3,6 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
+import { ChallengeIndicatorLine } from "@/components/challenges/integration/challenge-indicator";
+import type { ChallengeIndicator } from "@/components/challenges/integration/indicator";
 import { AddToReadlistSheet } from "@/components/readlists/add-to-readlist-sheet";
 import { ReadlistQuickAdd } from "@/components/readlists/readlist-quick-add";
 import { Link } from "@/components/ui/link";
@@ -56,6 +58,11 @@ export type BookRowProps = {
    * `onSelect` runs.
    */
   menuActions?: BookMenuAction[];
+  /**
+   * Challenge indicator (P25, D1 results and Home): "Part of 1 challenge" when the book is my
+   * pick, "Candidate in 2 challenges" otherwise. Without it no line is shown.
+   */
+  challengeIndicator?: ChallengeIndicator | null;
 };
 
 type OpenSheet = "menu" | "status" | "read" | "readlist";
@@ -89,6 +96,7 @@ export function BookRow({
   onQuickAdded,
   swipeable = true,
   menuActions,
+  challengeIndicator,
 }: BookRowProps) {
   const t = useTranslations("books");
   const tStatus = useTranslations("bookStatus");
@@ -193,6 +201,12 @@ export function BookRow({
                 <span className="block truncate text-sm text-muted">
                   {authors}
                 </span>
+                {challengeIndicator && (
+                  <ChallengeIndicatorLine
+                    indicator={challengeIndicator}
+                    className="mt-0.5"
+                  />
+                )}
                 {state.status === "reading" && state.progress !== null && (
                   <span
                     aria-hidden="true"

@@ -12,6 +12,7 @@ import {
   useTransition,
 } from "react";
 
+import type { ChallengeIndicator } from "@/components/challenges/integration/indicator";
 import { ButtonLink } from "@/components/ui/button";
 import { inputClass } from "@/components/ui/field";
 import { FormMessage } from "@/components/ui/form-message";
@@ -66,6 +67,8 @@ type BookSearchProps = {
   error: string | null;
   /** The page the search was opened from (P45); null for a plain search. */
   target?: AddTarget | null;
+  /** Challenge indicators (P25) of the results: book id → indicator. */
+  indicators?: Record<string, ChallengeIndicator>;
 };
 
 /**
@@ -79,6 +82,7 @@ export function BookSearch({
   results,
   error,
   target = null,
+  indicators = {},
 }: BookSearchProps) {
   const t = useTranslations("bookSearch");
   const errorMessage = useErrorMessage();
@@ -233,6 +237,7 @@ export function BookSearch({
                     book={book}
                     quickAdd={quickAddFor(book, target)}
                     onQuickAdded={() => clearAfterAdd(text)}
+                    challengeIndicator={indicators[book.id]}
                   />
                 </li>
               ))}

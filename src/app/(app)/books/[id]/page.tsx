@@ -10,10 +10,15 @@ import { BookDescription } from "@/components/books/book-description";
 import { BookDetailMenu } from "@/components/books/book-detail-menu";
 import { BookStatusControl } from "@/components/books/book-status-control";
 import { RatingStars } from "@/components/books/rating-stars";
+import { ChallengeIndicatorLine } from "@/components/challenges/integration/challenge-indicator";
+import { FitsYourChallenges } from "@/components/challenges/integration/fits-your-challenges";
+import { indicatorFor } from "@/components/challenges/integration/indicator";
 import { Link } from "@/components/ui/link";
 import { goodreadsUrl } from "@/lib/books/links";
 import { getBook } from "@/lib/books/queries.server";
 import { bookIdSchema } from "@/lib/books/validation";
+import { appToday } from "@/lib/challenges/dates";
+import { getChallengesForBook } from "@/lib/challenges/queries.server";
 import { getReadlistsWithBook } from "@/lib/readlists/book-readlists.server";
 
 async function findBook(id: string) {
@@ -29,20 +34,25 @@ export async function generateMetadata({
 }
 
 /**
- * D2 Book detail: cover, title, author, Google rating, my status, "+ Add to readlist" (C4),
- * Goodreads link, the description and the readlists that hold the book. Challenges (S5) and
- * friends' ratings (S8) come later.
+ * D2 Book detail: cover, title, author, the challenge indicator (P25), Google rating, my status,
+ * "+ Add to readlist" (C4), Goodreads link, the description, "Fits your challenges" (S5) and the
+ * readlists that hold the book. Friends' ratings (S8) come later.
  */
 export default async function BookDetailPage({
   params,
 }: PageProps<"/books/[id]">) {
-  const book = await findBook((await params).id);
-  if (!book) notFound();
-  const [t, readlists] = await Promise.all([
+  const { id } = await params;
+  if (!bookIdSchema.safeParse(id).success) notFound();
+  // One round of parallel queries (T21).
+  const [book, t, readlists, challenges] = await Promise.all([
+    getBook(id),
     getTranslations(),
-    getReadlistsWithBook(book.id),
+    getReadlistsWithBook(id),
+    getChallengesForBook(id),
   ]);
+  if (!book) notFound();
   const authors = book.authors.join(", ") || t("books.unknownAuthor");
+  const indicator = indicatorFor(challenges);
 
   return (
     <div className="space-y-6">
@@ -58,6 +68,7 @@ export default async function BookDetailPage({
             {book.title}
           </h1>
           <p>{authors}</p>
+          {indicator && <ChallengeIndicatorLine indicator={indicator} />}
           {book.publishedYear && (
             <p className="text-sm text-muted">
               {t("bookDetail.published", { year: String(book.publishedYear) })}
@@ -98,6 +109,16 @@ export default async function BookDetailPage({
       {book.description && (
         <Section title={t("bookDetail.about")}>
           <BookDescription text={book.description} />
+        </Section>
+      )}
+
+      {challenges.length > 0 && (
+        <Section title={t("bookDetail.fitsYourChallenges")}>
+          <FitsYourChallenges
+            book={{ id: book.id, title: book.title }}
+            challenges={challenges}
+            today={appToday()}
+          />
         </Section>
       )}
 

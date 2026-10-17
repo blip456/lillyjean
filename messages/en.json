@@ -190,7 +190,14 @@
     "newReadlistTile": "New",
     "newReadlist": "New readlist",
     "readlistsEmptyTitle": "Make your first readlist",
-    "readlistsEmptyText": "Collect books, like a playlist."
+    "readlistsEmptyText": "Collect books, like a playlist.",
+    "challengesCompleted": "{count, plural, one {# challenge completed} other {# challenges completed}}",
+    "ongoingChallenges": "Ongoing challenges",
+    "allChallenges": "All ({count})",
+    "allChallengesLabel": "All challenges ({count})",
+    "challengesEmptyTitle": "No challenges yet",
+    "challengesEmptyText": "Pick a theme and read one book that fits.",
+    "newChallenge": "New challenge"
   },
   "profile": {
     "title": "Profile",
@@ -199,7 +206,11 @@
     "pledgeThisYear": "Pledge this year",
     "pledgeProgress": "{count} / {goal}",
     "noPledge": "No goal, just reading",
-    "openSettings": "Settings"
+    "openSettings": "Settings",
+    "challengesSection": "Challenges",
+    "pastChallenges": "Past challenges",
+    "stampsEmpty": "Every challenge you complete gets a stamp here.",
+    "stampLabel": "{title}, completed"
   },
   "settings": {
     "title": "Settings",
@@ -346,7 +357,8 @@
     "notFoundText": "The link may be wrong, or the book is no longer available.",
     "searchBooks": "Search for a book",
     "addToReadlist": "Add to readlist",
-    "inYourReadlists": "In your readlists"
+    "inYourReadlists": "In your readlists",
+    "fitsYourChallenges": "Fits your challenges"
   },
   "books": {
     "status": {
@@ -643,7 +655,6 @@
       "cancel": "Keep my pick"
     },
     "picked": "“{title}” is your pick",
-    "completedSnack": "Challenge completed! You read {title}",
     "notFound": "Challenge not found",
     "notFoundText": "This challenge does not exist, or it is not yours.",
     "allChallenges": "All challenges",
@@ -657,5 +668,26 @@
     "usePick": "Use as my pick",
     "cantFind": "Can't find it?",
     "addManually": "Add it manually"
+  },
+  "celebration": {
+    "stamp": "Challenge completed",
+    "heading": "Challenge completed!",
+    "youRead": "You read {title}",
+    "count": "{count, plural, one {# challenge completed} other {# challenges completed}}",
+    "alsoCompleted": "This book also completed {count, plural, one {# other challenge} other {# other challenges}}",
+    "done": "Done",
+    "findNew": "Find a new challenge"
+  },
+  "challengeHints": {
+    "partOf": "{count, plural, one {Part of # challenge} other {Part of # challenges}}",
+    "candidateIn": "{count, plural, one {Candidate in # challenge} other {Candidate in # challenges}}",
+    "completes": "{count, plural, one {This completes # challenge} other {This completes # challenges}}",
+    "yourPickBadge": "Your pick",
+    "addThisBook": "Add this book",
+    "addThisBookLabel": "Add this book to {title}",
+    "replaceTitle": "Replace your pick ({title})?",
+    "replaceText": "{book} becomes your pick for {challenge}.",
+    "replace": "Replace",
+    "picked": "{title} is your pick now"
   }
 }

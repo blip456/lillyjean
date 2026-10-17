@@ -435,11 +435,17 @@ async function eventually(read, expected, timeout = 8000) {
       ),
     );
     check(
-      "P51: the completion shows (celebration hook + snackbar fallback)",
+      "P51: the completion celebration (E7) shows the challenge and the book",
       await visible(
-        page.getByText("Challenge completed! You read Candidate 6"),
+        page
+          .getByRole("dialog", { name: "Challenge completed!" })
+          .getByText("You read Candidate 6"),
       ),
     );
+    await page
+      .getByRole("dialog", { name: "Challenge completed!" })
+      .getByRole("button", { name: "Done" })
+      .click();
     check(
       "E4: the completed challenge is read-only: Completed · You read, no pick controls, no ⋯",
       (await visible(

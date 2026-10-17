@@ -56,6 +56,22 @@ const SEARCH_LABEL = "Search by title, author or ISBN";
     console.log(`  expected ${expected}, got ${value}`);
     return false;
   }
+  /** P48: a saved quick add empties the search field. */
+  const searchEmptied = () =>
+    page
+      .waitForFunction(
+        (label) =>
+          [...document.querySelectorAll("input[type=search]")].some(
+            (input) =>
+              input.labels?.[0]?.textContent === label && input.value === "",
+          ),
+        SEARCH_LABEL,
+        { timeout: 8000 },
+      )
+      .then(
+        () => true,
+        () => false,
+      );
   const search = async (text) => {
     await page.getByLabel(SEARCH_LABEL).fill(text);
     await page.getByText("3 results").waitFor();
@@ -84,10 +100,16 @@ const SEARCH_LABEL = "Search by title, author or ISBN";
     );
     await shot("context-01-search-reading");
     await row("Emma").getByRole("button", { name: "+ Reading" }).click();
+    // P48 (v0.4.3): after a saved quick add the search empties for the next book.
     check(
-      "+ Reading puts Emma on Reading",
+      "+ Reading puts Emma on Reading and empties the search (P48)",
       (await eventually(() => statusOf("Emma"), "reading")) &&
-        (await visible(pill("Emma", "Reading"))),
+        (await searchEmptied()),
+    );
+    await search("austen");
+    check(
+      "searching again shows Emma as Reading",
+      await visible(pill("Emma", "Reading")),
     );
 
     // 2. Want to read shelf (empty) → Find a book → + Want to read.
@@ -171,9 +193,13 @@ const SEARCH_LABEL = "Search by title, author or ISBN";
     await add.click();
     const added = row("Emma").getByRole("button", { name: /Added/ });
     check(
-      "Add puts Emma in the readlist and shows Added",
-      (await eventually(inList, 1)) &&
-        (await visible(added)) &&
+      "Add puts Emma in the readlist and empties the search (P48)",
+      (await eventually(inList, 1)) && (await searchEmptied()),
+    );
+    await search("austen");
+    check(
+      "searching again shows Emma as Added",
+      (await visible(added)) &&
         (await added.getAttribute("aria-pressed")) === "true",
     );
     await shot("context-03-search-readlist");
@@ -189,6 +215,8 @@ const SEARCH_LABEL = "Search by title, author or ISBN";
       .getByRole("button", { name: /^\+?\s*Add/ })
       .click();
     await eventually(inList, 1);
+    await searchEmptied();
+    await search("austen");
     await page.reload();
     check(
       "after a refresh Emma still shows Added",

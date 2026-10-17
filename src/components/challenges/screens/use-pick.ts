@@ -11,7 +11,7 @@ import { pickChallengeBook } from "@/lib/challenges/actions";
 /**
  * Makes a book my pick for a challenge (E4 "Add this book", E5 "Use as my pick"). When the book
  * was already read inside the window, the challenge completes at once (P51): the celebration
- * (E7) shows, and a snackbar says so too. `onDone` runs after a successful pick.
+ * (E7) shows instead of the "picked" snackbar. `onDone` runs after a successful pick.
  */
 export function usePick(challengeId: string) {
   const t = useTranslations("challengeScreens");
@@ -35,9 +35,6 @@ export function usePick(challengeId: string) {
       const { completed } = result.data;
       if (completed) {
         celebrate([completed]);
-        showSnackbar({
-          message: t("completedSnack", { title: completed.bookTitle }),
-        });
       } else {
         showSnackbar({ message: t("picked", { title: book.title }) });
       }

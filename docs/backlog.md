@@ -143,6 +143,16 @@ Goal: collect books in readlists, like playlists.
 
 ## Sprint 5 — Personal challenges · v0.5.0
 
+> Built on 2026-10-17, in review by the Product Owner before the release PR is merged. Shipped in four
+> pull requests: the challenges foundation (database rules, completion derived from reads, P49–P51,
+> T23), create and edit (E6, E8, + menu), the Challenges tab and challenge page (N1, E1, E3, E4, E5), and
+> challenges in the rest of the app (completion celebration E7, Mark as read preview, indicators on books,
+> "Fits your challenges", Home, library card; P52). Checked with unit tests, database tests and eleven
+> end-to-end checks (`e2e/`); the "please try this" list for Jean and Lilly is
+> [`test-checklists/v0.5.0.md`](test-checklists/v0.5.0.md).
+>
+> Still to check before the release: the celebration and its vibration on a real phone.
+
 Goal: set yourself reading challenges and complete them.
 
 - Create a challenge: title, theme, start date (required), end date (optional), **at least 5** candidate
