@@ -17,6 +17,8 @@ type ReadlistQuickAddProps = {
   readlistName: string;
   /** Whether the book is in the readlist (from the server). */
   added: boolean;
+  /** Runs once the book was saved in the readlist (not when it is taken out again). */
+  onAdded?: () => void;
 };
 
 /**
@@ -30,6 +32,7 @@ export function ReadlistQuickAdd({
   readlistId,
   readlistName,
   added,
+  onAdded,
 }: ReadlistQuickAddProps) {
   const t = useTranslations("readlists.quickAdd");
   const errorMessage = useErrorMessage();
@@ -51,6 +54,7 @@ export function ReadlistQuickAdd({
       });
       if (!result.ok)
         showSnackbar({ message: errorMessage(result.error) ?? "" });
+      else if (next) onAdded?.();
     });
 
   return (

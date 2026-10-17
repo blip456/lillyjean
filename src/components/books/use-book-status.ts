@@ -28,9 +28,11 @@ import {
 export type BookStatusApi = {
   /** What the screen shows: the server state, or the change that is on its way. */
   state: BookState;
+  /** `onSaved` runs once the server saved the change (not after a refusal). */
   setStatus: (
     status: "want_to_read" | "reading",
     progress: number | null,
+    onSaved?: () => void,
   ) => void;
   /** `finishedOn` is YYYY-MM-DD (validated by the caller) or empty for today. */
   markRead: (finishedOn: string, onMarked?: (readId: number) => void) => void;
@@ -113,7 +115,7 @@ export function useBookStatus(
 
   return {
     state,
-    setStatus: (status, progress) =>
+    setStatus: (status, progress, onSaved) =>
       run(
         { kind: "status", status, progress },
         () =>
@@ -123,6 +125,7 @@ export function useBookStatus(
             status === "reading" ? progress : null,
           ),
         (_, previous) => restoreBookStatus(book.id, previous),
+        onSaved,
       ),
     markRead: (finishedOn, onMarked) =>
       run(
