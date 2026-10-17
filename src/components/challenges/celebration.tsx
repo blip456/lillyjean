@@ -5,10 +5,12 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
 
+import { useSnackbarHold } from "@/components/ui/snackbar";
 import type { CompletedChallenge } from "@/lib/challenges/types";
 
 import { CelebrationScreen } from "./integration/celebration-screen";
@@ -42,6 +44,12 @@ export function CelebrationProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const moment = currentMoment(queue);
+  // The celebration covers the "Marked as read · Undo" snackbar: keep it until the screen closes.
+  const holdSnackbar = useSnackbarHold();
+  const showing = moment !== null;
+  useEffect(() => {
+    holdSnackbar(showing);
+  }, [holdSnackbar, showing]);
 
   return (
     <CelebrationContext.Provider value={celebrate}>

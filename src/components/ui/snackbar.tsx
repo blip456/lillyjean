@@ -26,27 +26,37 @@ const SnackbarContext = createContext<
 >(null);
 
 /**
+ * Holds the snackbar while something covers it (the completion celebration, E7): the message
+ * stays and its timer starts again from the beginning when the hold ends, so Undo is not gone
+ * before it could be seen.
+ */
+const SnackbarHoldContext = createContext<(held: boolean) => void>(() => {});
+
+/**
  * One message at a time at the bottom of the screen, above the tab bar
  * (`--tab-bar-height`, set by the app layout). Announced politely to screen readers.
  */
 export function SnackbarProvider({ children }: { children: ReactNode }) {
   const [snack, setSnack] = useState<Snack | null>(null);
+  const [held, setHeld] = useState(false);
 
   const show = useCallback((options: SnackbarOptions) => {
     setSnack({ duration: 5000, ...options, id: Date.now() });
   }, []);
 
   useEffect(() => {
-    if (!snack) return;
+    if (!snack || held) return;
     const timer = setTimeout(() => setSnack(null), snack.duration);
     return () => clearTimeout(timer);
-  }, [snack]);
+  }, [snack, held]);
 
   const value = useMemo(() => show, [show]);
 
   return (
     <SnackbarContext.Provider value={value}>
-      {children}
+      <SnackbarHoldContext.Provider value={setHeld}>
+        {children}
+      </SnackbarHoldContext.Provider>
       <div
         role="status"
         aria-live="polite"
@@ -81,4 +91,9 @@ export function useSnackbar() {
   const show = useContext(SnackbarContext);
   if (!show) throw new Error("useSnackbar needs a SnackbarProvider");
   return show;
+}
+
+/** Call with true while the snackbar is covered, and with false when it shows again. */
+export function useSnackbarHold() {
+  return useContext(SnackbarHoldContext);
 }

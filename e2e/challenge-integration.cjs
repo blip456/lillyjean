@@ -456,7 +456,13 @@ async function longSwipe(page, row) {
       }),
     );
     await shot("06-celebration", false);
+    // Stay on the celebration longer than the snackbar's 5 s: Undo must still be there after.
+    await page.waitForTimeout(6000);
     await celebration.getByRole("button", { name: "Done" }).click();
+    check(
+      "Undo is still offered after a long look at the celebration",
+      await visible(page.getByRole("button", { name: "Undo" }), 2000),
+    );
     check(
       "E7: Done closes and focus returns to where it was (Read)",
       (await celebration.count()) === 0 &&
